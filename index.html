@@ -382,70 +382,120 @@
           <span class="form-field__error" id="error-phone" aria-live="polite"></span>
         </div>
 
-        <!-- Field 3: Service dropdown -->
+                <!-- Field 3: Service — custom styled selector -->
         <div class="form-field">
           <label class="form-field__label" for="booking-service">SERVICE</label>
-          <div class="form-field__select-wrap">
-            <select class="form-field__input form-field__select" id="booking-service" name="service">
-              <option value="" disabled selected>Select a service</option>
-              <optgroup label="── WIG INSTALLATION ──">
-                <option>Wig Installation - 80,000 UGX</option>
-                <option>Buying in from our shop - 70,000 UGX</option>
-                <option>Installation + Lashes - 120,000 UGX</option>
-                <option>Installation + Washing + Lashes - 130,000 UGX</option>
-                <option>Wig Washing - 20,000 UGX</option>
-                <option>Lashes - 40,000 UGX</option>
-                <option>Weaving - 80,000 UGX</option>
-                <option>Masterpiece with hair - 150,000 UGX</option>
-                <option>Ponytail Gel - 50,000 UGX</option>
-                <option>Ponytail Closure - 70,000 UGX</option>
-              </optgroup>
-              <optgroup label="── BOHO BRAIDS WITH HAIR ──">
-                <option>Boho Braids Small - 150,000 UGX</option>
-                <option>Boho Braids Normal - 140,000 UGX</option>
-                <option>Boho Braids Big - 110,000 UGX</option>
-              </optgroup>
-              <optgroup label="── FULANI BRAIDS ──">
-                <option>Fulani Braids Small - 150,000 UGX</option>
-                <option>Fulani Braids Medium - 130,000 UGX</option>
-                <option>Fulani Braids Large - 100,000 UGX</option>
-              </optgroup>
-              <optgroup label="── KNOTLESS BRAIDS ──">
-                <option>Knotless Small - 180,000 UGX</option>
-                <option>Knotless Small-Medium - 150,000 UGX</option>
-                <option>Knotless Medium - 130,000 UGX</option>
-                <option>Knotless Large - 100,000 UGX</option>
-              </optgroup>
-              <optgroup label="── FRENCH CURLS ──">
-                <option>French Curls for Pencil - 140,000 UGX</option>
-                <option>French Curls for Braids - 150,000 UGX</option>
-              </optgroup>
-              <optgroup label="── WIGS - SHORT ──">
-                <option>Short Jerry Wig - 150,000 UGX</option>
-                <option>Pixie Wig - 150,000 UGX</option>
-                <option>Bob 10 inches - 180,000 UGX</option>
-                <option>Bob 12 inches - 200,000 UGX</option>
-              </optgroup>
-              <optgroup label="── WIGS - STRAIGHT, BODY & CURLS ──">
-                <option>Wig 14 inches - 220,000 UGX</option>
-                <option>Wig 16 inches - 250,000 UGX</option>
-                <option>Wig 18 inches - 300,000 UGX</option>
-                <option>Wig 20 inches - 350,000 UGX</option>
-                <option>Wig 22 inches - 400,000 UGX</option>
-                <option>Wig 24 inches - 450,000 UGX</option>
-                <option>Wig 26 inches - 500,000 UGX</option>
-                <option>Wig 28 inches - 550,000 UGX</option>
-                <option>Wig 30 inches - 600,000 UGX</option>
-                <option>Wig 32 inches - 620,000 UGX</option>
-                <option>Wig 34 inches - 670,000 UGX</option>
-                <option>Wig 36 inches - 700,000 UGX</option>
-              </optgroup>
-            </select>
-            <!-- Custom chevron arrow for the select -->
-            <svg class="form-field__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
+
+          <!-- Hidden native select — used for form submission value -->
+          <select id="booking-service" name="service" style="display:none" required>
+            <option value="" disabled selected>Select a service</option>
+            <option>Wig Installation - 80,000 UGX</option>
+            <option>Buying in from our shop - 70,000 UGX</option>
+            <option>Installation + Lashes - 120,000 UGX</option>
+            <option>Installation + Washing + Lashes - 130,000 UGX</option>
+            <option>Wig Washing - 20,000 UGX</option>
+            <option>Lashes - 40,000 UGX</option>
+            <option>Weaving - 80,000 UGX</option>
+            <option>Masterpiece with hair - 150,000 UGX</option>
+            <option>Ponytail Gel - 50,000 UGX</option>
+            <option>Ponytail Closure - 70,000 UGX</option>
+            <option>Boho Braids Small - 150,000 UGX</option>
+            <option>Boho Braids Normal - 140,000 UGX</option>
+            <option>Boho Braids Big - 110,000 UGX</option>
+            <option>Fulani Braids Small - 150,000 UGX</option>
+            <option>Fulani Braids Medium - 130,000 UGX</option>
+            <option>Fulani Braids Large - 100,000 UGX</option>
+            <option>Knotless Small - 180,000 UGX</option>
+            <option>Knotless Small-Medium - 150,000 UGX</option>
+            <option>Knotless Medium - 130,000 UGX</option>
+            <option>Knotless Large - 100,000 UGX</option>
+            <option>French Curls for Pencil - 140,000 UGX</option>
+            <option>French Curls for Braids - 150,000 UGX</option>
+            <option>Short Jerry Wig - 150,000 UGX</option>
+            <option>Pixie Wig - 150,000 UGX</option>
+            <option>Bob 10 inches - 180,000 UGX</option>
+            <option>Bob 12 inches - 200,000 UGX</option>
+            <option>Wig 14 inches - 220,000 UGX</option>
+            <option>Wig 16 inches - 250,000 UGX</option>
+            <option>Wig 18 inches - 300,000 UGX</option>
+            <option>Wig 20 inches - 350,000 UGX</option>
+            <option>Wig 22 inches - 400,000 UGX</option>
+            <option>Wig 24 inches - 450,000 UGX</option>
+            <option>Wig 26 inches - 500,000 UGX</option>
+            <option>Wig 28 inches - 550,000 UGX</option>
+            <option>Wig 30 inches - 600,000 UGX</option>
+            <option>Wig 32 inches - 620,000 UGX</option>
+            <option>Wig 34 inches - 670,000 UGX</option>
+            <option>Wig 36 inches - 700,000 UGX</option>
+          </select>
+
+          <!-- Custom visible selector trigger -->
+          <div class="custom-select" id="custom-select">
+            <div class="custom-select__trigger" id="custom-select-trigger">
+              <span class="custom-select__value" id="custom-select-value">Select a service</span>
+              <svg class="custom-select__arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+
+            <!-- Dropdown panel -->
+            <div class="custom-select__dropdown" id="custom-select-dropdown">
+
+              <div class="custom-select__group-label">Wig Installation</div>
+              <div class="custom-select__option" data-value="Wig Installation - 80,000 UGX">Wig Installation <span>80,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Buying in from our shop - 70,000 UGX">Buying in from our shop <span>70,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Installation + Lashes - 120,000 UGX">Installation + Lashes <span>120,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Installation + Washing + Lashes - 130,000 UGX">Installation + Washing + Lashes <span>130,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Wig Washing - 20,000 UGX">Wig Washing <span>20,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Lashes - 40,000 UGX">Lashes <span>40,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Weaving - 80,000 UGX">Weaving <span>80,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Masterpiece with hair - 150,000 UGX">Masterpiece with hair <span>150,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Ponytail Gel - 50,000 UGX">Ponytail Gel <span>50,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Ponytail Closure - 70,000 UGX">Ponytail Closure <span>70,000 UGX</span></div>
+
+              <div class="custom-select__group-label">Boho Braids with Hair</div>
+              <div class="custom-select__option" data-value="Boho Braids Small - 150,000 UGX">Small <span>150,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Boho Braids Normal - 140,000 UGX">Normal <span>140,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Boho Braids Big - 110,000 UGX">Big <span>110,000 UGX</span></div>
+
+              <div class="custom-select__group-label">Fulani Braids</div>
+              <div class="custom-select__option" data-value="Fulani Braids Small - 150,000 UGX">Small <span>150,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Fulani Braids Medium - 130,000 UGX">Medium <span>130,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Fulani Braids Large - 100,000 UGX">Large <span>100,000 UGX</span></div>
+
+              <div class="custom-select__group-label">Knotless Braids</div>
+              <div class="custom-select__option" data-value="Knotless Small - 180,000 UGX">Small <span>180,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Knotless Small-Medium - 150,000 UGX">Small-Medium <span>150,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Knotless Medium - 130,000 UGX">Medium <span>130,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Knotless Large - 100,000 UGX">Large <span>100,000 UGX</span></div>
+
+              <div class="custom-select__group-label">French Curls</div>
+              <div class="custom-select__option" data-value="French Curls for Pencil - 140,000 UGX">For Pencil <span>140,000 UGX</span></div>
+              <div class="custom-select__option" data-value="French Curls for Braids - 150,000 UGX">For Braids <span>150,000 UGX</span></div>
+
+              <div class="custom-select__group-label">Wigs — Short</div>
+              <div class="custom-select__option" data-value="Short Jerry Wig - 150,000 UGX">Short Jerry Wig <span>150,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Pixie Wig - 150,000 UGX">Pixie Wig <span>150,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Bob 10 inches - 180,000 UGX">Bob 10 inches <span>180,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Bob 12 inches - 200,000 UGX">Bob 12 inches <span>200,000 UGX</span></div>
+
+              <div class="custom-select__group-label">Wigs — Straight, Body &amp; Curls</div>
+              <div class="custom-select__option" data-value="Wig 14 inches - 220,000 UGX">14 inches <span>220,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Wig 16 inches - 250,000 UGX">16 inches <span>250,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Wig 18 inches - 300,000 UGX">18 inches <span>300,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Wig 20 inches - 350,000 UGX">20 inches <span>350,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Wig 22 inches - 400,000 UGX">22 inches <span>400,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Wig 24 inches - 450,000 UGX">24 inches <span>450,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Wig 26 inches - 500,000 UGX">26 inches <span>500,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Wig 28 inches - 550,000 UGX">28 inches <span>550,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Wig 30 inches - 600,000 UGX">30 inches <span>600,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Wig 32 inches - 620,000 UGX">32 inches <span>620,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Wig 34 inches - 670,000 UGX">34 inches <span>670,000 UGX</span></div>
+              <div class="custom-select__option" data-value="Wig 36 inches - 700,000 UGX">36 inches <span>700,000 UGX</span></div>
+
+            </div>
           </div>
+
           <span class="form-field__error" id="error-service" aria-live="polite"></span>
         </div>
 
