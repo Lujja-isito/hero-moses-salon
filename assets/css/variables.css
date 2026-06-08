@@ -1,0 +1,144 @@
+/*
+ * ============================================================
+ * variables.css
+ * ============================================================
+ * Central design token file.
+ * Every colour, font, size, and spacing value lives here.
+ * Never hard-code a colour anywhere else — always use a variable.
+ *
+ * HOW TO USE:
+ *   color: var(--color-gold);
+ *   font-family: var(--font-display);
+ *   padding: var(--space-lg);
+ * ============================================================
+ */
+
+:root {
+
+  /* ----------------------------------------------------------
+     COLOUR PALETTE
+     ---------------------------------------------------------- */
+
+  /* Backgrounds */
+  --color-bg-page:       #111111;   /* main page background */
+  --color-bg-surface:    #1a1a1a;   /* cards, navbar, panels */
+  --color-bg-footer:     #0d0d0d;   /* footer (darkest) */
+  --color-bg-input:      #222222;   /* form inputs */
+  --color-bg-hover:      #222222;   /* subtle hover state */
+
+  /* Gold — primary brand accent */
+  --color-gold:          #b8860b;   /* buttons, prices, active states */
+  --color-gold-light:    #c9a84c;   /* logo ring, decorative borders */
+  --color-gold-dim:      rgba(184, 134, 11, 0.08);  /* badge background */
+  --color-gold-dimmer:   rgba(184, 134, 11, 0.12);  /* hover state */
+
+  /* Cream — logo silhouette and text */
+  --color-cream:         #c8b89a;
+
+  /* Text */
+  --color-text-white:    #ffffff;   /* headings */
+  --color-text-bright:   #cccccc;   /* nav links, table values */
+  --color-text-muted:    #aaaaaa;   /* body copy, descriptions */
+  --color-text-dim:      #999999;   /* tertiary text, placeholders — visible on dark bg */
+
+  /* Borders */
+  --color-border-dark:   #222222;   /* section dividers */
+  --color-border-panel:  #2a2a2a;   /* card borders */
+  --color-border-input:  #333333;   /* input borders */
+  --color-border-modal:  #333333;   /* modal card border */
+
+  /* Feedback */
+  --color-success:       #2a5c2a;   /* booking confirmed background */
+  --color-error:         #c0392b;   /* validation error text */
+
+
+  /* ----------------------------------------------------------
+     TYPOGRAPHY
+     ---------------------------------------------------------- */
+
+  /* Font families */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  /* Used for: H1, H2, section titles, logo text, prices */
+
+  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Used for: nav links, body text, buttons, labels, inputs */
+
+
+  /* Font sizes */
+  --fs-hero:       clamp(48px, 6vw, 72px);   /* H1 hero headline */
+  --fs-section:    clamp(32px, 4vw, 48px);   /* H2 section titles */
+  --fs-body:       15px;                     /* standard body text */
+  --fs-small:      13px;                     /* contact values, footer text */
+  --fs-xs:         11px;                     /* buttons, labels, tags */
+  --fs-xxs:        10px;                     /* nav labels, badge text */
+  --fs-price:      16px;                     /* service prices */
+  --fs-modal-h:    22px;                     /* modal title */
+
+  /* Font weights */
+  --fw-regular:    400;
+  --fw-medium:     500;
+  --fw-semibold:   600;
+
+  /* Line heights */
+  --lh-tight:      1.0;   /* hero headline */
+  --lh-body:       1.7;   /* body paragraphs */
+  --lh-relaxed:    2.0;   /* address lines */
+
+  /* Letter spacing */
+  --ls-wide:       0.08em;   /* buttons, labels */
+  --ls-wider:      0.10em;   /* badge text */
+  --ls-widest:     0.12em;   /* wordmark sub, footer column titles */
+
+
+  /* ----------------------------------------------------------
+     SPACING SCALE
+     ---------------------------------------------------------- */
+
+  --space-xs:    8px;
+  --space-sm:    16px;
+  --space-md:    24px;
+  --space-lg:    32px;
+  --space-xl:    48px;
+  --space-2xl:   60px;
+  --space-3xl:   80px;
+  --space-4xl:   100px;
+
+
+  /* ----------------------------------------------------------
+     BORDER RADIUS
+     ---------------------------------------------------------- */
+
+  --radius-sm:   4px;    /* buttons, inputs, cards */
+  --radius-md:   6px;    /* stylist cards */
+  --radius-lg:   8px;    /* hero panel, gallery cells */
+  --radius-xl:   12px;   /* modal card */
+
+
+  /* ----------------------------------------------------------
+     TRANSITIONS
+     ---------------------------------------------------------- */
+
+  --transition-fast:   0.15s ease;
+  --transition-base:   0.25s ease;
+  --transition-slow:   0.4s ease;
+
+
+  /* ----------------------------------------------------------
+     Z-INDEX LAYERS
+     (higher number = on top)
+     ---------------------------------------------------------- */
+
+  --z-floating:   999;    /* floating book now button */
+  --z-navbar:    1000;    /* sticky navbar */
+  --z-modal:     2000;    /* booking modal overlay */
+
+
+  /* ----------------------------------------------------------
+     LAYOUT
+     ---------------------------------------------------------- */
+
+  --section-padding-x:  60px;   /* horizontal padding for all sections */
+  --section-padding-y:  100px;  /* vertical padding for all sections */
+  --navbar-height:       72px;  /* used to offset scroll-to-section targets */
+
+}

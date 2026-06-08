@@ -1,0 +1,227 @@
+/*
+ * ============================================================
+ * hours.css
+ * ============================================================
+ * Styles for the Hours of Operation section (#hours).
+ *
+ * Layout: two columns side by side
+ *   Left  (.hours__left)  — heading, description, contacts, CTA
+ *   Right (.hours__table) — 7-day hours rows
+ *
+ * Today's row is highlighted with:
+ *   - Gold left border (3px)
+ *   - Gold dot before the day name
+ *   - "TODAY" gold badge pill
+ *   - Slightly lighter background
+ *
+ * hours.js detects the current day and adds
+ * .hours-row--today to the matching row at runtime.
+ * ============================================================
+ */
+
+
+/* ----------------------------------------------------------
+   SECTION CONTAINER
+   ---------------------------------------------------------- */
+.hours {
+  display:               grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap:                   80px;
+  align-items:           start;
+
+  padding:    var(--section-padding-y) var(--section-padding-x);
+  background: var(--color-bg-page);
+}
+
+
+/* ===========================================================
+   LEFT COLUMN
+   =========================================================== */
+.hours__left {
+  /* Stacks heading, desc, contacts, and button vertically */
+}
+
+/* Heading — override section-title margin for tighter spacing */
+.hours__left .section-title {
+  margin-bottom: var(--space-sm);   /* 16px */
+}
+
+/* Description paragraph */
+.hours__desc {
+  font-family:   var(--font-body);
+  font-size:     var(--fs-body);
+  color:         var(--color-text-muted);
+  line-height:   var(--lh-body);
+  margin-bottom: var(--space-lg);   /* 32px */
+}
+
+
+/* ----------------------------------------------------------
+   CONTACT ROWS (location / phone / email)
+   ---------------------------------------------------------- */
+.hours__contacts {
+  display:        flex;
+  flex-direction: column;
+  gap:            12px;
+  margin-bottom:  var(--space-lg);
+}
+
+/* Single contact row — icon + text */
+.hours__contact-row {
+  display:     flex;
+  align-items: center;
+  gap:         10px;
+
+  font-family: var(--font-body);
+  font-size:   14px;
+  color:       var(--color-text-bright);
+  line-height: 1.4;
+}
+
+/* Gold icon */
+.hours__contact-icon {
+  flex-shrink: 0;
+  color:       var(--color-gold);
+}
+
+
+/* ===========================================================
+   RIGHT COLUMN — 7-DAY HOURS TABLE
+   =========================================================== */
+.hours__table {
+  border-top: 1px solid var(--color-border-dark);
+}
+
+
+/* ----------------------------------------------------------
+   INDIVIDUAL HOURS ROW
+   Each row: day name (left) + time with clock icon (right)
+   ---------------------------------------------------------- */
+.hours-row {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+
+  padding:         18px 20px;
+  border-bottom:   1px solid var(--color-border-dark);
+
+  /* Smooth transition for the today highlight */
+  transition:      background var(--transition-base),
+                   border-left-color var(--transition-base);
+
+  /* Reserve space for the gold left border so layout
+     doesn't shift when today's row gets it */
+  border-left:     3px solid transparent;
+}
+
+
+/* ----------------------------------------------------------
+   DAY NAME — left side of each row
+   Contains: dot (hidden by default) + name + TODAY badge
+   ---------------------------------------------------------- */
+.hours-row__day {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+}
+
+/* Gold dot — hidden by default, shown on today's row */
+.hours-row__dot {
+  display:       block;
+  width:         6px;
+  height:        6px;
+  border-radius: 50%;
+  background:    var(--color-gold);
+  flex-shrink:   0;
+
+  /* Hidden until hours.js adds .hours-row--today */
+  opacity:    0;
+  transform:  scale(0);
+  transition: opacity   var(--transition-base),
+              transform var(--transition-base);
+}
+
+/* Day name text — "Monday", "Tuesday" etc */
+.hours-row__name {
+  font-family: var(--font-body);
+  font-size:   var(--fs-body);   /* 15px */
+  color:       var(--color-text-bright);
+  font-weight: var(--fw-regular);
+  transition:  color var(--transition-base);
+}
+
+/* "TODAY" badge pill — hidden by default */
+.hours-row__today-tag {
+  display:        inline-block;
+  padding:        2px 8px;
+  border-radius:  3px;
+
+  background:     var(--color-gold);
+  color:          var(--color-text-white);
+
+  font-family:    var(--font-body);
+  font-size:      10px;
+  font-weight:    var(--fw-medium);
+  letter-spacing: 0.05em;
+
+  /* Hidden until hours.js adds .hours-row--today */
+  opacity:    0;
+  transform:  scale(0.8);
+  transition: opacity   var(--transition-base),
+              transform var(--transition-base);
+}
+
+
+/* ----------------------------------------------------------
+   TIME — right side of each row
+   Clock icon + time string side by side
+   ---------------------------------------------------------- */
+.hours-row__time {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+
+  font-family: var(--font-body);
+  font-size:   14px;
+  color:       var(--color-text-bright);
+}
+
+/* Clock icon — gold */
+.hours-row__time svg {
+  flex-shrink: 0;
+  color:       var(--color-gold);
+}
+
+
+/* ----------------------------------------------------------
+   TODAY ROW STATE
+   Added by hours.js to the row matching the current day.
+   All hidden elements (dot, badge) become visible.
+   ---------------------------------------------------------- */
+.hours-row--today {
+  background:       rgba(184, 134, 11, 0.06);   /* very faint gold tint */
+  border-left-color: var(--color-gold);          /* 3px gold left border */
+}
+
+/* Show the gold dot */
+.hours-row--today .hours-row__dot {
+  opacity:   1;
+  transform: scale(1);
+}
+
+/* Brighten the day name to gold */
+.hours-row--today .hours-row__name {
+  color:       var(--color-gold);
+  font-weight: var(--fw-medium);
+}
+
+/* Show the TODAY badge */
+.hours-row--today .hours-row__today-tag {
+  opacity:   1;
+  transform: scale(1);
+}
+
+/* Also brighten the time text slightly */
+.hours-row--today .hours-row__time {
+  color: var(--color-text-white);
+}

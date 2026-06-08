@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Full service menu and price list at Hero Moses Hair Salon, Kampala. Wigs, braids, weaves, lashes and more. Call +256757541061." />
+  <title>Our Services | Hero Moses Hair Salon</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/variables.css" />
+  <link rel="stylesheet" href="assets/css/reset.css" />
+  <link rel="stylesheet" href="assets/css/navbar.css" />
+  <link rel="stylesheet" href="assets/css/pages.css" />
+  <link rel="stylesheet" href="assets/css/services.css" />
+  <link rel="stylesheet" href="assets/css/modal.css" />
+  <link rel="stylesheet" href="assets/css/footer.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+
+  <style>
+    /* ── SERVICE CATEGORY HEADING ── */
+    .services__category {
+      margin-top:    48px;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom:  2px solid var(--color-gold);
+    }
+    .services__category:first-of-type { margin-top: 0; }
+
+    .services__category-title {
+      font-family:    var(--font-display);
+      font-size:      22px;
+      font-weight:    var(--fw-regular);
+      color:          var(--color-text-white);
+      letter-spacing: 0.02em;
+    }
+    .services__category-title em {
+      font-style: italic;
+      color:      var(--color-gold);
+    }
+
+    /* Sub-category label (e.g. BOHO BRAIDS - Small / Normal / Big) */
+    .services__sub {
+      font-family:    var(--font-body);
+      font-size:      10px;
+      font-weight:    var(--fw-medium);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color:          var(--color-gold);
+      padding:        16px 0 6px;
+      display:        block;
+      border-bottom:  0.5px solid #2a2a2a;
+    }
+
+    /* Override services grid to single column for this detailed layout */
+    .services__grid--full {
+      display:        block;
+      max-width:      700px;
+      margin:         0 auto;
+    }
+
+    /* Each service row */
+    .service-row {
+      display:         flex;
+      justify-content: space-between;
+      align-items:     flex-start;
+      gap:             24px;
+      padding:         14px 0;
+      border-bottom:   1px solid var(--color-border-dark);
+      transition:      background var(--transition-fast);
+    }
+    .service-row:last-child { border-bottom: none; }
+    .service-row:hover { background: rgba(184,134,11,0.02); }
+
+    .service-row__name {
+      font-family: var(--font-body);
+      font-size:   14px;
+      color:       var(--color-text-white);
+      flex:        1;
+    }
+    .service-row__price {
+      font-family: var(--font-display);
+      font-size:   15px;
+      font-weight: var(--fw-semibold);
+      color:       var(--color-gold);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Contact + hours callout box */
+    .services__callout {
+      margin-top:    60px;
+      padding:       32px;
+      background:    var(--color-bg-surface);
+      border:        1px solid var(--color-border-dark);
+      border-radius: var(--radius-lg);
+      display:       grid;
+      grid-template-columns: 1fr 1fr;
+      gap:           40px;
+    }
+    .services__callout-title {
+      font-family:    var(--font-body);
+      font-size:      10px;
+      font-weight:    var(--fw-medium);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color:          var(--color-gold);
+      margin-bottom:  12px;
+    }
+    .services__callout-row {
+      font-family:  var(--font-body);
+      font-size:    13px;
+      color:        var(--color-text-muted);
+      line-height:  1.9;
+      display:      flex;
+      gap:          10px;
+      align-items:  flex-start;
+    }
+    .services__callout-icon { color: var(--color-gold); flex-shrink: 0; margin-top: 2px; }
+    .services__callout a {
+      color:           var(--color-gold);
+      text-decoration: none;
+    }
+    .services__callout a:hover { opacity: 0.8; }
+
+    @media (max-width: 600px) {
+      .services__callout { grid-template-columns: 1fr; gap: 28px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__brand">
+      <div class="navbar__logo" id="navbar-logo"></div>
+      <div class="navbar__wordmark">
+        <span class="navbar__wordmark-name">
+          <span class="navbar__wordmark-hero">HERO</span>
+          <span class="navbar__wordmark-moses">MOSES</span>
+        </span>
+        <span class="navbar__wordmark-sub">HAIR SALON</span>
+      </div>
+    </div>
+    <ul class="navbar__links" id="navbar-links">
+      <li><a href="index.html"       class="navbar__link">Home</a></li>
+      <li><a href="stylists.html"    class="navbar__link">Stylists</a></li>
+      <li><a href="services.html"    class="navbar__link active">Services</a></li>
+      <li><a href="index.html#hours" class="navbar__link">Hours</a></li>
+      <li><a href="gallery.html"     class="navbar__link">Gallery</a></li>
+    </ul>
+    <button class="btn btn--gold open-modal" aria-label="Book an appointment">
+      <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      BOOK NOW
+    </button>
+    <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span class="navbar__hamburger-bar"></span>
+      <span class="navbar__hamburger-bar"></span>
+      <span class="navbar__hamburger-bar"></span>
+    </button>
+  </nav>
+
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero__breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="page-hero__breadcrumb-sep">/</span>
+      <span class="page-hero__breadcrumb-current">Services</span>
+    </div>
+    <h1 class="page-hero__title">Our <em>Services</em></h1>
+    <p class="page-hero__sub">
+      Premium ladies hair services in Kampala. All prices in UGX.
+      Walk-ins welcome, appointments recommended on weekends.
+    </p>
+  </div>
+
+
+  <!-- SERVICES CONTENT -->
+  <div class="page-body">
+    <section class="services" id="services">
+      <div class="services__grid--full">
+
+
+        <!-- ═══════════════════════════════
+             WIGS — INSTALLATION SERVICES
+             ═══════════════════════════════ -->
+        <div class="services__category">
+          <h2 class="services__category-title">Wig <em>Installation</em></h2>
+        </div>
+
+        <div class="service-row">
+          <span class="service-row__name">Wig Installation</span>
+          <span class="service-row__price">80,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Buying in from our shop</span>
+          <span class="service-row__price">70,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Installation + Lashes</span>
+          <span class="service-row__price">120,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Installation + Washing + Lashes</span>
+          <span class="service-row__price">130,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Wig Washing</span>
+          <span class="service-row__price">20,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Lashes</span>
+          <span class="service-row__price">40,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Weaving</span>
+          <span class="service-row__price">80,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Masterpiece (with hair)</span>
+          <span class="service-row__price">150,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Ponytail Gel</span>
+          <span class="service-row__price">50,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Ponytail Closure</span>
+          <span class="service-row__price">70,000 UGX</span>
+        </div>
+
+
+        <!-- ═══════════════════════════════
+             BOHO BRAIDS WITH HAIR
+             ═══════════════════════════════ -->
+        <div class="services__category">
+          <h2 class="services__category-title">Boho Braids <em>With Hair</em></h2>
+        </div>
+
+        <div class="service-row">
+          <span class="service-row__name">Small</span>
+          <span class="service-row__price">150,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Normal</span>
+          <span class="service-row__price">140,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Big</span>
+          <span class="service-row__price">110,000 UGX</span>
+        </div>
+
+
+        <!-- ═══════════════════════════════
+             FULANI BRAIDS
+             ═══════════════════════════════ -->
+        <div class="services__category">
+          <h2 class="services__category-title">Fulani Braids <em>(Pencil, Cornrows)</em></h2>
+        </div>
+
+        <div class="service-row">
+          <span class="service-row__name">Small</span>
+          <span class="service-row__price">150,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Medium (Normal)</span>
+          <span class="service-row__price">130,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Large</span>
+          <span class="service-row__price">100,000 UGX</span>
+        </div>
+
+
+        <!-- ═══════════════════════════════
+             KNOTLESS BRAIDS
+             ═══════════════════════════════ -->
+        <div class="services__category">
+          <h2 class="services__category-title"><em>Knotless</em> Braids</h2>
+        </div>
+
+        <div class="service-row">
+          <span class="service-row__name">Small</span>
+          <span class="service-row__price">180,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Small-Medium</span>
+          <span class="service-row__price">150,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Medium (Normal)</span>
+          <span class="service-row__price">130,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Large</span>
+          <span class="service-row__price">100,000 UGX</span>
+        </div>
+
+
+        <!-- ═══════════════════════════════
+             FRENCH CURLS
+             ═══════════════════════════════ -->
+        <div class="services__category">
+          <h2 class="services__category-title">French <em>Curls</em></h2>
+        </div>
+
+        <div class="service-row">
+          <span class="service-row__name">For Pencil</span>
+          <span class="service-row__price">140,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">For Braids</span>
+          <span class="service-row__price">150,000 UGX</span>
+        </div>
+
+
+        <!-- ═══════════════════════════════
+             WIGS — SHOP PRICES
+             ═══════════════════════════════ -->
+        <div class="services__category">
+          <h2 class="services__category-title">Wigs <em>Price List</em></h2>
+        </div>
+
+        <span class="services__sub">Short Wigs</span>
+        <div class="service-row">
+          <span class="service-row__name">Short Jerry Wig</span>
+          <span class="service-row__price">150,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Pixie Wig</span>
+          <span class="service-row__price">150,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Bob 10 inches</span>
+          <span class="service-row__price">180,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">Bob 12 inches</span>
+          <span class="service-row__price">200,000 UGX</span>
+        </div>
+
+        <span class="services__sub">Straight Wig, Body &amp; Curls</span>
+        <div class="service-row">
+          <span class="service-row__name">14 inches</span>
+          <span class="service-row__price">220,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">16 inches</span>
+          <span class="service-row__price">250,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">18 inches</span>
+          <span class="service-row__price">300,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">20 inches</span>
+          <span class="service-row__price">350,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">22 inches</span>
+          <span class="service-row__price">400,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">24 inches</span>
+          <span class="service-row__price">450,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">26 inches</span>
+          <span class="service-row__price">500,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">28 inches</span>
+          <span class="service-row__price">550,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">30 inches</span>
+          <span class="service-row__price">600,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">32 inches</span>
+          <span class="service-row__price">620,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">34 inches</span>
+          <span class="service-row__price">670,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <span class="service-row__name">36 inches</span>
+          <span class="service-row__price">700,000 UGX</span>
+        </div>
+
+
+        <!-- ═══════════════════════════════
+             CONTACT + HOURS CALLOUT
+             ═══════════════════════════════ -->
+        <div class="services__callout">
+
+          <div>
+            <p class="services__callout-title">Opening Hours</p>
+            <div class="services__callout-row">
+              <svg class="services__callout-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <div>
+                Monday to Thursday: 8:40 AM - 8:30 PM<br>
+                Friday and Saturday: 8:00 AM - 9:00 PM
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="services__callout-title">Contact &amp; Address</p>
+            <div class="services__callout-row" style="margin-bottom:10px">
+              <svg class="services__callout-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"></path></svg>
+              <a href="tel:+256757541061">+256 757 541 061</a>
+            </div>
+            <div class="services__callout-row">
+              <svg class="services__callout-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <div>Kampala Town, Mabirizi Complex<br>Level 4, Room 22</div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- BOTTOM CTA -->
+        <div class="services__book-cta">
+          <p class="services__book-text">
+            Ready to treat yourself? Book any of these services today.
+          </p>
+          <button class="btn btn--gold open-modal" aria-label="Book an appointment">
+            <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            BOOK NOW
+          </button>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+
+  <!-- BOOKING MODAL -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal" id="modal">
+      <div class="modal__header">
+        <div class="modal__logo" id="modal-logo"></div>
+        <div class="modal__title-block">
+          <h3 class="modal__title" id="modal-title">Book an Appointment</h3>
+          <p class="modal__subtitle">Hero Moses Hair Salon</p>
+        </div>
+        <button class="modal__close" id="modal-close" aria-label="Close booking modal">&times;</button>
+      </div>
+      <form class="modal__form" id="booking-form" novalidate>
+        <div class="form-field">
+          <label class="form-field__label" for="booking-name">YOUR NAME</label>
+          <input class="form-field__input" type="text" id="booking-name" name="name" placeholder="Full name" autocomplete="name" />
+          <span class="form-field__error" id="error-name" aria-live="polite"></span>
+        </div>
+        <div class="form-field">
+          <label class="form-field__label" for="booking-phone">PHONE NUMBER</label>
+          <input class="form-field__input" type="tel" id="booking-phone" name="phone" placeholder="07XX XXX XXX" autocomplete="tel" />
+          <span class="form-field__error" id="error-phone" aria-live="polite"></span>
+        </div>
+        <div class="form-field">
+          <label class="form-field__label" for="booking-service">SERVICE</label>
+          <div class="form-field__select-wrap">
+            <select class="form-field__input form-field__select" id="booking-service" name="service">
+              <option value="" disabled selected>Select a service</option>
+              <optgroup label="── WIG INSTALLATION ──">
+                <option>Wig Installation - 80,000 UGX</option>
+                <option>Buying in from our shop - 70,000 UGX</option>
+                <option>Installation + Lashes - 120,000 UGX</option>
+                <option>Installation + Washing + Lashes - 130,000 UGX</option>
+                <option>Wig Washing - 20,000 UGX</option>
+                <option>Lashes - 40,000 UGX</option>
+                <option>Weaving - 80,000 UGX</option>
+                <option>Masterpiece with hair - 150,000 UGX</option>
+                <option>Ponytail Gel - 50,000 UGX</option>
+                <option>Ponytail Closure - 70,000 UGX</option>
+              </optgroup>
+              <optgroup label="── BOHO BRAIDS WITH HAIR ──">
+                <option>Boho Braids Small - 150,000 UGX</option>
+                <option>Boho Braids Normal - 140,000 UGX</option>
+                <option>Boho Braids Big - 110,000 UGX</option>
+              </optgroup>
+              <optgroup label="── FULANI BRAIDS ──">
+                <option>Fulani Braids Small - 150,000 UGX</option>
+                <option>Fulani Braids Medium - 130,000 UGX</option>
+                <option>Fulani Braids Large - 100,000 UGX</option>
+              </optgroup>
+              <optgroup label="── KNOTLESS BRAIDS ──">
+                <option>Knotless Small - 180,000 UGX</option>
+                <option>Knotless Small-Medium - 150,000 UGX</option>
+                <option>Knotless Medium - 130,000 UGX</option>
+                <option>Knotless Large - 100,000 UGX</option>
+              </optgroup>
+              <optgroup label="── FRENCH CURLS ──">
+                <option>French Curls for Pencil - 140,000 UGX</option>
+                <option>French Curls for Braids - 150,000 UGX</option>
+              </optgroup>
+              <optgroup label="── WIGS - SHORT ──">
+                <option>Short Jerry Wig - 150,000 UGX</option>
+                <option>Pixie Wig - 150,000 UGX</option>
+                <option>Bob 10 inches - 180,000 UGX</option>
+                <option>Bob 12 inches - 200,000 UGX</option>
+              </optgroup>
+              <optgroup label="── WIGS - STRAIGHT, BODY & CURLS ──">
+                <option>Wig 14 inches - 220,000 UGX</option>
+                <option>Wig 16 inches - 250,000 UGX</option>
+                <option>Wig 18 inches - 300,000 UGX</option>
+                <option>Wig 20 inches - 350,000 UGX</option>
+                <option>Wig 22 inches - 400,000 UGX</option>
+                <option>Wig 24 inches - 450,000 UGX</option>
+                <option>Wig 26 inches - 500,000 UGX</option>
+                <option>Wig 28 inches - 550,000 UGX</option>
+                <option>Wig 30 inches - 600,000 UGX</option>
+                <option>Wig 32 inches - 620,000 UGX</option>
+                <option>Wig 34 inches - 670,000 UGX</option>
+                <option>Wig 36 inches - 700,000 UGX</option>
+              </optgroup>
+            </select>
+            <svg class="form-field__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <span class="form-field__error" id="error-service" aria-live="polite"></span>
+        </div>
+        <div class="form-field">
+          <label class="form-field__label" for="booking-date">PREFERRED DATE</label>
+          <input class="form-field__input" type="date" id="booking-date" name="date" />
+          <span class="form-field__error" id="error-date" aria-live="polite"></span>
+        </div>
+        <button type="submit" class="modal__submit" id="booking-submit">CONFIRM BOOKING</button>
+        <p class="modal__footnote">Or call us directly at <a href="tel:+256757541061" class="modal__footnote-link">+256 757 541 061</a></p>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="footer__grid">
+      <div class="footer__col footer__col--brand">
+        <div class="footer__brand-row">
+          <div class="footer__logo" id="footer-logo"></div>
+          <div class="footer__wordmark">
+            <span class="footer__wordmark-name">HERO MOSES</span>
+            <span class="footer__wordmark-sub">HAIR SALON</span>
+          </div>
+        </div>
+        <p class="footer__desc">A premium ladies hair salon offering professional styling, wing installations, luxury braiding, and every hair service a woman deserves at an upscale atmosphere in the heart of Kampala.</p>
+        <div class="footer__social">
+          <a href="https://www.instagram.com/heromoseshair" class="footer__social-btn" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+          <a href="https://www.facebook.com/YOUR_PAGE" class="footer__social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+          <a href="https://www.tiktok.com/@hero_moseshair" class="footer__social-btn" aria-label="TikTok" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__col-title">VISIT US</h4>
+        <p class="footer__address">Mabirizi Complex<br>Level 4, Room 22<br>Kampala, Uganda</p>
+        <hr class="footer__divider" />
+        <p class="footer__hours-summary">Mon - Thu: 8:40 AM - 8:30 PM<br>Fri - Sat: 8:00 AM - 9:00 PM</p>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__col-title">CONTACT</h4>
+        <div class="footer__contact-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"></path></svg><a href="tel:+256757541061" class="footer__contact-link">+256 757 541 061</a></div>
+        <div class="footer__contact-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><a href="mailto:blessingbutsigho@gmail.com" class="footer__contact-link">blessingbutsigho@gmail.com</a></div>
+        <button class="btn btn--gold open-modal" style="margin-top:24px" aria-label="Book an appointment"><svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>BOOK NOW</button>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__copyright">&copy; 2026 HERO MOSES HAIR SALON. ALL RIGHTS RESERVED.</span>
+    </div>
+  </footer>
+
+  <button class="floating-btn open-modal" id="floating-btn" aria-label="Book an appointment">
+    <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+    BOOK NOW
+  </button>
+
+  <script src="assets/js/logo.js"></script>
+  <script src="assets/js/modal.js"></script>
+  <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/scroll.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,273 @@
+/*
+ * ============================================================
+ * navbar.css
+ * ============================================================
+ * Styles for the sticky navigation bar.
+ * Covers:
+ *   - Navbar container layout
+ *   - Logo + wordmark (left group)
+ *   - Nav links (centre group)
+ *   - Book Now button (right group)
+ *   - Active link state (managed by navbar.js)
+ *   - Hamburger menu button (mobile — shown via responsive.css)
+ *   - Scroll shadow effect (added by navbar.js on scroll)
+ * ============================================================
+ */
+
+
+/* ----------------------------------------------------------
+   NAVBAR CONTAINER
+   Sticky bar that stays fixed at top of viewport while
+   the user scrolls. Everything else scrolls under it.
+   ---------------------------------------------------------- */
+.navbar {
+  position:        sticky;
+  top:             0;
+  z-index:         var(--z-navbar);
+
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             var(--space-md);
+
+  height:          var(--navbar-height);        /* 72px — set in variables.css */
+  padding:         0 var(--section-padding-x);  /* 0 60px */
+
+  background:      var(--color-bg-surface);     /* #1a1a1a */
+  border-bottom:   1px solid var(--color-border-dark); /* #222222 */
+
+  /* Smooth shadow transition when JS adds .navbar--scrolled */
+  transition:      box-shadow var(--transition-base);
+}
+
+/* Shadow state — added by navbar.js when user scrolls down */
+.navbar--scrolled {
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+}
+
+
+/* ----------------------------------------------------------
+   LEFT GROUP — logo + wordmark
+   ---------------------------------------------------------- */
+.navbar__brand {
+  display:     flex;
+  align-items: center;
+  gap:         12px;
+  flex-shrink: 0;       /* prevents brand from shrinking when nav links are long */
+  text-decoration: none;
+  cursor:      pointer;
+}
+
+/* The div that logo.js injects the SVG into */
+.navbar__logo {
+  display:     flex;
+  align-items: center;
+  flex-shrink: 0;
+  width:       38px;
+  height:      38px;
+}
+
+/* Ensure the injected SVG fills its container neatly */
+.navbar__logo .logo-svg {
+  display: block;
+  width:   38px;
+  height:  38px;
+}
+
+/* Two-line wordmark next to the logo */
+.navbar__wordmark {
+  display:        flex;
+  flex-direction: column;
+  gap:            1px;
+  line-height:    1;
+}
+
+/* Line 1: "HERO MOSES" */
+.navbar__wordmark-name {
+  display:     flex;
+  gap:         5px;
+  font-family: var(--font-body);
+  font-size:   13px;
+  font-weight: var(--fw-medium);
+}
+
+/* "HERO" — white */
+.navbar__wordmark-hero {
+  color: var(--color-text-white);
+}
+
+/* "MOSES" — gold */
+.navbar__wordmark-moses {
+  color:       var(--color-gold);
+  font-weight: var(--fw-semibold);
+}
+
+/* Line 2: "HAIR SALON" — white, wide letter spacing */
+.navbar__wordmark-sub {
+  font-family:     var(--font-body);
+  font-size:       9px;
+  font-weight:     var(--fw-medium);
+  color:           var(--color-text-white);
+  letter-spacing:  var(--ls-widest);  /* 0.12em */
+}
+
+
+/* ----------------------------------------------------------
+   CENTRE GROUP — navigation links
+   ---------------------------------------------------------- */
+.navbar__links {
+  display:     flex;
+  align-items: center;
+  gap:         4px;       /* tight horizontal gap between links */
+  list-style:  none;
+  margin:      0;
+  padding:     0;
+}
+
+/* Individual nav link */
+.navbar__link {
+  display:         inline-block;
+  padding:         6px 14px;
+  font-family:     var(--font-body);
+  font-size:       13px;
+  font-weight:     var(--fw-regular);
+  color:           var(--color-text-bright);   /* #cccccc default */
+  text-decoration: none;
+  letter-spacing:  0.02em;
+  border-bottom:   none;     /* NO line — ever */
+  transition:      color var(--transition-fast);
+}
+
+/* Hover — text turns gold, nothing else */
+.navbar__link:hover {
+  color: var(--color-gold);
+}
+
+/* Active (current section) — text stays gold, nothing else.
+   navbar.js adds this class via Intersection Observer. */
+.navbar__link.active {
+  color:       var(--color-gold);
+  font-weight: var(--fw-medium);
+}
+
+
+/* ----------------------------------------------------------
+   RIGHT GROUP — Book Now button
+   The .btn and .btn--gold base styles are in reset.css.
+   Only navbar-specific overrides go here.
+   ---------------------------------------------------------- */
+
+/* The navbar Book Now button */
+.navbar .btn--gold {
+  padding:      10px 22px;
+  font-size:    var(--fs-xs);
+  flex-shrink:  0;
+  transition:   background  var(--transition-fast),
+                color       var(--transition-fast),
+                border      var(--transition-fast);
+}
+
+/* Hover — white background, gold text */
+.navbar .btn--gold:hover {
+  background: #ffffff;
+  color:      var(--color-gold);
+}
+
+/* Tap / press */
+.navbar .btn--gold:active {
+  background: #f0f0f0;
+  color:      var(--color-gold);
+  transform:  scale(0.98);
+}
+
+
+/* ----------------------------------------------------------
+   HAMBURGER MENU BUTTON
+   Hidden on desktop. Shown on mobile via responsive.css.
+   Three horizontal bars that animate into an X when open.
+   ---------------------------------------------------------- */
+.navbar__hamburger {
+  display:        none;    /* hidden on desktop — responsive.css shows it */
+  flex-direction: column;
+  justify-content: center;
+  gap:            5px;
+  width:          36px;
+  height:         36px;
+  padding:        4px;
+  background:     none;
+  border:         none;
+  cursor:         pointer;
+  flex-shrink:    0;
+}
+
+/* Each bar of the hamburger */
+.navbar__hamburger-bar {
+  display:       block;
+  width:         22px;
+  height:        2px;
+  background:    var(--color-text-bright);
+  border-radius: 2px;
+  transition:    transform var(--transition-base),
+                 opacity   var(--transition-base);
+}
+
+/* Hamburger open state — bars animate into an X */
+/* Added by navbar.js when hamburger is clicked */
+.navbar--menu-open .navbar__hamburger-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.navbar--menu-open .navbar__hamburger-bar:nth-child(2) {
+  opacity:   0;
+  transform: scaleX(0);
+}
+
+.navbar--menu-open .navbar__hamburger-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+
+/* ----------------------------------------------------------
+   MOBILE MENU OPEN STATE
+   When hamburger is open, the nav links drop down as a
+   vertical column. Handled fully in responsive.css.
+   The .navbar--menu-open class is toggled by navbar.js.
+   ---------------------------------------------------------- */
+
+
+/* ----------------------------------------------------------
+   LOGO IMAGE STYLES
+   Applied to every <img class="logo-img"> injected by logo.js
+   ---------------------------------------------------------- */
+
+/* The actual logo image tag */
+.logo-img {
+  display:      block;
+  object-fit:   contain;      /* never distort the logo */
+  border-radius: 50%;         /* clips the white corners of the PNG
+                                 into a clean circle matching the logo shape */
+}
+
+/* Navbar size */
+.navbar__logo .logo-img {
+  width:  38px;
+  height: 38px;
+}
+
+/* Hero panel size — larger centrepiece */
+.hero__panel-logo .logo-img {
+  width:  140px;
+  height: 140px;
+}
+
+/* Modal header size */
+.modal__logo .logo-img {
+  width:  38px;
+  height: 38px;
+}
+
+/* Footer size */
+.footer__logo .logo-img {
+  width:  52px;
+  height: 52px;
+}

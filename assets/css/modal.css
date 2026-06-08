@@ -1,0 +1,375 @@
+/*
+ * ============================================================
+ * modal.css
+ * ============================================================
+ * Styles for the Booking Modal overlay and card.
+ *
+ * Structure:
+ *   .modal-overlay       — full-screen dark backdrop
+ *     .modal             — the centred white/dark card
+ *       .modal__header   — logo + title + close button
+ *       .modal__form     — the booking form
+ *         .form-field    — each individual field group
+ *
+ * Visibility:
+ *   Hidden by default (display: none).
+ *   modal.js sets display: flex to show it.
+ *   modal.js removes display to hide it.
+ *
+ * Animations:
+ *   The overlay fades in. The card slides up slightly.
+ *   Both use CSS transitions triggered by a class toggle.
+ * ============================================================
+ */
+
+
+/* ----------------------------------------------------------
+   OVERLAY — full-screen dark backdrop
+   Sits behind the modal card and dims everything else.
+   Clicking the overlay (not the card) closes the modal.
+   ---------------------------------------------------------- */
+.modal-overlay {
+  /* Hidden by default — modal.js sets display:flex to show */
+  display:         none;
+
+  /* When visible: covers the entire viewport */
+  position:        fixed;
+  inset:           0;            /* shorthand for top:0 right:0 bottom:0 left:0 */
+  z-index:         var(--z-modal);   /* 2000 — highest layer on the page */
+
+  /* Centre the modal card */
+  align-items:     center;
+  justify-content: center;
+
+  /* Semi-transparent dark backdrop */
+  background:      rgba(0, 0, 0, 0.78);
+
+  /* Fade in animation */
+  animation:       overlayFadeIn var(--transition-base) ease forwards;
+
+  /* Allow scrolling if modal is taller than viewport on small screens */
+  overflow-y:      auto;
+  padding:         var(--space-md);
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+
+/* ----------------------------------------------------------
+   MODAL CARD
+   The actual booking form container.
+   Stops click events from bubbling to the overlay
+   (handled in modal.js with stopPropagation).
+   ---------------------------------------------------------- */
+.modal {
+  position:         relative;
+  width:            480px;
+  max-width:        100%;         /* never wider than the screen */
+
+  background:       var(--color-bg-surface);   /* #1a1a1a */
+  border:           0.5px solid var(--color-border-modal);  /* #333333 */
+  border-radius:    var(--radius-xl);   /* 12px */
+  padding:          32px;
+
+  /* Slide up animation when it appears */
+  animation:        modalSlideUp var(--transition-base) ease forwards;
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity:   0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ----------------------------------------------------------
+   MODAL HEADER
+   Row: logo | title + subtitle | close button
+   ---------------------------------------------------------- */
+.modal__header {
+  display:       flex;
+  align-items:   center;
+  gap:           14px;
+  margin-bottom: 28px;
+}
+
+/* Logo slot — logo.js injects the <img> here */
+.modal__logo {
+  flex-shrink:  0;
+  width:        38px;
+  height:       38px;
+  border-radius: 50%;
+  overflow:     hidden;    /* clips the logo image into a circle */
+  background:   #f5f5f0;  /* warm white background matching hero panel */
+}
+
+/* Ensure logo image fills its slot neatly */
+.modal__logo .logo-img {
+  width:         38px;
+  height:        38px;
+  border-radius: 0;        /* the parent overflow:hidden handles the clip */
+  object-fit:    contain;
+}
+
+/* Title + subtitle stacked block */
+.modal__title-block {
+  flex: 1;
+  min-width: 0;
+}
+
+/* "Book an Appointment" */
+.modal__title {
+  font-family:   var(--font-display);
+  font-size:     var(--fs-modal-h);    /* 22px */
+  font-weight:   var(--fw-regular);
+  color:         var(--color-text-white);
+  line-height:   1.2;
+  margin-bottom: 2px;
+}
+
+/* "Hero Moses Hair Salon" */
+.modal__subtitle {
+  font-family: var(--font-body);
+  font-size:   12px;
+  color:       var(--color-text-muted);
+}
+
+/* Close button — the × character */
+.modal__close {
+  flex-shrink:  0;
+  margin-left:  auto;
+
+  background:   none;
+  border:       none;
+  cursor:       pointer;
+  padding:      4px;
+
+  font-size:    22px;
+  line-height:  1;
+  color:        var(--color-text-muted);
+
+  transition:   color var(--transition-fast);
+}
+
+.modal__close:hover {
+  color: var(--color-text-white);
+}
+
+
+/* ----------------------------------------------------------
+   FORM FIELDS
+   Each field is wrapped in a .form-field div:
+     - .form-field__label   — uppercase label above the input
+     - .form-field__input   — text input, tel input, date input
+     - .form-field__select-wrap — wrapper for the <select>
+     - .form-field__select  — the dropdown
+     - .form-field__chevron — custom gold arrow for select
+     - .form-field__error   — red validation message below field
+   ---------------------------------------------------------- */
+
+/* Field wrapper — adds spacing between fields */
+.form-field {
+  margin-bottom: 20px;
+}
+
+/* Field label: "YOUR NAME", "PHONE NUMBER" etc */
+.form-field__label {
+  display:        block;
+  margin-bottom:  6px;
+
+  font-family:    var(--font-body);
+  font-size:      var(--fs-xxs);     /* 10px */
+  font-weight:    var(--fw-medium);
+  letter-spacing: var(--ls-wide);    /* 0.08em */
+  text-transform: uppercase;
+  color:          var(--color-text-muted);
+}
+
+/* All inputs + select share these base styles */
+.form-field__input {
+  display:       block;
+  width:         100%;
+
+  background:    var(--color-bg-input);    /* #222222 */
+  border:        1px solid var(--color-border-input);  /* #333333 */
+  border-radius: var(--radius-sm);         /* 4px */
+  padding:       12px 14px;
+
+  font-family:   var(--font-body);
+  font-size:     14px;
+  color:         var(--color-text-white);
+
+  transition:    border-color var(--transition-fast);
+
+  /* Remove browser defaults */
+  outline:       none;
+  appearance:    none;
+}
+
+/* Input placeholder text */
+.form-field__input::placeholder {
+  color: var(--color-text-dim);   /* #555555 */
+}
+
+/* Input focus state — gold border */
+.form-field__input:focus {
+  border-color: var(--color-gold);
+}
+
+/* Input error state — red border (added by modal.js) */
+.form-field__input.input--error {
+  border-color: var(--color-error);
+}
+
+
+/* ----------------------------------------------------------
+   SELECT DROPDOWN
+   The native <select> is hidden behind a custom styled
+   wrapper. The gold chevron arrow sits on the right.
+   ---------------------------------------------------------- */
+
+/* Wrapper creates relative positioning for the chevron */
+.form-field__select-wrap {
+  position: relative;
+}
+
+/* The <select> itself — same styles as input */
+.form-field__select {
+  /* appearance:none is already in reset.css but we repeat
+     here for clarity — removes the native OS dropdown arrow */
+  appearance:    none;
+  cursor:        pointer;
+
+  /* Extra right padding so text doesn't overlap the chevron */
+  padding-right: 40px;
+
+  /* Dark background for the dropdown options */
+  background:    var(--color-bg-input);
+}
+
+/* Style the option items inside the dropdown */
+.form-field__select option {
+  background:  var(--color-bg-surface);
+  color:       var(--color-text-white);
+  font-size:   13px;
+  padding:     8px;
+}
+
+/* The placeholder option (disabled, greyed out) */
+.form-field__select option[disabled] {
+  color: var(--color-text-dim);
+}
+
+/* Gold chevron arrow — absolutely positioned on the right */
+.form-field__chevron {
+  position:      absolute;
+  right:         14px;
+  top:           50%;
+  transform:     translateY(-50%);
+
+  color:         var(--color-gold);
+  pointer-events: none;  /* click passes through to the select beneath */
+  flex-shrink:   0;
+}
+
+/* Date input — style the calendar icon */
+input[type="date"] {
+  color-scheme: dark;    /* tells browser to use dark theme for date picker UI */
+}
+
+
+/* ----------------------------------------------------------
+   VALIDATION ERROR MESSAGE
+   Shown below each field when validation fails.
+   Hidden by default (empty string). modal.js sets the text.
+   ---------------------------------------------------------- */
+.form-field__error {
+  display:     block;
+  margin-top:  5px;
+
+  font-family: var(--font-body);
+  font-size:   11px;
+  color:       var(--color-error);   /* #c0392b — red */
+
+  /* Hidden when empty — visible when modal.js adds text */
+  min-height:  0;
+}
+
+
+/* ----------------------------------------------------------
+   CONFIRM BOOKING BUTTON
+   Full-width gold button at the bottom of the form.
+   modal.js changes it to green on successful submission.
+   ---------------------------------------------------------- */
+.modal__submit {
+  display:      block;
+  width:        100%;
+  margin-top:   8px;
+
+  padding:      16px;
+  background:   var(--color-gold);
+  color:        var(--color-text-white);
+  border:       none;
+  border-radius: var(--radius-sm);
+  cursor:       pointer;
+
+  font-family:     var(--font-body);
+  font-size:       var(--fs-xs);       /* 11px */
+  font-weight:     var(--fw-medium);
+  letter-spacing:  var(--ls-wide);     /* 0.08em */
+  text-transform:  uppercase;
+
+  transition: background var(--transition-base),
+              transform  var(--transition-fast);
+}
+
+.modal__submit:hover {
+  background: #a07809;   /* darker gold on hover */
+}
+
+.modal__submit:active {
+  transform: scale(0.99);
+}
+
+/* Confirmed state — modal.js adds this class on success */
+.modal__submit--confirmed {
+  background: var(--color-success);   /* #2a5c2a — green */
+  cursor:     default;
+}
+
+.modal__submit--confirmed:hover {
+  background: var(--color-success);   /* stays green, no hover change */
+}
+
+
+/* ----------------------------------------------------------
+   FOOTNOTE
+   "Or call us directly at 0757541061"
+   ---------------------------------------------------------- */
+.modal__footnote {
+  margin-top:  16px;
+  text-align:  center;
+
+  font-family: var(--font-body);
+  font-size:   12px;
+  color:       var(--color-text-dim);
+}
+
+/* The clickable phone number in gold */
+.modal__footnote-link {
+  color:           var(--color-gold);
+  text-decoration: none;
+  transition:      opacity var(--transition-fast);
+}
+
+.modal__footnote-link:hover {
+  opacity: 0.8;
+}

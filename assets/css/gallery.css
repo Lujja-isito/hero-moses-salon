@@ -1,0 +1,237 @@
+/*
+ * ============================================================
+ * gallery.css
+ * ============================================================
+ * Styles for the Gallery section (#gallery).
+ *
+ * Layout:
+ *   Top bar  — heading block (left) + social icon buttons (right)
+ *   Row 1    — 2 tall image cells side by side
+ *   Row 2    — 3 medium image cells side by side
+ *   CTA      — "Follow us" text + 3 social pill buttons
+ *
+ * Image cells are dark placeholders now.
+ * When real photos are added, each cell gets:
+ *   background-image: url('../images/gallery/photo1.jpg');
+ *   background-size: cover;
+ *   background-position: center;
+ * No code change needed — just add the image path.
+ * ============================================================
+ */
+
+
+/* ----------------------------------------------------------
+   SECTION CONTAINER
+   ---------------------------------------------------------- */
+.gallery {
+  padding:    var(--section-padding-y) var(--section-padding-x);
+  background: var(--color-bg-page);
+}
+
+
+/* ----------------------------------------------------------
+   TOP BAR
+   Heading + subtitle on the left, icon buttons on the right.
+   ---------------------------------------------------------- */
+.gallery__topbar {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: space-between;
+  gap:             var(--space-lg);
+  margin-bottom:   40px;
+}
+
+/* Left block — heading + subtitle */
+.gallery__heading-block .section-subtitle {
+  margin:    0;       /* override the auto margin from reset.css */
+  max-width: 480px;
+  text-align: left;   /* override centre alignment from reset.css */
+}
+
+/* Right block — two icon buttons */
+.gallery__social-icons {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+  flex-shrink: 0;
+  padding-top: 6px;   /* nudge down to align with heading top */
+}
+
+/* Individual icon button (Instagram, TikTok) */
+.gallery__icon-btn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+
+  width:         36px;
+  height:        36px;
+  padding:       8px;
+
+  background:    var(--color-bg-surface);
+  border:        1px solid var(--color-border-input);
+  border-radius: var(--radius-sm);
+
+  color:         var(--color-text-muted);
+  cursor:        pointer;
+  text-decoration: none;
+
+  transition:    border-color var(--transition-fast),
+                 color        var(--transition-fast),
+                 transform    var(--transition-fast);
+}
+
+.gallery__icon-btn:hover {
+  border-color: var(--color-gold);
+  color:        var(--color-gold);
+  transform:    translateY(-2px);
+}
+
+
+/* ----------------------------------------------------------
+   ROW 1 — 2 tall cells
+   ---------------------------------------------------------- */
+.gallery__row--two {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   16px;
+  margin-bottom:         16px;
+}
+
+/* ----------------------------------------------------------
+   ROW 2 — 3 medium cells
+   ---------------------------------------------------------- */
+.gallery__row--three {
+  display:               grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:                   16px;
+}
+
+
+/* ----------------------------------------------------------
+   INDIVIDUAL IMAGE CELL
+   Dark placeholder. Real photo replaces background when ready.
+   ---------------------------------------------------------- */
+.gallery__cell {
+  background:    var(--color-bg-surface);
+  border:        1px solid var(--color-border-dark);
+  border-radius: var(--radius-lg);    /* 8px */
+  overflow:      hidden;
+
+  /* For when real photos are added */
+  background-size:     cover;
+  background-position: center;
+  background-repeat:   no-repeat;
+
+  /* Hover effect */
+  transition:    border-color var(--transition-base),
+                 transform    var(--transition-base),
+                 opacity      var(--transition-base);
+  cursor:        pointer;
+  position:      relative;
+}
+
+/* Subtle shimmer overlay — gives empty cells some depth */
+.gallery__cell::before {
+  content:    '';
+  position:   absolute;
+  inset:      0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.01) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  pointer-events: none;
+}
+
+/* Gold overlay on hover */
+.gallery__cell::after {
+  content:    '';
+  position:   absolute;
+  inset:      0;
+  background: rgba(184, 134, 11, 0.04);
+  opacity:    0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
+}
+
+.gallery__cell:hover {
+  border-color: #2e2e2e;
+  transform:    scale(1.005);
+}
+
+.gallery__cell:hover::after {
+  opacity: 1;
+}
+
+/* Tall cells — Row 1 */
+.gallery__cell--tall {
+  height: 380px;
+}
+
+/* Medium cells — Row 2 */
+.gallery__cell--medium {
+  height: 280px;
+}
+
+
+/* ----------------------------------------------------------
+   SOCIAL CTA AREA
+   Below the image grid — "Follow us" + 3 pill buttons
+   ---------------------------------------------------------- */
+.gallery__social-cta {
+  margin-top:  48px;
+  text-align:  center;
+}
+
+/* "Follow us on social media for daily inspiration" */
+.gallery__social-text {
+  font-family:   var(--font-body);
+  font-size:     var(--fs-small);    /* 13px */
+  color:         var(--color-text-dim);
+  margin-bottom: 16px;
+}
+
+/* Row of 3 pill buttons */
+.gallery__social-pills {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             12px;
+  flex-wrap:       wrap;
+}
+
+/* Individual pill button — Instagram / Facebook / TikTok */
+.gallery__pill {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             8px;
+
+  padding:         10px 20px;
+  border:          1px solid var(--color-border-input);
+  border-radius:   var(--radius-sm);
+  background:      transparent;
+
+  font-family:     var(--font-body);
+  font-size:       var(--fs-small);   /* 13px */
+  color:           var(--color-text-bright);
+  text-decoration: none;
+  cursor:          pointer;
+
+  transition:      border-color var(--transition-fast),
+                   color        var(--transition-fast),
+                   transform    var(--transition-fast),
+                   background   var(--transition-fast);
+}
+
+.gallery__pill:hover {
+  border-color: var(--color-gold);
+  color:        var(--color-gold);
+  background:   rgba(184, 134, 11, 0.05);
+  transform:    translateY(-2px);
+}
+
+/* Icon inside each pill */
+.gallery__pill svg {
+  flex-shrink: 0;
+}

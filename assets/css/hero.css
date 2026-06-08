@@ -1,0 +1,365 @@
+/*
+ * ============================================================
+ * hero.css
+ * ============================================================
+ * Styles for the full-viewport Hero section (#home).
+ *
+ * Layout: two columns side by side
+ *   Left  (.hero__content) — text, CTAs, contact strip
+ *   Right (.hero__panel)   — logo display card + carousel dots
+ *
+ * Also covers the floating Book Now button that persists
+ * across all sections (scroll.js controls its visibility).
+ * ============================================================
+ */
+
+
+/* ----------------------------------------------------------
+   HERO SECTION — outer container
+   ---------------------------------------------------------- */
+.hero {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             var(--space-3xl);       /* 80px gap between columns */
+
+  min-height:      100vh;                  /* fills the full viewport height */
+  padding:         120px var(--section-padding-x) 80px;
+                                           /* top padding clears the navbar */
+  background:      var(--color-bg-page);   /* #111111 */
+}
+
+
+/* ===========================================================
+   LEFT COLUMN — text content
+   =========================================================== */
+.hero__content {
+  flex:      1.1;           /* left column is slightly wider than right */
+  min-width: 0;             /* prevents flex overflow on small screens */
+}
+
+
+/* ----------------------------------------------------------
+   BADGE PILL
+   "✦ PREMIUM LADIES HAIR SALON"
+   ---------------------------------------------------------- */
+.hero__badge {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             8px;
+
+  padding:         6px 16px;
+  margin-bottom:   var(--space-md);    /* 24px below badge */
+
+  font-family:     var(--font-body);
+  font-size:       var(--fs-xxs);      /* 10px */
+  font-weight:     var(--fw-medium);
+  letter-spacing:  var(--ls-wider);    /* 0.10em */
+  text-transform:  uppercase;
+  color:           var(--color-gold);
+
+  border:          1px solid var(--color-gold);
+  border-radius:   var(--radius-sm);   /* 4px */
+  background:      var(--color-gold-dim);
+}
+
+/* The decorative star character before the text */
+.hero__badge-star {
+  font-size:   12px;
+  line-height: 1;
+  color:       var(--color-gold);
+}
+
+
+/* ----------------------------------------------------------
+   MAIN HEADLINE
+   "Elevate" (white) + "Your Style." (gold italic)
+   Both are children of <h1 class="hero__headline">
+   ---------------------------------------------------------- */
+.hero__headline {
+  display:       flex;
+  flex-direction: column;
+  gap:           0;
+  margin-bottom: var(--space-md);   /* 24px */
+  line-height:   var(--lh-tight);   /* 1.0 — very tight for display text */
+}
+
+/* "Elevate" — plain white */
+.hero__headline-white {
+  display:     block;
+  font-family: var(--font-display);
+  font-size:   var(--fs-hero);       /* clamp(48px, 6vw, 72px) */
+  font-weight: var(--fw-regular);
+  color:       var(--color-text-white);
+  line-height: var(--lh-tight);
+}
+
+/* "Your Style." — gold italic */
+.hero__headline-gold {
+  display:     block;
+  font-family: var(--font-display);
+  font-size:   var(--fs-hero);
+  font-weight: var(--fw-regular);
+  font-style:  italic;
+  color:       var(--color-gold);
+  line-height: var(--lh-tight);
+}
+
+
+/* ----------------------------------------------------------
+   TAGLINE PARAGRAPH
+   ---------------------------------------------------------- */
+.hero__tagline {
+  font-family:  var(--font-body);
+  font-size:    var(--fs-body);     /* 15px */
+  color:        var(--color-text-muted);
+  line-height:  var(--lh-body);    /* 1.7 */
+  max-width:    480px;
+  margin-bottom: var(--space-lg);  /* 32px */
+}
+
+
+/* ----------------------------------------------------------
+   CTA BUTTONS ROW
+   Gold filled + outline buttons side by side
+   ---------------------------------------------------------- */
+.hero__ctas {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-sm);     /* 16px between buttons */
+  flex-wrap:   wrap;                /* wraps to new line on narrow screens */
+  margin-bottom: var(--space-3xl); /* 80px — generous space before contact strip */
+}
+
+
+/* ----------------------------------------------------------
+   CONTACT INFO STRIP
+   Three items: Location / Call Us / Email
+   Each has a gold icon + uppercase label + value below
+   ---------------------------------------------------------- */
+.hero__contact {
+  display:     flex;
+  align-items: flex-start;
+  gap:         var(--space-3xl);    /* 80px between each contact item */
+  flex-wrap:   wrap;
+}
+
+/* Single contact item — icon + text block */
+.hero__contact-item {
+  display:     flex;
+  align-items: flex-start;
+  gap:         10px;
+}
+
+/* Gold icon SVG */
+.hero__contact-icon {
+  flex-shrink: 0;
+  color:       var(--color-gold);
+  margin-top:  2px;    /* slight nudge down to align with label text */
+}
+
+/* Label: "LOCATION", "CALL US", "EMAIL" */
+.hero__contact-label {
+  display:        block;
+  font-family:    var(--font-body);
+  font-size:      var(--fs-xxs);    /* 10px */
+  font-weight:    var(--fw-medium);
+  letter-spacing: var(--ls-wide);   /* 0.08em */
+  text-transform: uppercase;
+  color:          var(--color-gold);
+  margin-bottom:  4px;
+}
+
+/* Value: "Mabirizi Complex / Level 4, Room 22" etc */
+.hero__contact-value {
+  display:     block;
+  font-family: var(--font-body);
+  font-size:   var(--fs-small);     /* 13px */
+  color:       var(--color-text-muted);
+  line-height: 1.5;
+}
+
+
+/* ===========================================================
+   RIGHT COLUMN — logo display panel
+   =========================================================== */
+.hero__panel {
+  flex:            1;
+  min-width:       0;
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  gap:             var(--space-sm);   /* gap between outer container and dots */
+}
+
+
+/* ----------------------------------------------------------
+   OUTER DARK CONTAINER
+   Dark surface card that holds the logo white card inside.
+   Has two gold decorative lines (top and bottom) via
+   pseudo-elements — no extra HTML needed.
+   ---------------------------------------------------------- */
+.hero__panel-outer {
+  position:      relative;
+  width:         100%;
+  max-width:     420px;
+
+  background:    var(--color-bg-surface);   /* #1a1a1a */
+  border-radius: var(--radius-lg);          /* 8px */
+  padding:       var(--space-md);           /* 24px all around */
+
+  /* Subtle border so the dark card is visible on dark background */
+  border:        1px solid var(--color-border-panel);
+}
+
+/* Gold decorative line — TOP
+   Sits just inside the top edge of the outer container */
+.hero__panel-line {
+  position:   absolute;
+  left:       50%;
+  transform:  translateX(-50%);
+  width:      60%;
+  height:     1px;
+
+  /* Fades from transparent → gold → transparent */
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-gold),
+    transparent
+  );
+}
+
+.hero__panel-line--top {
+  top: 12px;
+}
+
+.hero__panel-line--bottom {
+  bottom: 12px;
+}
+
+
+/* ----------------------------------------------------------
+   WHITE INNER CARD
+   Removed — the logo PNG already has a white background.
+   We let the logo image itself act as the white card.
+   ---------------------------------------------------------- */
+.hero__panel-card {
+  background:    transparent;
+  border-radius: var(--radius-md);
+  padding:       0;
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+}
+
+
+/* ----------------------------------------------------------
+   LOGO CONTAINER inside the panel
+   Logo image fills the full width of the outer dark container.
+   The logo's own white background fills the space naturally.
+   ---------------------------------------------------------- */
+.hero__panel-logo {
+  display:    block;
+  width:      100%;
+  line-height: 0;
+}
+
+.hero__panel-logo .logo-img {
+  display:       block;
+  width:         100%;
+  height:        auto;        /* maintains correct proportions */
+  border-radius: var(--radius-md);
+  object-fit:    contain;
+}
+
+
+/* ----------------------------------------------------------
+   CAROUSEL DOT INDICATORS
+   Three dots below the panel: first is wide gold (active),
+   others are small grey (inactive).
+   ---------------------------------------------------------- */
+.hero__dots {
+  display:     flex;
+  align-items: center;
+  gap:         6px;
+}
+
+/* Base dot style */
+.hero__dot {
+  display:       block;
+  height:        4px;
+  border-radius: 2px;
+  background:    #333333;    /* inactive — dark grey */
+  width:         8px;
+  transition:    width var(--transition-base),
+                 background var(--transition-base);
+}
+
+/* Active dot — wider and gold */
+.hero__dot--active {
+  width:      24px;
+  background: var(--color-gold);
+}
+
+
+/* ===========================================================
+   FLOATING BOOK NOW BUTTON
+   Fixed to the bottom-right corner of the viewport.
+   Stays visible as the user scrolls through all sections.
+   scroll.js controls the fade-in after 300px of scroll.
+   =========================================================== */
+.floating-btn {
+  position:   fixed;
+  bottom:     32px;
+  right:      32px;
+  z-index:    var(--z-floating);   /* 999 — below modal (2000) but above everything else */
+
+  display:    inline-flex;
+  align-items: center;
+  gap:         8px;
+
+  padding:         12px 22px;
+  background:      var(--color-gold);
+  color:           var(--color-text-white);
+  border:          none;
+  border-radius:   var(--radius-sm);
+  cursor:          pointer;
+
+  font-family:     var(--font-body);
+  font-size:       var(--fs-xs);     /* 11px */
+  font-weight:     var(--fw-medium);
+  letter-spacing:  var(--ls-wide);   /* 0.08em */
+  text-transform:  uppercase;
+
+  /* Hidden by default — scroll.js fades it in after 300px */
+  opacity:    0;
+  visibility: hidden;
+  transform:  translateY(8px);
+
+  transition: opacity      var(--transition-slow),
+              visibility   var(--transition-slow),
+              transform    var(--transition-slow),
+              background   var(--transition-fast),
+              color        var(--transition-fast);
+}
+
+/* Visible state — added by scroll.js */
+.floating-btn--visible {
+  opacity:    1;
+  visibility: visible;
+  transform:  translateY(0);
+}
+
+/* Hover — white background, gold text — matches all other Book Now buttons */
+.floating-btn:hover {
+  background: #ffffff;
+  color:      var(--color-gold);
+}
+
+/* Tap / press */
+.floating-btn:active {
+  background: #f0f0f0;
+  color:      var(--color-gold);
+  transform:  scale(0.98);
+}

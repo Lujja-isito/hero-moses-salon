@@ -1,0 +1,297 @@
+/*
+ * ============================================================
+ * reset.css
+ * ============================================================
+ * Clears inconsistent browser default styles so we start
+ * from a clean, predictable baseline across all browsers.
+ *
+ * Also sets the global base styles that apply to the entire
+ * page (body background, font, smooth scroll, box-sizing).
+ * ============================================================
+ */
+
+
+/* ----------------------------------------------------------
+   BOX SIZING
+   Makes width/height include padding and border — much easier
+   to reason about element sizes this way.
+   ---------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+/* ----------------------------------------------------------
+   REMOVE DEFAULT MARGIN & PADDING
+   Browsers add their own margins to headings, paragraphs, etc.
+   We reset them all to zero and add our own intentionally.
+   ---------------------------------------------------------- */
+
+html,
+body,
+h1, h2, h3, h4, h5, h6,
+p,
+ul, ol, li,
+figure,
+figcaption,
+blockquote,
+dl, dd {
+  margin:  0;
+  padding: 0;
+}
+
+
+/* ----------------------------------------------------------
+   LIST STYLE
+   Remove bullet points from all lists — we style lists
+   manually when needed.
+   ---------------------------------------------------------- */
+
+ul,
+ol {
+  list-style: none;
+}
+
+
+/* ----------------------------------------------------------
+   LINKS
+   Remove underline by default. Colour is set per-component.
+   ---------------------------------------------------------- */
+
+a {
+  text-decoration: none;
+  color:           inherit;
+}
+
+
+/* ----------------------------------------------------------
+   IMAGES & MEDIA
+   Make images responsive by default. They never overflow
+   their container. display: block removes the inline gap
+   that appears below images.
+   ---------------------------------------------------------- */
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display:   block;
+  max-width: 100%;
+}
+
+
+/* ----------------------------------------------------------
+   FORM ELEMENTS
+   Browsers style buttons, inputs, and selects very differently.
+   We reset them all so we have full control.
+   ---------------------------------------------------------- */
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;   /* use our chosen font, not the browser default */
+  font-size:   inherit;
+  color:       inherit;
+  background:  none;
+  border:      none;
+  outline:     none;
+  padding:     0;
+  margin:      0;
+  appearance:  none;      /* removes native OS styling on selects */
+  cursor:      pointer;
+}
+
+/* Remove the default number input spinners */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  appearance: none;
+}
+
+/* Remove the default date input icon in some browsers */
+input[type='date']::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);    /* dims the calendar icon to match our dark theme */
+  cursor: pointer;
+}
+
+
+/* ----------------------------------------------------------
+   GLOBAL BASE — HTML & BODY
+   ---------------------------------------------------------- */
+
+html {
+  scroll-behavior: smooth;     /* smooth scrolling for anchor links */
+  font-size:       16px;       /* base font size — all rem units scale from this */
+}
+
+body {
+  background-color: var(--color-bg-page);
+  color:            var(--color-text-muted);
+  font-family:      var(--font-body);
+  font-size:        var(--fs-body);
+  font-weight:      var(--fw-regular);
+  line-height:      var(--lh-body);
+  -webkit-font-smoothing:  antialiased;   /* smoother text rendering on Mac */
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;   /* prevents horizontal scrollbar from appearing */
+}
+
+
+/* ----------------------------------------------------------
+   SHARED SECTION TITLE STYLES
+   Used across all sections: hero, stylists, services, etc.
+   The <em> inside gets the gold italic treatment.
+   ---------------------------------------------------------- */
+
+.section-title {
+  font-family:  var(--font-display);
+  font-size:    var(--fs-section);
+  font-weight:  var(--fw-regular);
+  color:        var(--color-text-white);
+  line-height:  1.15;
+  margin-bottom: var(--space-sm);
+}
+
+/* The italic gold word inside a section title */
+.section-title em {
+  font-style:  italic;
+  color:       var(--color-gold);
+  font-family: var(--font-display);
+}
+
+/* Subtitle text that appears below section titles */
+.section-subtitle {
+  font-family:  var(--font-body);
+  font-size:    var(--fs-body);
+  color:        var(--color-text-muted);
+  line-height:  var(--lh-body);
+  max-width:    600px;
+  margin:       0 auto;
+}
+
+
+/* ----------------------------------------------------------
+   SHARED BUTTON STYLES
+   Two variants: gold filled (.btn--gold) and outline (.btn--outline).
+   Both defined here because buttons appear in many sections.
+   ---------------------------------------------------------- */
+
+.btn {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             8px;
+  font-family:     var(--font-body);
+  font-size:       var(--fs-xs);
+  font-weight:     var(--fw-medium);
+  letter-spacing:  var(--ls-wide);
+  text-transform:  uppercase;
+  padding:         14px 28px;
+  border-radius:   var(--radius-sm);
+  border:          none;
+  cursor:          pointer;
+  transition:      background var(--transition-fast),
+                   color var(--transition-fast),
+                   border-color var(--transition-fast),
+                   opacity var(--transition-fast);
+  white-space:     nowrap;
+}
+
+/* Gold filled button */
+.btn--gold {
+  background: var(--color-gold);
+  color:      var(--color-text-white);
+}
+
+/* Hover — white background, gold text */
+.btn--gold:hover {
+  background: #ffffff;
+  color:      var(--color-gold);
+}
+
+/* Tap / click */
+.btn--gold:active {
+  background: #f0f0f0;
+  color:      var(--color-gold);
+  transform:  scale(0.98);
+}
+
+/* Outline button */
+.btn--outline {
+  background:   transparent;
+  color:        var(--color-text-white);
+  border:       1.5px solid var(--color-border-input);
+}
+
+.btn--outline:hover {
+  border-color: var(--color-gold);
+  color:        var(--color-gold);
+}
+
+/* Icon inside a button (the small SVG before the text) */
+.btn__icon {
+  flex-shrink: 0;
+  display:     inline-block;
+}
+
+
+/* ===========================================================
+   FLOATING BOOK NOW BUTTON
+   Defined here (reset.css) so it works on ALL pages —
+   not just index.html which loads hero.css.
+   scroll.js controls visibility via .floating-btn--visible.
+   =========================================================== */
+.floating-btn {
+  position:        fixed;
+  bottom:          32px;
+  right:           32px;
+  z-index:         var(--z-floating);
+
+  display:         inline-flex;
+  align-items:     center;
+  gap:             8px;
+
+  padding:         12px 22px;
+  background:      var(--color-gold);
+  color:           var(--color-text-white);
+  border:          none;
+  border-radius:   var(--radius-sm);
+  cursor:          pointer;
+
+  font-family:     var(--font-body);
+  font-size:       var(--fs-xs);
+  font-weight:     var(--fw-medium);
+  letter-spacing:  var(--ls-wide);
+  text-transform:  uppercase;
+
+  /* Hidden by default — scroll.js adds .floating-btn--visible */
+  opacity:    0;
+  visibility: hidden;
+  transform:  translateY(8px);
+
+  transition: opacity    var(--transition-slow),
+              visibility var(--transition-slow),
+              transform  var(--transition-slow),
+              background var(--transition-fast),
+              color      var(--transition-fast);
+}
+
+.floating-btn--visible {
+  opacity:    1;
+  visibility: visible;
+  transform:  translateY(0);
+}
+
+.floating-btn:hover {
+  background: #ffffff;
+  color:      var(--color-gold);
+}
+
+.floating-btn:active {
+  background: #f0f0f0;
+  color:      var(--color-gold);
+  transform:  scale(0.98);
+}

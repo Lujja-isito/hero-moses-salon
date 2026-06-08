@@ -1,0 +1,269 @@
+/*
+ * ============================================================
+ * footer.css
+ * ============================================================
+ * Styles for the site Footer (#footer).
+ *
+ * Layout:
+ *   .footer__grid    — 3-column grid (brand / visit us / contact)
+ *   .footer__bottom  — bottom bar (copyright + privacy policy)
+ *
+ * Column 1 (.footer__col--brand):
+ *   Logo + wordmark + description paragraph + social icons
+ *
+ * Column 2:
+ *   "VISIT US" heading + address + divider + hours summary
+ *
+ * Column 3:
+ *   "CONTACT" heading + phone row + email row + Book Now button
+ *
+ * Bottom bar:
+ *   Copyright text (left) + Privacy Policy link (right)
+ * ============================================================
+ */
+
+
+/* ----------------------------------------------------------
+   FOOTER OUTER CONTAINER
+   Darkest background on the page — #0d0d0d
+   ---------------------------------------------------------- */
+.footer {
+  background: var(--color-bg-footer);   /* #0d0d0d */
+}
+
+
+/* ----------------------------------------------------------
+   3-COLUMN GRID
+   Sits inside the footer with padding all around.
+   The bottom padding is handled separately so the bottom
+   bar sits flush against the grid content.
+   ---------------------------------------------------------- */
+.footer__grid {
+  display:               grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap:                   60px;
+
+  padding: 60px var(--section-padding-x) 48px;
+  /* 60px top, 60px sides, 48px bottom */
+}
+
+
+/* ----------------------------------------------------------
+   INDIVIDUAL COLUMN
+   Base styles shared by all 3 columns.
+   ---------------------------------------------------------- */
+.footer__col {
+  display:        flex;
+  flex-direction: column;
+}
+
+
+/* ===========================================================
+   COLUMN 1 — BRAND
+   =========================================================== */
+
+/* Logo + wordmark side by side */
+.footer__brand-row {
+  display:     flex;
+  align-items: center;
+  gap:         14px;
+  margin-bottom: var(--space-sm);   /* 16px */
+}
+
+/* Logo image slot — logo.js injects <img> here */
+.footer__logo {
+  flex-shrink:   0;
+  width:         52px;
+  height:        52px;
+  border-radius: 50%;
+  overflow:      hidden;
+  background:    #f5f5f0;   /* warm white so logo sits cleanly */
+}
+
+/* Ensure the injected image fills the slot */
+.footer__logo .logo-img {
+  width:         52px;
+  height:        52px;
+  border-radius: 0;
+  object-fit:    contain;
+}
+
+/* Wordmark: two lines stacked */
+.footer__wordmark {
+  display:        flex;
+  flex-direction: column;
+  gap:            3px;
+}
+
+/* "HERO MOSES" */
+.footer__wordmark-name {
+  font-family:    var(--font-display);
+  font-size:      22px;
+  font-weight:    var(--fw-regular);
+  color:          var(--color-gold);
+  letter-spacing: 0.04em;
+  line-height:    1;
+}
+
+/* "HAIR SALON" */
+.footer__wordmark-sub {
+  font-family:    var(--font-body);
+  font-size:      9px;
+  font-weight:    var(--fw-medium);
+  color:          var(--color-text-dim);
+  letter-spacing: var(--ls-widest);   /* 0.12em */
+}
+
+/* Description paragraph */
+.footer__desc {
+  font-family:  var(--font-body);
+  font-size:    var(--fs-small);   /* 13px */
+  color:        var(--color-text-dim);
+  line-height:  var(--lh-body);   /* 1.7 */
+  margin-bottom: var(--space-md); /* 24px */
+  max-width:    320px;
+}
+
+/* Social icon buttons row */
+.footer__social {
+  display:     flex;
+  align-items: center;
+  gap:         10px;
+  margin-top:  auto;   /* pushes to bottom of column if column is taller */
+}
+
+/* Individual square social button */
+.footer__social-btn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+
+  width:         28px;
+  height:        28px;
+
+  background:    var(--color-bg-surface);
+  border:        1px solid var(--color-border-input);
+  border-radius: var(--radius-sm);
+
+  color:         var(--color-text-muted);
+  text-decoration: none;
+  cursor:        pointer;
+
+  transition:    border-color var(--transition-fast),
+                 color        var(--transition-fast),
+                 transform    var(--transition-fast);
+}
+
+.footer__social-btn:hover {
+  border-color: var(--color-gold);
+  color:        var(--color-gold);
+  transform:    translateY(-2px);
+}
+
+
+/* ===========================================================
+   COLUMNS 2 & 3 — VISIT US / CONTACT
+   =========================================================== */
+
+/* Column heading: "VISIT US" / "CONTACT" */
+.footer__col-title {
+  font-family:    var(--font-body);
+  font-size:      var(--fs-xxs);    /* 10px */
+  font-weight:    var(--fw-medium);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color:          var(--color-gold);
+  margin-bottom:  var(--space-sm);  /* 16px */
+}
+
+
+/* ----------------------------------------------------------
+   COLUMN 2 — VISIT US
+   ---------------------------------------------------------- */
+
+/* Address block */
+.footer__address {
+  font-family:  var(--font-body);
+  font-size:    var(--fs-small);   /* 13px */
+  color:        var(--color-text-dim);
+  line-height:  var(--lh-relaxed); /* 2.0 — generous line height for address */
+  margin-bottom: 0;
+}
+
+/* Thin divider line between address and hours summary */
+.footer__divider {
+  border:        none;
+  border-top:    1px solid var(--color-border-dark);
+  margin:        var(--space-sm) 0;   /* 16px top and bottom */
+}
+
+/* Hours summary: Mon–Fri / Sat / Sun */
+.footer__hours-summary {
+  font-family:  var(--font-body);
+  font-size:    var(--fs-small);   /* 13px */
+  color:        var(--color-text-dim);
+  line-height:  var(--lh-relaxed); /* 2.0 */
+}
+
+
+/* ----------------------------------------------------------
+   COLUMN 3 — CONTACT
+   ---------------------------------------------------------- */
+
+/* Phone and email rows — icon + link */
+.footer__contact-row {
+  display:     flex;
+  align-items: center;
+  gap:         10px;
+  margin-bottom: 12px;
+}
+
+/* Gold icon */
+.footer__contact-row svg {
+  flex-shrink: 0;
+  color:       var(--color-gold);
+}
+
+/* Clickable phone / email link */
+.footer__contact-link {
+  font-family:     var(--font-body);
+  font-size:       var(--fs-small);   /* 13px */
+  color:           var(--color-text-bright);
+  text-decoration: none;
+
+  transition:      color var(--transition-fast);
+}
+
+.footer__contact-link:hover {
+  color: var(--color-gold);
+}
+
+
+/* ===========================================================
+   BOTTOM BAR
+   Full-width bar at the very bottom of the footer.
+   Copyright text centred, white color.
+   =========================================================== */
+.footer__bottom {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;   /* centred */
+  gap:             var(--space-sm);
+
+  padding:         20px var(--section-padding-x);
+  border-top:      1px solid #1f1f1f;
+}
+
+/* "© 2026 HERO MOSES HAIR SALON. ALL RIGHTS RESERVED." */
+.footer__copyright {
+  font-family:    var(--font-body);
+  font-size:      11px;
+  color:          var(--color-text-white);   /* white */
+  letter-spacing: 0.02em;
+  text-align:     center;
+}
+
+/* Privacy Policy — hidden */
+.footer__privacy {
+  display: none;
+}

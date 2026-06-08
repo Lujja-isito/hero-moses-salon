@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Gallery — Hero Moses Hair Salon. See our salon, our work, and the transformations we create for our clients in Kampala." />
+  <title>Gallery | Hero Moses Hair Salon</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/variables.css" />
+  <link rel="stylesheet" href="assets/css/reset.css" />
+  <link rel="stylesheet" href="assets/css/navbar.css" />
+  <link rel="stylesheet" href="assets/css/pages.css" />
+  <link rel="stylesheet" href="assets/css/gallery.css" />
+  <link rel="stylesheet" href="assets/css/modal.css" />
+  <link rel="stylesheet" href="assets/css/footer.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+
+  <style>
+    /* Gallery page specific styles */
+
+    /* Section wrapper shared by all 3 gallery sections */
+    .gallery-section {
+      padding: var(--section-padding-y) var(--section-padding-x);
+      border-bottom: 1px solid var(--color-border-dark);
+    }
+    .gallery-section:last-of-type { border-bottom: none; }
+
+    /* Section heading block */
+    .gallery-section__head {
+      margin-bottom: 40px;
+    }
+    .gallery-section__label {
+      font-family:    var(--font-body);
+      font-size:      10px;
+      font-weight:    var(--fw-medium);
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+      color:          var(--color-gold);
+      margin-bottom:  var(--space-sm);
+      display:        block;
+    }
+    .gallery-section__title {
+      font-family:   var(--font-display);
+      font-size:     clamp(28px, 3.5vw, 40px);
+      font-weight:   var(--fw-regular);
+      color:         var(--color-text-white);
+      margin-bottom: var(--space-sm);
+      line-height:   1.15;
+    }
+    .gallery-section__title em {
+      font-style:  italic;
+      color:       var(--color-gold);
+    }
+    .gallery-section__desc {
+      font-family: var(--font-body);
+      font-size:   var(--fs-body);
+      color:       var(--color-text-muted);
+      max-width:   600px;
+      line-height: var(--lh-body);
+    }
+
+    /* ── SECTION 1: SALON SET PHOTOS ── */
+    /* 3-column grid for salon photos */
+    .salon-grid {
+      display:               grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:                   16px;
+    }
+    .salon-grid__cell {
+      background:          var(--color-bg-surface);
+      border:              1px solid var(--color-border-dark);
+      border-radius:       var(--radius-lg);
+      overflow:            hidden;
+      position:            relative;
+      cursor:              pointer;
+      background-size:     cover;
+      background-position: center;
+      transition:          transform var(--transition-base),
+                           border-color var(--transition-base);
+    }
+    .salon-grid__cell:hover {
+      transform:    scale(1.01);
+      border-color: #2e2e2e;
+    }
+    /* First cell spans 2 columns — hero photo */
+    .salon-grid__cell--hero {
+      grid-column: span 2;
+      height:      360px;
+    }
+    /* Regular cells */
+    .salon-grid__cell--regular { height: 360px; }
+    .salon-grid__cell--small   { height: 220px; }
+
+    /* Placeholder label inside empty cells */
+    .salon-grid__placeholder {
+      position:        absolute;
+      inset:           0;
+      display:         flex;
+      flex-direction:  column;
+      align-items:     center;
+      justify-content: center;
+      gap:             8px;
+    }
+    .salon-grid__ph-icon {
+      width:         40px;
+      height:        40px;
+      border:        1px solid #333;
+      border-radius: 50%;
+      display:       flex;
+      align-items:   center;
+      justify-content: center;
+      color:         #333;
+    }
+    .salon-grid__ph-text {
+      font-family:    var(--font-body);
+      font-size:      10px;
+      color:          #333;
+      letter-spacing: 0.06em;
+      text-align:     center;
+      text-transform: uppercase;
+    }
+
+    /* ── SECTION 2: CLIENT PHOTOS ── */
+    /* Masonry-style grid — 4 columns */
+    .clients-grid {
+      display:               grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:                   12px;
+    }
+    .clients-grid__cell {
+      background:          var(--color-bg-surface);
+      border:              1px solid var(--color-border-dark);
+      border-radius:       var(--radius-md);
+      overflow:            hidden;
+      position:            relative;
+      cursor:              pointer;
+      background-size:     cover;
+      background-position: center top;
+      transition:          transform var(--transition-base),
+                           border-color var(--transition-base);
+    }
+    .clients-grid__cell:hover {
+      transform:    translateY(-4px);
+      border-color: rgba(184,134,11,0.4);
+    }
+    .clients-grid__cell--tall   { height: 320px; }
+    .clients-grid__cell--medium { height: 240px; }
+    .clients-grid__cell--short  { height: 180px; }
+
+    /* Caption overlay on hover */
+    .clients-grid__caption {
+      position:   absolute;
+      bottom:     0;
+      left:       0;
+      right:      0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      padding:    20px 14px 12px;
+      opacity:    0;
+      transition: opacity var(--transition-base);
+    }
+    .clients-grid__cell:hover .clients-grid__caption { opacity: 1; }
+    .clients-grid__caption-text {
+      font-family:    var(--font-body);
+      font-size:      11px;
+      color:          var(--color-text-white);
+      letter-spacing: 0.04em;
+    }
+    .clients-grid__placeholder {
+      position:        absolute;
+      inset:           0;
+      display:         flex;
+      align-items:     center;
+      justify-content: center;
+    }
+    .clients-grid__ph-text {
+      font-family:    var(--font-body);
+      font-size:      9px;
+      color:          #2a2a2a;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── SECTION 3: ABOUT THE SALON ── */
+    .about-grid {
+      display:     grid;
+      grid-template-columns: 1fr 1fr;
+      gap:         60px;
+      align-items: start;
+    }
+    .about-grid__visual {
+      background:    var(--color-bg-surface);
+      border:        1px solid var(--color-border-dark);
+      border-radius: var(--radius-lg);
+      height:        420px;
+      position:      relative;
+      overflow:      hidden;
+      background-size:     cover;
+      background-position: center;
+    }
+    /* Decorative gold corner accent */
+    .about-grid__visual::before {
+      content:       '';
+      position:      absolute;
+      top:           16px;
+      left:          16px;
+      width:         40px;
+      height:        40px;
+      border-top:    2px solid var(--color-gold);
+      border-left:   2px solid var(--color-gold);
+      border-radius: 2px 0 0 0;
+    }
+    .about-grid__visual::after {
+      content:       '';
+      position:      absolute;
+      bottom:        16px;
+      right:         16px;
+      width:         40px;
+      height:        40px;
+      border-bottom: 2px solid var(--color-gold);
+      border-right:  2px solid var(--color-gold);
+      border-radius: 0 0 2px 0;
+    }
+    .about-grid__visual-placeholder {
+      position:        absolute;
+      inset:           0;
+      display:         flex;
+      flex-direction:  column;
+      align-items:     center;
+      justify-content: center;
+      gap:             10px;
+    }
+    .about-grid__content { padding-top: 8px; }
+    .about-grid__tag {
+      display:        inline-block;
+      font-family:    var(--font-body);
+      font-size:      10px;
+      font-weight:    var(--fw-medium);
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+      color:          var(--color-gold);
+      border:         1px solid rgba(184,134,11,0.3);
+      border-radius:  var(--radius-sm);
+      padding:        4px 12px;
+      margin-bottom:  var(--space-md);
+    }
+    .about-grid__heading {
+      font-family:   var(--font-display);
+      font-size:     clamp(28px, 3vw, 38px);
+      font-weight:   var(--fw-regular);
+      color:         var(--color-text-white);
+      line-height:   1.2;
+      margin-bottom: var(--space-md);
+    }
+    .about-grid__heading em {
+      font-style: italic;
+      color:      var(--color-gold);
+    }
+    .about-grid__text {
+      font-family:   var(--font-body);
+      font-size:     var(--fs-body);
+      color:         var(--color-text-muted);
+      line-height:   var(--lh-body);
+      margin-bottom: var(--space-md);
+    }
+    /* Stats row */
+    .about-grid__stats {
+      display:         flex;
+      gap:             var(--space-lg);
+      margin:          var(--space-lg) 0;
+      padding:         var(--space-md) 0;
+      border-top:      1px solid var(--color-border-dark);
+      border-bottom:   1px solid var(--color-border-dark);
+    }
+    .about-stat__number {
+      font-family:   var(--font-display);
+      font-size:     36px;
+      font-weight:   var(--fw-regular);
+      color:         var(--color-gold);
+      line-height:   1;
+      display:       block;
+      margin-bottom: 4px;
+    }
+    .about-stat__label {
+      font-family:    var(--font-body);
+      font-size:      11px;
+      color:          var(--color-text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* Social follow CTA at the bottom */
+    .gallery-social-cta {
+      padding:    60px var(--section-padding-x);
+      text-align: center;
+      background: var(--color-bg-surface);
+    }
+    .gallery-social-cta__text {
+      font-family:   var(--font-body);
+      font-size:     var(--fs-body);
+      color:         var(--color-text-muted);
+      margin-bottom: var(--space-md);
+    }
+    .gallery-social-cta__pills {
+      display:         flex;
+      justify-content: center;
+      gap:             12px;
+      flex-wrap:       wrap;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .salon-grid   { grid-template-columns: 1fr 1fr; }
+      .clients-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .salon-grid         { grid-template-columns: 1fr; }
+      .salon-grid__cell--hero { grid-column: span 1; height: 260px; }
+      .salon-grid__cell--regular { height: 240px; }
+      .salon-grid__cell--small   { height: 180px; }
+      .clients-grid { grid-template-columns: 1fr 1fr; }
+      .clients-grid__cell--tall   { height: 220px; }
+      .clients-grid__cell--medium { height: 180px; }
+      .clients-grid__cell--short  { height: 140px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-grid__visual { height: 280px; }
+      .about-grid__stats  { gap: var(--space-md); }
+    }
+    @media (max-width: 480px) {
+      .clients-grid { grid-template-columns: 1fr; }
+      .gallery-section { padding: 60px 20px; }
+      .about-grid__stats { flex-direction: column; gap: var(--space-sm); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__brand">
+      <div class="navbar__logo" id="navbar-logo"></div>
+      <div class="navbar__wordmark">
+        <span class="navbar__wordmark-name">
+          <span class="navbar__wordmark-hero">HERO</span>
+          <span class="navbar__wordmark-moses">MOSES</span>
+        </span>
+        <span class="navbar__wordmark-sub">HAIR SALON</span>
+      </div>
+    </div>
+
+    <ul class="navbar__links" id="navbar-links">
+      <li><a href="index.html"    class="navbar__link">Home</a></li>
+      <li><a href="stylists.html" class="navbar__link">Stylists</a></li>
+      <li><a href="services.html" class="navbar__link">Services</a></li>
+      <li><a href="index.html#hours" class="navbar__link">Hours</a></li>
+      <li><a href="gallery.html"  class="navbar__link active">Gallery</a></li>
+    </ul>
+
+    <button class="btn btn--gold open-modal" aria-label="Book an appointment">
+      <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8"  y1="2" x2="8"  y2="6"></line>
+        <line x1="3"  y1="10" x2="21" y2="10"></line>
+      </svg>
+      BOOK NOW
+    </button>
+
+    <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span class="navbar__hamburger-bar"></span>
+      <span class="navbar__hamburger-bar"></span>
+      <span class="navbar__hamburger-bar"></span>
+    </button>
+  </nav>
+
+
+  <!-- PAGE HERO BANNER -->
+  <div class="page-hero">
+    <div class="page-hero__breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="page-hero__breadcrumb-sep">/</span>
+      <span class="page-hero__breadcrumb-current">Gallery</span>
+    </div>
+    <h1 class="page-hero__title">The <em>Gallery</em></h1>
+    <p class="page-hero__sub">
+      A glimpse into our world , precision, artistry, and the
+      pursuit of perfection in every look.
+    </p>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       SECTION 1 — THE SALON
+       Photos of the salon space and setup
+       ══════════════════════════════════════ -->
+  <div class="page-body">
+
+    <div class="gallery-section">
+      <div class="gallery-section__head">
+        <span class="gallery-section__label">Section 01</span>
+        <h2 class="gallery-section__title">The <em>Salon</em></h2>
+        <p class="gallery-section__desc">
+          Step inside Hero Moses Hair Salon at Mabirizi Complex, Level 4,
+          Room 22. A premium, upscale space designed to make every client
+          feel comfortable, pampered, and truly special from the moment
+          they walk through the door.
+        </p>
+      </div>
+
+      <div class="salon-grid">
+
+        <!-- Hero cell — Reception (wide main shot) -->
+        <div class="salon-grid__cell salon-grid__cell--hero"
+             style="background-image: url('assets/images/gallery/Reception.jpeg');">
+        </div>
+
+        <!-- Salon cell 2 — Natural hair products -->
+        <div class="salon-grid__cell salon-grid__cell--regular"
+             style="background-image: url('assets/images/gallery/natural.jpeg');">
+        </div>
+
+        <!-- Salon cell 3 — Hair products display -->
+        <div class="salon-grid__cell salon-grid__cell--small"
+             style="background-image: url('assets/images/gallery/hair-products.jpeg');">
+        </div>
+
+        <!-- Salon cell 4 — Products -->
+        <div class="salon-grid__cell salon-grid__cell--small"
+             style="background-image: url('assets/images/gallery/product3.jpg');">
+        </div>
+
+        <!-- Salon cell 5 — natura -->
+        <div class="salon-grid__cell salon-grid__cell--small"
+             style="background-image: url('assets/images/gallery/natura.jpeg');">
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════
+         SECTION 2 — CLIENT TRANSFORMATIONS
+         Before/after and finished look photos
+         ══════════════════════════════════════ -->
+    <div class="gallery-section">
+      <div class="gallery-section__head">
+        <span class="gallery-section__label">Section 02</span>
+        <h2 class="gallery-section__title">Client <em>Transformations</em></h2>
+        <p class="gallery-section__desc">
+          Every client who sits in our chair deserves to feel extraordinary.
+          These are the transformations we create every day - braids, colour,
+          wings, weaves, and styles that turn heads across Kampala.
+        </p>
+      </div>
+
+      <div class="clients-grid">
+
+        <div class="clients-grid__cell clients-grid__cell--tall"
+             style="background-image: url('assets/images/gallery/braids1.jpeg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Luxury Braiding</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--medium"
+             style="background-image: url('assets/images/gallery/wig-installation.jpeg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Wing Installation</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--tall"
+             style="background-image: url('assets/images/gallery/p1.JPG');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Hair Styling</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--medium"
+             style="background-image: url('assets/images/gallery/wig-installation-2.jpeg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Wing Installation</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--short"
+             style="background-image: url('assets/images/gallery/conorols.jpeg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Cornrows</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--medium"
+             style="background-image: url('assets/images/gallery/p2.JPG');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Hair Styling</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--short"
+             style="background-image: url('assets/images/gallery/wig-installed.jpeg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Wig Installed</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--short"
+             style="background-image: url('assets/images/gallery/conoralss.jpeg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Cornrows</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--tall"
+             style="background-image: url('assets/images/gallery/p4.jpg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Hair Styling</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--medium"
+             style="background-image: url('assets/images/gallery/wig-imnstalled-2.jpeg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Wig Customization</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--tall"
+             style="background-image: url('assets/images/gallery/p5.jpg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Hair Styling</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--medium"
+             style="background-image: url('assets/images/gallery/wig-installation3.jpeg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Wing Installation</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--short"
+             style="background-image: url('assets/images/gallery/p6.JPG');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Hair Styling</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--medium"
+             style="background-image: url('assets/images/gallery/weaver.jpeg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Weave Installation</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--short"
+             style="background-image: url('assets/images/gallery/p7.JPG');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Hair Styling</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--short"
+             style="background-image: url('assets/images/gallery/p8.JPG');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Hair Styling</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--tall"
+             style="background-image: url('assets/images/gallery/IMG_9665.jpg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Salon Work</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--medium"
+             style="background-image: url('assets/images/gallery/IMG_9670.jpg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Salon Work</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--medium"
+             style="background-image: url('assets/images/gallery/IMG_9676.jpg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Salon Work</span></div>
+        </div>
+
+        <div class="clients-grid__cell clients-grid__cell--short"
+             style="background-image: url('assets/images/gallery/nice.jpg');">
+          <div class="clients-grid__caption"><span class="clients-grid__caption-text">Hair Styling</span></div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════
+         SECTION 3 — ABOUT THE SALON
+         Story, description, stats
+         ══════════════════════════════════════ -->
+    <div class="gallery-section">
+      <div class="gallery-section__head">
+        <span class="gallery-section__label">Section 03</span>
+        <h2 class="gallery-section__title">Our <em>Story</em></h2>
+      </div>
+
+      <div class="about-grid">
+
+        <!-- Visual side — real salon photo -->
+        <div class="about-grid__visual"
+             style="background-image: url('assets/images/gallery/IMG_9665.jpg');">
+        </div>
+
+        <!-- Text side -->
+        <div class="about-grid__content">
+          <span class="about-grid__tag">Mabirizi Complex, Kampala</span>
+          <h3 class="about-grid__heading">Where every woman <em>deserves</em> to feel beautiful</h3>
+          <p class="about-grid__text">
+            Hero Moses Hair Salon was founded with one simple belief that
+            every woman who walks through our doors deserves to leave feeling
+            transformed, confident, and utterly beautiful.
+          </p>
+          <p class="about-grid__text">
+            Located at Level 4, Room 22 of Mabirizi Complex in the heart of
+            Kampala, we offer a premium, upscale experience at prices that
+            celebrate every woman not just a few. From everyday styling
+            to bridal transformations, our team of expert stylists brings
+            skill, care, and artistry to every single appointment.
+          </p>
+          <p class="about-grid__text">
+            We are open 7 days a week. Walk-ins are always welcome, though
+            appointments are recommended on weekends and for special services.
+          </p>
+
+          <!-- Stats -->
+          <div class="about-grid__stats">
+            <div>
+              <span class="about-stat__number">8+</span>
+              <span class="about-stat__label">Years of experience</span>
+            </div>
+            <div>
+              <span class="about-stat__number">4</span>
+              <span class="about-stat__label">Expert stylists</span>
+            </div>
+            <div>
+              <span class="about-stat__number">12</span>
+              <span class="about-stat__label">Services offered</span>
+            </div>
+            <div>
+              <span class="about-stat__number">7</span>
+              <span class="about-stat__label">Days a week open</span>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <button class="btn btn--gold open-modal" aria-label="Book an appointment">
+            <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8"  y1="2" x2="8"  y2="6"></line>
+              <line x1="3"  y1="10" x2="21" y2="10"></line>
+            </svg>
+            BOOK YOUR APPOINTMENT
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- Social follow CTA -->
+    <div class="gallery-social-cta">
+      <p class="gallery-social-cta__text">Follow us on social media for daily inspiration</p>
+      <div class="gallery-social-cta__pills">
+        <a href="https://www.instagram.com/heromoseshair" class="gallery__pill" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          Instagram
+        </a>
+        <a href="https://www.facebook.com/YOUR_PAGE" class="gallery__pill" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          Facebook
+        </a>
+        <a href="https://www.tiktok.com/@hero_moseshair" class="gallery__pill" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+          TikTok
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- BOOKING MODAL -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal" id="modal">
+      <div class="modal__header">
+        <div class="modal__logo" id="modal-logo"></div>
+        <div class="modal__title-block">
+          <h3 class="modal__title" id="modal-title">Book an Appointment</h3>
+          <p class="modal__subtitle">Hero Moses Hair Salon</p>
+        </div>
+        <button class="modal__close" id="modal-close" aria-label="Close booking modal">&times;</button>
+      </div>
+      <form class="modal__form" id="booking-form" novalidate>
+        <div class="form-field">
+          <label class="form-field__label" for="booking-name">YOUR NAME</label>
+          <input class="form-field__input" type="text" id="booking-name" name="name" placeholder="Full name" autocomplete="name" />
+          <span class="form-field__error" id="error-name" aria-live="polite"></span>
+        </div>
+        <div class="form-field">
+          <label class="form-field__label" for="booking-phone">PHONE NUMBER</label>
+          <input class="form-field__input" type="tel" id="booking-phone" name="phone" placeholder="07XX XXX XXX" autocomplete="tel" />
+          <span class="form-field__error" id="error-phone" aria-live="polite"></span>
+        </div>
+        <div class="form-field">
+          <label class="form-field__label" for="booking-service">SERVICE</label>
+          <div class="form-field__select-wrap">
+            <select class="form-field__input form-field__select" id="booking-service" name="service">
+              <option value="" disabled selected>Select a service</option>
+              <optgroup label="── WIG INSTALLATION ──">
+                <option>Wig Installation - 80,000 UGX</option>
+                <option>Buying in from our shop - 70,000 UGX</option>
+                <option>Installation + Lashes - 120,000 UGX</option>
+                <option>Installation + Washing + Lashes - 130,000 UGX</option>
+                <option>Wig Washing - 20,000 UGX</option>
+                <option>Lashes - 40,000 UGX</option>
+                <option>Weaving - 80,000 UGX</option>
+                <option>Masterpiece with hair - 150,000 UGX</option>
+                <option>Ponytail Gel - 50,000 UGX</option>
+                <option>Ponytail Closure - 70,000 UGX</option>
+              </optgroup>
+              <optgroup label="── BOHO BRAIDS WITH HAIR ──">
+                <option>Boho Braids Small - 150,000 UGX</option>
+                <option>Boho Braids Normal - 140,000 UGX</option>
+                <option>Boho Braids Big - 110,000 UGX</option>
+              </optgroup>
+              <optgroup label="── FULANI BRAIDS ──">
+                <option>Fulani Braids Small - 150,000 UGX</option>
+                <option>Fulani Braids Medium - 130,000 UGX</option>
+                <option>Fulani Braids Large - 100,000 UGX</option>
+              </optgroup>
+              <optgroup label="── KNOTLESS BRAIDS ──">
+                <option>Knotless Small - 180,000 UGX</option>
+                <option>Knotless Small-Medium - 150,000 UGX</option>
+                <option>Knotless Medium - 130,000 UGX</option>
+                <option>Knotless Large - 100,000 UGX</option>
+              </optgroup>
+              <optgroup label="── FRENCH CURLS ──">
+                <option>French Curls for Pencil - 140,000 UGX</option>
+                <option>French Curls for Braids - 150,000 UGX</option>
+              </optgroup>
+              <optgroup label="── WIGS - SHORT ──">
+                <option>Short Jerry Wig - 150,000 UGX</option>
+                <option>Pixie Wig - 150,000 UGX</option>
+                <option>Bob 10 inches - 180,000 UGX</option>
+                <option>Bob 12 inches - 200,000 UGX</option>
+              </optgroup>
+              <optgroup label="── WIGS - STRAIGHT, BODY & CURLS ──">
+                <option>Wig 14 inches - 220,000 UGX</option>
+                <option>Wig 16 inches - 250,000 UGX</option>
+                <option>Wig 18 inches - 300,000 UGX</option>
+                <option>Wig 20 inches - 350,000 UGX</option>
+                <option>Wig 22 inches - 400,000 UGX</option>
+                <option>Wig 24 inches - 450,000 UGX</option>
+                <option>Wig 26 inches - 500,000 UGX</option>
+                <option>Wig 28 inches - 550,000 UGX</option>
+                <option>Wig 30 inches - 600,000 UGX</option>
+                <option>Wig 32 inches - 620,000 UGX</option>
+                <option>Wig 34 inches - 670,000 UGX</option>
+                <option>Wig 36 inches - 700,000 UGX</option>
+              </optgroup>
+            </select>
+            <svg class="form-field__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <span class="form-field__error" id="error-service" aria-live="polite"></span>
+        </div>
+        <div class="form-field">
+          <label class="form-field__label" for="booking-date">PREFERRED DATE</label>
+          <input class="form-field__input" type="date" id="booking-date" name="date" />
+          <span class="form-field__error" id="error-date" aria-live="polite"></span>
+        </div>
+        <button type="submit" class="modal__submit" id="booking-submit">CONFIRM BOOKING</button>
+        <p class="modal__footnote">Or call us directly at <a href="tel:0757541061" class="modal__footnote-link">0757541061</a></p>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="footer__grid">
+      <div class="footer__col footer__col--brand">
+        <div class="footer__brand-row">
+          <div class="footer__logo" id="footer-logo"></div>
+          <div class="footer__wordmark">
+            <span class="footer__wordmark-name">HERO MOSES</span>
+            <span class="footer__wordmark-sub">HAIR SALON</span>
+          </div>
+        </div>
+        <p class="footer__desc">A premium ladies hair salon offering professional styling, wing installations, luxury braiding, and every hair service a woman deserves , at an upscale atmosphere in the heart of Kampala.</p>
+        <div class="footer__social">
+          <a href="https://www.instagram.com/heromoseshair" class="footer__social-btn" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+          <a href="https://www.facebook.com/YOUR_PAGE" class="footer__social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+          <a href="https://www.tiktok.com/@hero_moseshair" class="footer__social-btn" aria-label="TikTok" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__col-title">VISIT US</h4>
+        <p class="footer__address">Mabirizi Complex<br>Level 4, Room 22<br>Kampala, Uganda</p>
+        <hr class="footer__divider" />
+        <p class="footer__hours-summary">Mon - Thu: 8:40 AM - 8:30 PM<br>Fri - Sat: 8:00 AM - 9:00 PM</p>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__col-title">CONTACT</h4>
+        <div class="footer__contact-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"></path></svg><a href="tel:0757541061" class="footer__contact-link">0757541061</a></div>
+        <div class="footer__contact-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><a href="mailto:blessingbutsigho@gmail.com" class="footer__contact-link">blessingbutsigho@gmail.com</a></div>
+        <button class="btn btn--gold open-modal" style="margin-top: 24px;" aria-label="Book an appointment"><svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>BOOK NOW</button>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__copyright">&copy; 2026 HERO MOSES HAIR SALON. ALL RIGHTS RESERVED.</span>
+    </div>
+  </footer>
+
+  <button class="floating-btn open-modal" id="floating-btn" aria-label="Book an appointment">
+    <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+    BOOK NOW
+  </button>
+
+  <script src="assets/js/logo.js"></script>
+  <script src="assets/js/modal.js"></script>
+  <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/scroll.js"></script>
+
+</body>
+</html>

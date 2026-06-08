@@ -1,0 +1,322 @@
+/*
+ * ============================================================
+ * stylists.css
+ * ============================================================
+ * Styles for the Stylists section ("The Artists") — #stylists
+ *
+ * THREE STATES per card:
+ *   1. DEFAULT  — dark border, small "Tap to book" hint visible
+ *   2. HOVER    — soft gold border, name turns gold, card lifts
+ *                 signals the card is clickable before clicking
+ *   3. SELECTED — full gold border, higher lift, strong glow,
+ *                 "Book with..." button slides fully into view
+ * ============================================================
+ */
+
+
+/* ----------------------------------------------------------
+   SECTION CONTAINER
+   ---------------------------------------------------------- */
+.stylists {
+  padding:    var(--section-padding-y) var(--section-padding-x);
+  background: var(--color-bg-page);
+}
+
+
+/* ----------------------------------------------------------
+   SECTION HEADER
+   ---------------------------------------------------------- */
+.stylists__header {
+  text-align:    center;
+  margin-bottom: 60px;
+}
+
+.stylists__header .section-subtitle {
+  margin: 0 auto;
+}
+
+
+/* ----------------------------------------------------------
+   4-COLUMN CARD GRID
+   ---------------------------------------------------------- */
+.stylists__grid {
+  display:               grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:                   24px;
+}
+
+
+/* ----------------------------------------------------------
+   STYLIST CARD — DEFAULT state
+   ---------------------------------------------------------- */
+.stylist-card {
+  background:    var(--color-bg-surface);
+  border:        1.5px solid #2a2a2a;
+  border-radius: var(--radius-md);
+  overflow:      hidden;
+  cursor:        pointer;
+
+  transition:    border-color var(--transition-base),
+                 transform    var(--transition-base),
+                 box-shadow   var(--transition-base);
+}
+
+
+/* ----------------------------------------------------------
+   HOVER STATE — soft gold hint before clicking
+   ---------------------------------------------------------- */
+.stylist-card:hover {
+  border-color: rgba(184, 134, 11, 0.5);
+  transform:    translateY(-4px);
+  box-shadow:   0 6px 24px rgba(184, 134, 11, 0.08);
+}
+
+.stylist-card:hover .stylist-card__name {
+  color: var(--color-gold);
+}
+
+.stylist-card:hover .stylist-card__initial {
+  color: #3a3a3a;
+}
+
+.stylist-card:hover .stylist-card__hint {
+  color:   var(--color-gold);
+  opacity: 1;
+}
+
+
+/* ----------------------------------------------------------
+   SELECTED STATE — full gold, button revealed
+   ---------------------------------------------------------- */
+.stylist-card--selected {
+  border-color: var(--color-gold);
+  transform:    translateY(-8px);
+  box-shadow:   0 12px 40px rgba(184, 134, 11, 0.18);
+}
+
+.stylist-card--selected:hover {
+  border-color: var(--color-gold);
+  transform:    translateY(-8px);
+}
+
+.stylist-card--selected .stylist-card__name {
+  color: var(--color-gold);
+}
+
+.stylist-card--selected .stylist-card__initial {
+  color: #3d3d3d;
+}
+
+/* Hint disappears when button is visible */
+.stylist-card--selected .stylist-card__hint {
+  opacity: 0;
+  padding: 0;
+  height:  0;
+}
+
+
+/* ----------------------------------------------------------
+   CARD IMAGE AREA
+   ---------------------------------------------------------- */
+.stylist-card__image {
+  height:          260px;
+  background:      #1e1e1e;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  position:        relative;
+  overflow:        hidden;
+}
+
+.stylist-card__image::after {
+  content:        '';
+  position:       absolute;
+  inset:          0;
+  background:     linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  pointer-events: none;
+}
+
+
+/* ----------------------------------------------------------
+   INITIAL LETTER
+   ---------------------------------------------------------- */
+.stylist-card__initial {
+  font-family: var(--font-display);
+  font-size:   80px;
+  font-weight: var(--fw-regular);
+  color:       #2e2e2e;
+  line-height: 1;
+  user-select: none;
+  position:    relative;
+  z-index:     1;
+  transition:  color var(--transition-base);
+}
+
+
+/* ----------------------------------------------------------
+   STYLIST NAME
+   ---------------------------------------------------------- */
+.stylist-card__name {
+  padding:    14px 16px 2px;
+  font-family: var(--font-display);
+  font-size:   18px;
+  font-weight: var(--fw-regular);
+  color:       var(--color-text-bright);
+  text-align:  center;
+  transition:  color var(--transition-base);
+}
+
+
+/* ----------------------------------------------------------
+   STYLIST ROLE LABEL
+   ---------------------------------------------------------- */
+.stylist-card__role {
+  display:        block;
+  padding:        2px 16px 0;
+  text-align:     center;
+  font-family:    var(--font-body);
+  font-size:      10px;
+  font-weight:    var(--fw-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color:          var(--color-text-dim);
+}
+
+
+/* ----------------------------------------------------------
+   "TAP TO BOOK" HINT
+   Always visible in default state on all cards.
+   Tells clients the card is interactive as they scroll.
+   Turns gold on hover. Disappears when card is selected.
+   ---------------------------------------------------------- */
+.stylist-card__hint {
+  display:        block;
+  text-align:     center;
+  padding:        10px 16px 14px;
+  font-family:    var(--font-body);
+  font-size:      10px;
+  font-weight:    var(--fw-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color:          #484848;
+  opacity:        0.9;
+  transition:     color   var(--transition-base),
+                  opacity var(--transition-base),
+                  height  var(--transition-base),
+                  padding var(--transition-base);
+}
+
+
+/* ----------------------------------------------------------
+   "BOOK WITH..." CTA BUTTON WRAP
+   Hidden by default, slides in on selection.
+   ---------------------------------------------------------- */
+.stylist-card__cta-wrap {
+  overflow:   hidden;
+  max-height: 0;
+  opacity:    0;
+  transition: max-height var(--transition-slow),
+              opacity    var(--transition-slow);
+}
+
+.stylist-card--selected .stylist-card__cta-wrap {
+  max-height: 60px;
+  opacity:    1;
+}
+
+
+/* ----------------------------------------------------------
+   "BOOK WITH..." CTA BUTTON
+   ---------------------------------------------------------- */
+.stylist-card__cta {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             8px;
+  width:           100%;
+  padding:         14px var(--space-sm);
+  background:      var(--color-gold);
+  color:           var(--color-text-white);
+  border:          none;
+  border-radius:   0;
+  cursor:          pointer;
+  font-family:     var(--font-body);
+  font-size:       var(--fs-xxs);
+  font-weight:     var(--fw-medium);
+  letter-spacing:  0.1em;
+  text-transform:  uppercase;
+  transition:      background var(--transition-fast),
+                   color      var(--transition-fast);
+}
+
+/* Book button hover — white background, gold text */
+.stylist-card__cta:hover {
+  background: #ffffff;
+  color:      var(--color-gold);
+}
+
+.stylist-card__cta svg {
+  flex-shrink: 0;
+}
+
+
+/* ----------------------------------------------------------
+   STYLIST PAGE EXTRAS
+   Bio text, specialties pills, bottom CTA
+   (only visible on stylists.html — not on index.html)
+   ---------------------------------------------------------- */
+
+/* Specialty pill tags */
+.stylist-card__specialties {
+  display:     flex;
+  flex-wrap:   wrap;
+  gap:         6px;
+  padding:     8px 14px 0;
+  justify-content: center;
+}
+
+.stylist-card__spec {
+  font-family:    var(--font-body);
+  font-size:      10px;
+  font-weight:    var(--fw-medium);
+  letter-spacing: 0.05em;
+  color:          var(--color-gold);
+  background:     rgba(184,134,11,0.08);
+  border:         0.5px solid rgba(184,134,11,0.3);
+  border-radius:  var(--radius-sm);
+  padding:        3px 8px;
+}
+
+/* Bio paragraph */
+.stylist-card__bio {
+  font-family:  var(--font-body);
+  font-size:    12px;
+  color:        var(--color-text-muted);
+  line-height:  1.65;
+  padding:      10px 14px 0;
+  text-align:   center;
+}
+
+/* Bottom CTA section */
+.stylists__bottom-cta {
+  margin-top:      64px;
+  padding-top:     48px;
+  border-top:      1px solid var(--color-border-dark);
+  text-align:      center;
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  gap:             var(--space-md);
+}
+
+.stylists__bottom-text {
+  font-family: var(--font-body);
+  font-size:   var(--fs-body);
+  color:       var(--color-text-muted);
+  max-width:   480px;
+  line-height: var(--lh-body);
+}
