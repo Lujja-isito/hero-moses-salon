@@ -492,7 +492,7 @@
     <div class="services__header">
       <h2 class="section-title">Our <em>Services</em></h2>
       <p class="section-subtitle">
-        From wigs and braids to lashes and weaves — we offer a full
+        From wigs and braids to lashes and weaves, we offer a full
         menu of premium ladies hair services in the heart of Kampala.
       </p>
     </div>
@@ -565,14 +565,81 @@
     </div>
 
     <!-- View full menu CTA -->
-    <div style="text-align:center; margin-top: 48px;">
-      <p style="font-family: var(--font-body); font-size: 14px; color: var(--color-text-muted); margin-bottom: 20px;">
+    <div style="text-align:center; margin-top: 56px;">
+      <p style="font-family: var(--font-body); font-size: 14px; color: var(--color-text-muted); margin-bottom: 28px;">
         View our complete price list including all sizes and packages.
       </p>
-      <a href="services.html" class="btn btn--gold">
-        VIEW FULL MENU &rarr;
+      <a href="services.html" class="services-cta-btn" aria-label="View full services menu">
+        <span class="services-cta-btn__text">VIEW FULL MENU</span>
+        <span class="services-cta-btn__circle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
       </a>
     </div>
+
+    <style>
+      /* Animated View Full Menu button */
+      .services-cta-btn {
+        display:         inline-flex;
+        align-items:     center;
+        gap:             16px;
+        text-decoration: none;
+        cursor:          pointer;
+      }
+
+      /* Text label */
+      .services-cta-btn__text {
+        font-family:    var(--font-body);
+        font-size:      12px;
+        font-weight:    var(--fw-medium);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color:          var(--color-text-white);
+        transition:     color var(--transition-fast);
+      }
+
+      /* Round gold circle with arrow inside */
+      .services-cta-btn__circle {
+        display:         flex;
+        align-items:     center;
+        justify-content: center;
+        width:           52px;
+        height:          52px;
+        border-radius:   50%;
+        background:      var(--color-gold);
+        color:           var(--color-text-white);
+        flex-shrink:     0;
+
+        /* Arrow moves right on hover */
+        transition:      background   var(--transition-fast),
+                         transform    var(--transition-base),
+                         box-shadow   var(--transition-base);
+      }
+
+      /* Arrow SVG inside the circle */
+      .services-cta-btn__circle svg {
+        transition: transform var(--transition-base);
+      }
+
+      /* Hover state */
+      .services-cta-btn:hover .services-cta-btn__text {
+        color: var(--color-gold);
+      }
+
+      .services-cta-btn:hover .services-cta-btn__circle {
+        background:  #ffffff;
+        color:       var(--color-gold);
+        box-shadow:  0 0 0 2px var(--color-gold);
+        transform:   scale(1.08);
+      }
+
+      .services-cta-btn:hover .services-cta-btn__circle svg {
+        transform: translateX(3px);
+      }
+    </style>
 
   </section>
   <!-- end services -->
