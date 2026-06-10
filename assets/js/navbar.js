@@ -1,7 +1,11 @@
 /*
  * navbar.js
- * Handles scroll shadow, hamburger menu, and smart
- * link behaviour — page links navigate, anchor links scroll.
+ * Handles:
+ *   1. Scroll shadow on navbar
+ *   2. Active nav link via IntersectionObserver (home page only)
+ *   3. Hamburger menu toggle on mobile
+ *   4. Smooth scroll for anchor links only (#hours)
+ *      Page links are handled by scroll.js (fade transition)
  */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -21,29 +25,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   handleScroll();
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('scroll', handleScroll, { passive: true });
 
 
-  /* 2. ACTIVE LINK via IntersectionObserver
-     Only runs on pages that have sections (index.html).
-     On inner pages (stylists.html etc) there are no sections
-     so the observer does nothing — active class is set in HTML. */
+  /* 2. ACTIVE LINK via IntersectionObserver — home page only */
   if (sections.length > 0) {
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (!entry.isIntersecting) return;
         var id = entry.target.getAttribute('id');
-        allLinks.forEach(function(link) {
-          link.classList.remove('active');
-        });
+        allLinks.forEach(function(link) { link.classList.remove('active'); });
         var match = document.querySelector('.navbar__link[data-section="' + id + '"]');
         if (match) match.classList.add('active');
       });
     }, { rootMargin: '-72px 0px 0px 0px', threshold: 0.35 });
 
-    sections.forEach(function(section) {
-      observer.observe(section);
-    });
+    sections.forEach(function(section) { observer.observe(section); });
   }
 
 
@@ -56,17 +53,15 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 
-  /* 4. SMART LINK HANDLER
-     Rule: if href starts with '#' → smooth scroll (same page anchor)
-           if href contains '.html' → let browser navigate (page link)
-           anything else → let browser handle normally */
+  /* 4. ANCHOR LINKS ONLY — smooth scroll for #hours etc
+     Page links (services.html, gallery.html etc) are handled
+     by scroll.js which adds the fade-out transition */
   allLinks.forEach(function(link) {
     link.addEventListener('click', function(e) {
-
       var href = link.getAttribute('href');
 
-      /* ANCHOR LINK — starts with # → smooth scroll */
-      if (href.charAt(0) === '#') {
+      /* Only handle pure anchor links here */
+      if (href && href.charAt(0) === '#') {
         e.preventDefault();
         var target = document.getElementById(href.slice(1));
         if (target) {
@@ -74,18 +69,15 @@ document.addEventListener('DOMContentLoaded', function() {
           var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
           window.scrollTo({ top: top, behavior: 'smooth' });
         }
+        /* Close mobile menu */
         navbar.classList.remove('navbar--menu-open');
         if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
-        return;
+      } else {
+        /* Page link — just close mobile menu, let scroll.js handle fade */
+        navbar.classList.remove('navbar--menu-open');
+        if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
       }
-
-      /* PAGE LINK — contains .html → navigate normally, just close menu */
-      navbar.classList.remove('navbar--menu-open');
-      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
-      /* No e.preventDefault() — browser handles the navigation */
-
     });
   });
-
 
 });

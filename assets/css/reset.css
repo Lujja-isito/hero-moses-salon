@@ -295,3 +295,20 @@ body {
   color:      var(--color-gold);
   transform:  scale(0.98);
 }
+
+
+/* ===========================================================
+   PAGE TRANSITION
+   Body starts at opacity 0 — scroll.js adds .page--loaded
+   to fade it in. On navigation, .page--loaded is removed
+   to fade out before the next page loads.
+   Creates a smooth, professional feel between pages.
+   =========================================================== */
+body {
+  opacity:    0;
+  transition: opacity 0.3s ease;
+}
+
+body.page--loaded {
+  opacity: 1;
+}
