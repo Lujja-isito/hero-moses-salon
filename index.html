@@ -272,7 +272,7 @@
         <span class="team-mosaic__initial">E</span>
         <span class="team-mosaic__name">Esther</span>
       </div>
-      <div class="team-mosaic__tile team-mosaic__tile--label">
+      <a href="stylists.html" class="team-mosaic__tile team-mosaic__tile--label" aria-label="View salon leadership">
         <span class="team-mosaic__label-text">SALON<br>LEADERSHIP</span>
         <span class="team-mosaic__label-arrow">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -308,8 +308,22 @@
         display:               grid;
         grid-template-columns: repeat(4, 1fr);
         gap:                   0;
-        max-width:             1000px;
+        max-width:             640px;   /* compact — does not dominate the page */
         margin:                0 auto;
+      }
+
+      /* ── BLOCK-BUILDING ANIMATION ──
+         Tiles start collapsed and build in one by one when the
+         section scrolls into view. Rebuilds on every revisit. */
+      .team-mosaic__tile {
+        opacity:   0;
+        transform: scale(0.4);
+        transition: opacity 0.45s ease,
+                    transform 0.45s cubic-bezier(0.34, 1.45, 0.64, 1);
+      }
+      .team-mosaic__tile.tile-in {
+        opacity:   1;
+        transform: scale(1);
       }
 
       .team-mosaic__tile {
@@ -355,7 +369,7 @@
       /* Initial letter placeholder — shows until real photo is set */
       .team-mosaic__initial {
         font-family: var(--font-display);
-        font-size:   54px;
+        font-size:   34px;
         font-weight: var(--fw-regular);
         color:       #4a4a4a;
         line-height: 1;
@@ -363,12 +377,12 @@
 
       .team-mosaic__name {
         position:       absolute;
-        bottom:         10px;
+        bottom:         8px;
         left:           0;
         right:          0;
         text-align:     center;
         font-family:    var(--font-body);
-        font-size:      10px;
+        font-size:      8px;
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color:          #8a8a8a;
@@ -382,7 +396,7 @@
       }
       .team-mosaic__label-text {
         font-family:    var(--font-body);
-        font-size:      15px;
+        font-size:      11px;
         font-weight:    500;
         letter-spacing: 0.1em;
         text-align:     center;
@@ -390,7 +404,7 @@
         line-height:    1.5;
       }
       .team-mosaic__label-arrow {
-        width: 38px; height: 38px;
+        width: 28px; height: 28px;
         border: 2px solid #e8761b;
         border-radius: 50%;
         display: flex;
@@ -409,7 +423,7 @@
       }
       .team-mosaic__cta-text {
         font-family:    var(--font-body);
-        font-size:      17px;
+        font-size:      12px;
         font-weight:    500;
         letter-spacing: 0.1em;
         text-align:     center;
@@ -417,7 +431,7 @@
         line-height:    1.5;
       }
       .team-mosaic__cta-circle {
-        width: 40px; height: 40px;
+        width: 30px; height: 30px;
         border: 2px solid #ffffff;
         border-radius: 50%;
         display: flex;
@@ -435,17 +449,58 @@
         transform:  translateX(4px);
       }
 
-      /* Mobile — 2 columns, hide decorative blanks for compactness */
+      /* Mobile — SAME 4-column grid as desktop, scaled down */
       @media (max-width: 600px) {
-        .team-mosaic { grid-template-columns: repeat(2, 1fr); }
-        .team-mosaic__tile--blank-white,
-        .team-mosaic__tile--blank-dark,
-        .team-mosaic__tile--blank-gray,
-        .team-mosaic__tile--blank-stripes { display: none; }
-        .team-mosaic__cta-text { font-size: 14px; }
-        .team-mosaic__label-text { font-size: 12px; }
+        .team-mosaic__initial    { font-size: 22px; }
+        .team-mosaic__name       { font-size: 6px; bottom: 5px; }
+        .team-mosaic__cta-text   { font-size: 9px; }
+        .team-mosaic__label-text { font-size: 8px; }
+        .team-mosaic__cta-circle   { width: 22px; height: 22px; }
+        .team-mosaic__label-arrow  { width: 20px; height: 20px; }
+        .team-mosaic__cta-circle svg,
+        .team-mosaic__label-arrow svg { width: 11px; height: 11px; }
+        .team-mosaic__tile--cta,
+        .team-mosaic__tile--label { gap: 8px; }
       }
     </style>
+
+    <script>
+      /* Block-building animation — tiles assemble one by one
+         each time the mosaic scrolls into view, and reset when
+         it leaves so it rebuilds on the next pass. */
+      document.addEventListener('DOMContentLoaded', function () {
+        var mosaic = document.querySelector('.team-mosaic');
+        if (!mosaic || !('IntersectionObserver' in window)) {
+          /* Fallback: just show the tiles */
+          document.querySelectorAll('.team-mosaic__tile').forEach(function (t) {
+            t.classList.add('tile-in');
+          });
+          return;
+        }
+
+        var tiles = mosaic.querySelectorAll('.team-mosaic__tile');
+
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              /* Build in — staggered, one block at a time */
+              tiles.forEach(function (tile, i) {
+                setTimeout(function () {
+                  tile.classList.add('tile-in');
+                }, i * 70);
+              });
+            } else {
+              /* Reset so it rebuilds next time */
+              tiles.forEach(function (tile) {
+                tile.classList.remove('tile-in');
+              });
+            }
+          });
+        }, { threshold: 0.15 });
+
+        observer.observe(mosaic);
+      });
+    </script>
 
   </section>
   <!-- end the artists -->
