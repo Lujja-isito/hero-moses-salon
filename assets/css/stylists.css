@@ -320,3 +320,27 @@
   max-width:   480px;
   line-height: var(--lh-body);
 }
+
+
+/* ----------------------------------------------------------
+   FOUNDER BADGE — gold tag on Moses' card (stylists page)
+   ---------------------------------------------------------- */
+.stylist-card__founder {
+  position:       absolute;
+  top:            12px;
+  left:           12px;
+  background:     var(--color-gold);
+  color:          var(--color-text-white);
+  font-family:    var(--font-body);
+  font-size:      9px;
+  font-weight:    var(--fw-medium);
+  letter-spacing: 0.12em;
+  padding:        4px 10px;
+  border-radius:  var(--radius-sm);
+  z-index:        2;
+}
+
+/* Card image needs relative positioning for the badge */
+.stylist-card__image {
+  position: relative;
+}
