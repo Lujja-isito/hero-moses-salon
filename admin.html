@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin | Hero Moses Hair Salon</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:       #111111;
+      --surface:  #1a1a1a;
+      --border:   #2a2a2a;
+      --gold:     #b8860b;
+      --gold-lt:  #c9a84c;
+      --white:    #ffffff;
+      --muted:    #aaaaaa;
+      --dim:      #999999;
+      --danger:   #c0392b;
+      --success:  #2e7d32;
+      --font-d:   'Cormorant Garamond', serif;
+      --font-b:   'Inter', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background:  var(--bg);
+      font-family: var(--font-b);
+      color:       var(--white);
+      min-height:  100vh;
+    }
+
+    /* ── LOGIN SCREEN ── */
+    .login {
+      min-height:      100vh;
+      display:         flex;
+      align-items:     center;
+      justify-content: center;
+      padding:         20px;
+    }
+    .login__card {
+      background:    var(--surface);
+      border:        1px solid var(--border);
+      border-radius: 10px;
+      padding:       40px 32px;
+      width:         100%;
+      max-width:     380px;
+      text-align:    center;
+    }
+    .login__logo {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: block;
+    }
+    .login__title {
+      font-family: var(--font-d);
+      font-size:   26px;
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+    .login__title em { font-style: italic; color: var(--gold); }
+    .login__sub {
+      font-size: 12px;
+      color: var(--dim);
+      margin-bottom: 28px;
+      letter-spacing: 0.04em;
+    }
+    .field { margin-bottom: 16px; text-align: left; }
+    .field__label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .field__input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      color: var(--white);
+      font-family: var(--font-b);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .field__input:focus { border-color: var(--gold); }
+    .btn {
+      width: 100%;
+      background: var(--gold);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      padding: 13px;
+      font-family: var(--font-b);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn:hover { background: var(--white); color: var(--gold); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .login__error {
+      color: var(--danger);
+      font-size: 12px;
+      margin-top: 14px;
+      min-height: 16px;
+    }
+
+    /* ── ADMIN PANEL ── */
+    .panel { display: none; }
+
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .topbar__brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .topbar__logo { width: 36px; height: 36px; border-radius: 50%; }
+    .topbar__name {
+      font-family: var(--font-d);
+      font-size: 17px;
+    }
+    .topbar__name em { font-style: italic; color: var(--gold); }
+    .topbar__logout {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--muted);
+      padding: 8px 16px;
+      font-family: var(--font-b);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .topbar__logout:hover { border-color: var(--danger); color: var(--danger); }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+    }
+
+    .intro {
+      margin-bottom: 32px;
+    }
+    .intro__title {
+      font-family: var(--font-d);
+      font-size: 30px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .intro__title em { font-style: italic; color: var(--gold); }
+    .intro__sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* Section tabs */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .tab {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--muted);
+      padding: 10px 18px;
+      font-family: var(--font-b);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab.active {
+      background: rgba(184,134,11,0.1);
+      border-color: var(--gold);
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    /* Upload area */
+    .upload {
+      background: var(--surface);
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 36px 20px;
+      text-align: center;
+      margin-bottom: 28px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .upload:hover { border-color: var(--gold); }
+    .upload__icon { color: var(--gold); margin-bottom: 10px; }
+    .upload__text { font-size: 14px; color: var(--white); margin-bottom: 4px; }
+    .upload__hint { font-size: 11px; color: var(--dim); }
+    .upload input { display: none; }
+
+    /* Caption modal for client photos */
+    .caption-row {
+      display: none;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .caption-row.visible { display: flex; }
+    .caption-row .field { flex: 1; margin-bottom: 0; }
+    .caption-row .btn { width: auto; padding: 12px 24px; }
+
+    /* Status message */
+    .status {
+      font-size: 13px;
+      margin-bottom: 20px;
+      min-height: 18px;
+    }
+    .status.ok  { color: var(--success); }
+    .status.err { color: var(--danger); }
+
+    /* Photo grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+    }
+    .photo {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      aspect-ratio: 1;
+      background-size: cover;
+      background-position: center;
+    }
+    .photo__del {
+      position: absolute;
+      top: 6px; right: 6px;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid var(--danger);
+      color: var(--danger);
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .photo__del:hover { background: var(--danger); color: var(--white); }
+    .photo__caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+      padding: 14px 8px 6px;
+      font-size: 10px;
+      color: var(--white);
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--dim);
+      font-size: 13px;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+    }
+
+    .loader {
+      text-align: center;
+      padding: 30px;
+      color: var(--dim);
+      font-size: 13px;
+      grid-column: 1 / -1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════════════ LOGIN SCREEN ══════════════ -->
+  <div class="login" id="login-screen">
+    <div class="login__card">
+      <img src="assets/images/logo.png" alt="Hero Moses Hair Salon" class="login__logo" />
+      <h1 class="login__title">Admin <em>Panel</em></h1>
+      <p class="login__sub">HERO MOSES HAIR SALON</p>
+
+      <div class="field">
+        <label class="field__label" for="login-email">Email</label>
+        <input class="field__input" type="email" id="login-email" autocomplete="email" />
+      </div>
+      <div class="field">
+        <label class="field__label" for="login-password">Password</label>
+        <input class="field__input" type="password" id="login-password" autocomplete="current-password" />
+      </div>
+      <button class="btn" id="login-btn">Sign In</button>
+      <p class="login__error" id="login-error"></p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════ ADMIN PANEL ══════════════ -->
+  <div class="panel" id="admin-panel">
+
+    <div class="topbar">
+      <div class="topbar__brand">
+        <img src="assets/images/logo.png" alt="" class="topbar__logo" />
+        <span class="topbar__name">Hero Moses <em>Admin</em></span>
+      </div>
+      <button class="topbar__logout" id="logout-btn">LOG OUT</button>
+    </div>
+
+    <div class="container">
+
+      <div class="intro">
+        <h2 class="intro__title">Gallery <em>Manager</em></h2>
+        <p class="intro__sub">
+          Upload photos to each section of your website gallery.
+          Photos appear on the live site immediately. Tap the red circle
+          on any photo to delete it.
+        </p>
+      </div>
+
+      <!-- Section tabs -->
+      <div class="tabs">
+        <button class="tab active" data-section="salon">The Salon</button>
+        <button class="tab" data-section="clients">Client Transformations</button>
+        <button class="tab" data-section="story">Our Story</button>
+      </div>
+
+      <!-- Upload area -->
+      <label class="upload" id="upload-area">
+        <div class="upload__icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <p class="upload__text">Tap to upload a photo</p>
+        <p class="upload__hint">JPG or PNG — photos are compressed automatically</p>
+        <input type="file" id="file-input" accept="image/*" />
+      </label>
+
+      <!-- Caption input (client section only) -->
+      <div class="caption-row" id="caption-row">
+        <div class="field">
+          <label class="field__label" for="caption-input">Caption (e.g. Knotless Braids)</label>
+          <input class="field__input" type="text" id="caption-input" placeholder="Optional caption" />
+        </div>
+        <button class="btn" id="caption-save">Upload</button>
+      </div>
+
+      <p class="status" id="status"></p>
+
+      <!-- Photo grid -->
+      <div class="grid" id="photo-grid">
+        <div class="loader">Loading photos...</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════ FIREBASE LOGIC ══════════════ -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import {
+      getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import {
+      getFirestore, collection, addDoc, deleteDoc, doc,
+      query, where, orderBy, getDocs, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBBV1YGdwlA2Q5yU1knZo0Kdayf4Cv_F1g",
+      authDomain: "hero-moses-salon.firebaseapp.com",
+      projectId: "hero-moses-salon",
+      storageBucket: "hero-moses-salon.firebasestorage.app",
+      messagingSenderId: "222681569385",
+      appId: "1:222681569385:web:6390b308ec3de8f3e76af8"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    /* ── ELEMENTS ── */
+    const loginScreen = document.getElementById('login-screen');
+    const adminPanel  = document.getElementById('admin-panel');
+    const loginBtn    = document.getElementById('login-btn');
+    const loginError  = document.getElementById('login-error');
+    const logoutBtn   = document.getElementById('logout-btn');
+    const tabs        = document.querySelectorAll('.tab');
+    const fileInput   = document.getElementById('file-input');
+    const captionRow  = document.getElementById('caption-row');
+    const captionInput= document.getElementById('caption-input');
+    const captionSave = document.getElementById('caption-save');
+    const statusEl    = document.getElementById('status');
+    const photoGrid   = document.getElementById('photo-grid');
+
+    let currentSection = 'salon';
+    let pendingImage   = null;   /* compressed base64 waiting for caption */
+
+    /* ── AUTH STATE ── */
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loginScreen.style.display = 'none';
+        adminPanel.style.display  = 'block';
+        loadPhotos();
+      } else {
+        loginScreen.style.display = 'flex';
+        adminPanel.style.display  = 'none';
+      }
+    });
+
+    /* ── LOGIN ── */
+    loginBtn.addEventListener('click', async () => {
+      const email = document.getElementById('login-email').value.trim();
+      const pass  = document.getElementById('login-password').value;
+      loginError.textContent = '';
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Signing in...';
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+      } catch (err) {
+        loginError.textContent = 'Wrong email or password. Try again.';
+      }
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Sign In';
+    });
+
+    /* Enter key submits login */
+    document.getElementById('login-password').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') loginBtn.click();
+    });
+
+    /* ── LOGOUT ── */
+    logoutBtn.addEventListener('click', () => signOut(auth));
+
+    /* ── TABS ── */
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentSection = tab.dataset.section;
+        captionRow.classList.remove('visible');
+        pendingImage = null;
+        setStatus('');
+        loadPhotos();
+      });
+    });
+
+    /* ── IMAGE COMPRESSION ──
+       Resizes to max 1200px and compresses to JPEG.
+       Keeps each photo under ~400KB so Firestore stays fast. */
+    function compressImage(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const MAX = 1200;
+            let w = img.width, h = img.height;
+            if (w > MAX || h > MAX) {
+              if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+              else       { w = Math.round(w * MAX / h); h = MAX; }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+
+            /* Try quality levels until under 400KB */
+            let quality = 0.75;
+            let dataUrl = canvas.toDataURL('image/jpeg', quality);
+            while (dataUrl.length > 550000 && quality > 0.4) {
+              quality -= 0.1;
+              dataUrl = canvas.toDataURL('image/jpeg', quality);
+            }
+            resolve(dataUrl);
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    /* ── FILE SELECTED ── */
+    fileInput.addEventListener('change', async () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      setStatus('Compressing photo...', '');
+
+      try {
+        const compressed = await compressImage(file);
+
+        if (currentSection === 'clients') {
+          /* Ask for caption first */
+          pendingImage = compressed;
+          captionRow.classList.add('visible');
+          captionInput.value = '';
+          captionInput.focus();
+          setStatus('Add a caption then tap Upload', '');
+        } else {
+          await uploadPhoto(compressed, '');
+        }
+      } catch (err) {
+        setStatus('Could not read that photo. Try another one.', 'err');
+      }
+      fileInput.value = '';
+    });
+
+    /* ── CAPTION SAVE (clients section) ── */
+    captionSave.addEventListener('click', async () => {
+      if (!pendingImage) return;
+      await uploadPhoto(pendingImage, captionInput.value.trim());
+      pendingImage = null;
+      captionRow.classList.remove('visible');
+    });
+
+    /* ── UPLOAD TO FIRESTORE ── */
+    async function uploadPhoto(base64, caption) {
+      setStatus('Uploading...', '');
+      try {
+        await addDoc(collection(db, 'gallery'), {
+          section:   currentSection,
+          image:     base64,
+          caption:   caption || '',
+          createdAt: serverTimestamp()
+        });
+        setStatus('Photo uploaded! It is now live on the website.', 'ok');
+        loadPhotos();
+      } catch (err) {
+        setStatus('Upload failed. Check your internet and try again.', 'err');
+      }
+    }
+
+    /* ── LOAD PHOTOS FOR CURRENT SECTION ── */
+    async function loadPhotos() {
+      photoGrid.innerHTML = '<div class="loader">Loading photos...</div>';
+      try {
+        const q = query(
+          collection(db, 'gallery'),
+          where('section', '==', currentSection)
+        );
+        const snap = await getDocs(q);
+
+        if (snap.empty) {
+          photoGrid.innerHTML = '<div class="empty">No photos in this section yet.<br>Tap the upload box above to add the first one.</div>';
+          return;
+        }
+
+        /* Sort newest first (client-side to avoid composite index) */
+        const docs = [];
+        snap.forEach(d => docs.push({ id: d.id, ...d.data() }));
+        docs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+
+        photoGrid.innerHTML = '';
+        docs.forEach(p => {
+          const cell = document.createElement('div');
+          cell.className = 'photo';
+          cell.style.backgroundImage = `url('${p.image}')`;
+
+          const del = document.createElement('button');
+          del.className = 'photo__del';
+          del.innerHTML = '&times;';
+          del.title = 'Delete photo';
+          del.onclick = async () => {
+            if (!confirm('Delete this photo from the website?')) return;
+            await deleteDoc(doc(db, 'gallery', p.id));
+            loadPhotos();
+          };
+          cell.appendChild(del);
+
+          if (p.caption) {
+            const cap = document.createElement('div');
+            cap.className = 'photo__caption';
+            cap.textContent = p.caption;
+            cell.appendChild(cap);
+          }
+
+          photoGrid.appendChild(cell);
+        });
+
+      } catch (err) {
+        photoGrid.innerHTML = '<div class="empty">Could not load photos. Check your internet connection.</div>';
+      }
+    }
+
+    /* ── STATUS HELPER ── */
+    function setStatus(msg, type) {
+      statusEl.textContent = msg;
+      statusEl.className = 'status' + (type ? ' ' + type : '');
+    }
+  </script>
+
+</body>
+</html>

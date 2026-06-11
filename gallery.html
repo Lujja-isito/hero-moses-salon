@@ -803,5 +803,81 @@
   <script src="assets/js/navbar.js"></script>
   <script src="assets/js/scroll.js"></script>
 
+
+  <!-- ══════════════ FIREBASE GALLERY LOADER ══════════════
+       Loads photos uploaded by the admin panel and displays
+       them in their matching sections, newest first.
+       Static photos coded in the HTML above remain untouched. -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import {
+      getFirestore, collection, query, where, getDocs
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBBV1YGdwlA2Q5yU1knZo0Kdayf4Cv_F1g",
+      authDomain: "hero-moses-salon.firebaseapp.com",
+      projectId: "hero-moses-salon",
+      storageBucket: "hero-moses-salon.firebasestorage.app",
+      messagingSenderId: "222681569385",
+      appId: "1:222681569385:web:6390b308ec3de8f3e76af8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    async function loadSection(sectionName) {
+      const q = query(collection(db, 'gallery'), where('section', '==', sectionName));
+      const snap = await getDocs(q);
+      const docs = [];
+      snap.forEach(d => docs.push(d.data()));
+      docs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      return docs;
+    }
+
+    /* ── THE SALON section ── */
+    loadSection('salon').then(photos => {
+      const grid = document.querySelector('.salon-grid');
+      if (!grid || !photos.length) return;
+      photos.forEach(p => {
+        const cell = document.createElement('div');
+        cell.className = 'salon-grid__cell salon-grid__cell--small';
+        cell.style.backgroundImage = `url('${p.image}')`;
+        grid.appendChild(cell);
+      });
+    }).catch(() => {});
+
+    /* ── CLIENT TRANSFORMATIONS section ── */
+    loadSection('clients').then(photos => {
+      const grid = document.querySelector('.clients-grid');
+      if (!grid || !photos.length) return;
+      const sizes = ['tall', 'medium', 'short'];
+      photos.forEach((p, i) => {
+        const cell = document.createElement('div');
+        cell.className = 'clients-grid__cell clients-grid__cell--' + sizes[i % 3];
+        cell.style.backgroundImage = `url('${p.image}')`;
+        if (p.caption) {
+          const cap = document.createElement('div');
+          cap.className = 'clients-grid__caption';
+          cap.innerHTML = '<span class="clients-grid__caption-text"></span>';
+          cap.querySelector('span').textContent = p.caption;
+          cell.appendChild(cap);
+        }
+        grid.appendChild(cell);
+      });
+    }).catch(() => {});
+
+    /* ── OUR STORY visual ── */
+    loadSection('story').then(photos => {
+      if (!photos.length) return;
+      const visual = document.querySelector('.about-grid__visual');
+      if (visual) {
+        visual.style.backgroundImage = `url('${photos[0].image}')`;
+        const ph = visual.querySelector('.about-grid__visual-placeholder');
+        if (ph) ph.style.display = 'none';
+      }
+    }).catch(() => {});
+  </script>
+
 </body>
 </html>
