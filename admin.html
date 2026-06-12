@@ -175,6 +175,138 @@
     .intro__title em { font-style: italic; color: var(--gold); }
     .intro__sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
+    /* Top-level view switcher */
+    .views {
+      display: flex;
+      gap: 0;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      width: fit-content;
+    }
+    .view-btn {
+      background: var(--surface);
+      border: none;
+      color: var(--muted);
+      padding: 12px 28px;
+      font-family: var(--font-b);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .view-btn.active { background: var(--gold); color: var(--white); }
+
+    /* Team member cards */
+    .member {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .member__photo {
+      width: 54px; height: 54px;
+      border-radius: 50%;
+      background: var(--bg);
+      background-size: cover;
+      background-position: center top;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-d); font-size: 22px; color: #4a4a4a;
+      flex-shrink: 0;
+    }
+    .member__info { flex: 1; min-width: 0; }
+    .member__name {
+      font-size: 14px; color: var(--white); font-weight: 500;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .member__founder {
+      background: var(--gold); color: var(--white);
+      font-size: 8px; letter-spacing: 0.1em;
+      padding: 2px 7px; border-radius: 3px;
+    }
+    .member__role { font-size: 11px; color: var(--dim); margin-top: 2px; }
+    .member__actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .member__btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--muted);
+      padding: 7px 14px;
+      font-family: var(--font-b);
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .member__btn:hover { border-color: var(--gold); color: var(--gold); }
+    .member__btn--del:hover { border-color: var(--danger); color: var(--danger); }
+
+    /* Team form */
+    .team-form {
+      background: var(--surface);
+      border: 1px solid var(--gold);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 24px;
+      display: none;
+    }
+    .team-form.visible { display: block; }
+    .team-form__title {
+      font-family: var(--font-d);
+      font-size: 19px;
+      margin-bottom: 16px;
+    }
+    .team-form__title em { font-style: italic; color: var(--gold); }
+    .team-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 560px) { .team-form__row { grid-template-columns: 1fr; } }
+    .team-form textarea {
+      width: 100%; background: var(--bg);
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 12px 14px; color: var(--white);
+      font-family: var(--font-b); font-size: 13px;
+      min-height: 80px; resize: vertical; outline: none;
+    }
+    .team-form textarea:focus { border-color: var(--gold); }
+    .check-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px; font-size: 13px; color: var(--muted);
+    }
+    .check-row input { width: 16px; height: 16px; accent-color: var(--gold); }
+    .team-form__actions { display: flex; gap: 10px; }
+    .team-form__actions .btn { width: auto; padding: 12px 26px; }
+    .btn--ghost {
+      background: none; border: 1px solid var(--border); color: var(--muted);
+    }
+    .btn--ghost:hover { background: none; border-color: var(--danger); color: var(--danger); }
+
+    /* Undo bar */
+    .undo-bar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--surface);
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: var(--white);
+    }
+    .undo-bar.visible { display: flex; }
+    .undo-bar button {
+      background: var(--gold); border: none; border-radius: 6px;
+      color: var(--white); padding: 8px 18px;
+      font-family: var(--font-b); font-size: 11px;
+      letter-spacing: 0.08em; cursor: pointer;
+    }
+
     /* Section tabs */
     .tabs {
       display: flex;
@@ -360,12 +492,26 @@
     <div class="container">
 
       <div class="intro">
-        <h2 class="intro__title">Gallery <em>Manager</em></h2>
+        <h2 class="intro__title">Site <em>Manager</em></h2>
         <p class="intro__sub">
-          Upload photos to each section of your website gallery.
-          Photos appear on the live site immediately. Tap the red circle
-          on any photo to delete it.
+          Manage every photo on the website and your full team — add,
+          edit or remove anything. Changes go live immediately.
         </p>
+      </div>
+
+      <!-- Top-level views -->
+      <div class="views">
+        <button class="view-btn active" data-view="photos">PHOTOS</button>
+        <button class="view-btn" data-view="team">TEAM</button>
+      </div>
+
+      <!-- ════════ PHOTOS VIEW ════════ -->
+      <div class="view-panel" id="view-photos">
+
+      <!-- Undo bar -->
+      <div class="undo-bar" id="undo-bar">
+        <span id="undo-text">Photo deleted.</span>
+        <button id="undo-btn">UNDO</button>
       </div>
 
       <!-- Section tabs -->
@@ -408,6 +554,80 @@
         <div class="loader">Loading photos...</div>
       </div>
 
+      </div><!-- /view-photos -->
+
+
+      <!-- ════════ TEAM VIEW ════════ -->
+      <div class="view-panel" id="view-team" style="display:none">
+
+        <!-- Guidelines -->
+        <div class="section-guide">
+          <div class="section-guide__badge">TEAM — HOME PAGE &amp; STYLISTS PAGE</div>
+          <p class="section-guide__text">
+            Your team shows in <strong>two places</strong>: the black-and-white
+            mosaic on the home page and the full colour cards on the Stylists page.
+            The <strong>Founder</strong> always appears first. Best photos:
+            portrait style, face centred, taken against a plain background.
+            Photos scale to fit automatically.
+          </p>
+        </div>
+
+        <div class="undo-bar" id="team-undo-bar">
+          <span id="team-undo-text">Member removed.</span>
+          <button id="team-undo-btn">UNDO</button>
+        </div>
+
+        <button class="btn" id="add-member-btn" style="width:auto;padding:12px 26px;margin-bottom:20px">+ ADD TEAM MEMBER</button>
+
+        <!-- Add / Edit form -->
+        <div class="team-form" id="team-form">
+          <h3 class="team-form__title" id="team-form-title">Add <em>Member</em></h3>
+
+          <div class="team-form__row">
+            <div class="field">
+              <label class="field__label" for="m-name">Name</label>
+              <input class="field__input" type="text" id="m-name" placeholder="e.g. Sarah" />
+            </div>
+            <div class="field">
+              <label class="field__label" for="m-role">Role</label>
+              <input class="field__input" type="text" id="m-role" placeholder="e.g. Senior Stylist" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="m-specs">Specialties (separate with commas)</label>
+            <input class="field__input" type="text" id="m-specs" placeholder="e.g. Knotless Braids, Wig Installation, Lashes" />
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="m-bio">Short bio</label>
+            <textarea id="m-bio" placeholder="One or two sentences about this stylist..."></textarea>
+          </div>
+
+          <div class="check-row">
+            <input type="checkbox" id="m-founder" />
+            <label for="m-founder">This is the Founder (shows the gold FOUNDER badge and appears first)</label>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="m-photo">Photo (optional — initials show if empty)</label>
+            <input class="field__input" type="file" id="m-photo" accept="image/*" />
+          </div>
+
+          <div class="team-form__actions">
+            <button class="btn" id="m-save">SAVE MEMBER</button>
+            <button class="btn btn--ghost" id="m-cancel">CANCEL</button>
+          </div>
+          <p class="status" id="team-status"></p>
+        </div>
+
+        <!-- Members list -->
+        <div id="members-list">
+          <div class="loader">Loading team...</div>
+        </div>
+
+      </div><!-- /view-team -->
+
     </div>
   </div>
 
@@ -419,7 +639,7 @@
       getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
     import {
-      getFirestore, collection, addDoc, deleteDoc, doc,
+      getFirestore, collection, addDoc, deleteDoc, updateDoc, doc,
       query, where, orderBy, getDocs, serverTimestamp
     } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
@@ -640,7 +860,10 @@
           del.title = 'Delete photo';
           del.onclick = async () => {
             if (!confirm('Delete this photo from the website?')) return;
+            lastDeletedPhoto = { section: p.section, image: p.image,
+                                 caption: p.caption || '', createdAt: p.createdAt || null };
             await deleteDoc(doc(db, 'gallery', p.id));
+            showUndo('photo');
             loadPhotos();
           };
           cell.appendChild(del);
@@ -672,6 +895,214 @@
     function setStatus(msg, type) {
       statusEl.textContent = msg;
       statusEl.className = 'status' + (type ? ' ' + type : '');
+    }
+
+
+    /* ════════════════════════════════════════════
+       VIEW SWITCHING — Photos | Team
+       ════════════════════════════════════════════ */
+    const viewBtns  = document.querySelectorAll('.view-btn');
+    const viewPanels = {
+      photos: document.getElementById('view-photos'),
+      team:   document.getElementById('view-team')
+    };
+    viewBtns.forEach(b => b.addEventListener('click', () => {
+      viewBtns.forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      const v = b.dataset.view;
+      viewPanels.photos.style.display = v === 'photos' ? 'block' : 'none';
+      viewPanels.team.style.display   = v === 'team'   ? 'block' : 'none';
+      if (v === 'team') loadMembers();
+    }));
+
+
+    /* ════════════════════════════════════════════
+       UNDO — photos and team share the pattern
+       ════════════════════════════════════════════ */
+    let lastDeletedPhoto  = null;
+    let lastDeletedMember = null;
+    let undoTimer = null;
+
+    function showUndo(kind) {
+      const bar = document.getElementById(kind === 'photo' ? 'undo-bar' : 'team-undo-bar');
+      bar.classList.add('visible');
+      clearTimeout(undoTimer);
+      undoTimer = setTimeout(() => bar.classList.remove('visible'), 8000);
+    }
+
+    document.getElementById('undo-btn').addEventListener('click', async () => {
+      if (!lastDeletedPhoto) return;
+      const d = lastDeletedPhoto; lastDeletedPhoto = null;
+      await addDoc(collection(db, 'gallery'),
+        { ...d, createdAt: d.createdAt || serverTimestamp() });
+      document.getElementById('undo-bar').classList.remove('visible');
+      loadPhotos();
+    });
+
+    document.getElementById('team-undo-btn').addEventListener('click', async () => {
+      if (!lastDeletedMember) return;
+      const d = lastDeletedMember; lastDeletedMember = null;
+      await addDoc(collection(db, 'team'),
+        { ...d, createdAt: d.createdAt || serverTimestamp() });
+      document.getElementById('team-undo-bar').classList.remove('visible');
+      loadMembers();
+    });
+
+
+    /* ════════════════════════════════════════════
+       TEAM CRUD
+       ════════════════════════════════════════════ */
+    const teamForm   = document.getElementById('team-form');
+    const formTitle  = document.getElementById('team-form-title');
+    const mName   = document.getElementById('m-name');
+    const mRole   = document.getElementById('m-role');
+    const mSpecs  = document.getElementById('m-specs');
+    const mBio    = document.getElementById('m-bio');
+    const mFounder= document.getElementById('m-founder');
+    const mPhoto  = document.getElementById('m-photo');
+    const teamStatus = document.getElementById('team-status');
+    let editingId = null;     /* null = creating, otherwise doc id being edited */
+
+    function setTeamStatus(msg, type) {
+      teamStatus.textContent = msg;
+      teamStatus.className = 'status' + (type ? ' ' + type : '');
+    }
+
+    function openForm(member) {
+      teamForm.classList.add('visible');
+      if (member) {
+        editingId = member.id;
+        formTitle.innerHTML = 'Edit <em>' + member.name + '</em>';
+        mName.value  = member.name || '';
+        mRole.value  = member.role || '';
+        mSpecs.value = (member.specialties || []).join(', ');
+        mBio.value   = member.bio || '';
+        mFounder.checked = !!member.founder;
+      } else {
+        editingId = null;
+        formTitle.innerHTML = 'Add <em>Member</em>';
+        mName.value = mRole.value = mSpecs.value = mBio.value = '';
+        mFounder.checked = false;
+      }
+      mPhoto.value = '';
+      setTeamStatus('');
+      mName.focus();
+    }
+
+    document.getElementById('add-member-btn').addEventListener('click', () => openForm(null));
+    document.getElementById('m-cancel').addEventListener('click', () => {
+      teamForm.classList.remove('visible');
+      editingId = null;
+    });
+
+    /* CREATE + UPDATE */
+    document.getElementById('m-save').addEventListener('click', async () => {
+      const name = mName.value.trim();
+      if (!name) { setTeamStatus('Please enter a name.', 'err'); return; }
+
+      setTeamStatus('Saving...', '');
+      const data = {
+        name,
+        role:        mRole.value.trim() || 'Stylist',
+        specialties: mSpecs.value.split(',').map(s => s.trim()).filter(Boolean),
+        bio:         mBio.value.trim(),
+        founder:     mFounder.checked
+      };
+
+      try {
+        if (mPhoto.files[0]) {
+          data.photo = await compressImage(mPhoto.files[0]);
+        }
+        if (editingId) {
+          await updateDoc(doc(db, 'team', editingId), data);
+          setTeamStatus('Member updated — live on the site now.', 'ok');
+        } else {
+          data.createdAt = serverTimestamp();
+          if (!('photo' in data)) data.photo = '';
+          await addDoc(collection(db, 'team'), data);
+          setTeamStatus('Member added — live on the site now.', 'ok');
+        }
+        teamForm.classList.remove('visible');
+        editingId = null;
+        loadMembers();
+      } catch (e) {
+        setTeamStatus('Save failed. Check your internet and try again.', 'err');
+      }
+    });
+
+    /* READ */
+    async function loadMembers() {
+      const list = document.getElementById('members-list');
+      list.innerHTML = '<div class="loader">Loading team...</div>';
+      try {
+        const snap = await getDocs(collection(db, 'team'));
+        const members = [];
+        snap.forEach(d => members.push({ id: d.id, ...d.data() }));
+
+        if (!members.length) {
+          list.innerHTML = '<div class="empty">No team members yet.<br>Tap + ADD TEAM MEMBER to add the first one.</div>';
+          return;
+        }
+
+        /* Founder first, then oldest-added first */
+        members.sort((a, b) => (b.founder === true) - (a.founder === true)
+          || (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0));
+
+        list.innerHTML = '';
+        members.forEach(m => {
+          const row = document.createElement('div');
+          row.className = 'member';
+
+          const photo = document.createElement('div');
+          photo.className = 'member__photo';
+          if (m.photo) photo.style.backgroundImage = `url('${m.photo}')`;
+          else photo.textContent = (m.name || '?')[0];
+
+          const info = document.createElement('div');
+          info.className = 'member__info';
+          const nm = document.createElement('div');
+          nm.className = 'member__name';
+          nm.textContent = m.name;
+          if (m.founder) {
+            const b = document.createElement('span');
+            b.className = 'member__founder';
+            b.textContent = 'FOUNDER';
+            nm.appendChild(b);
+          }
+          const rl = document.createElement('div');
+          rl.className = 'member__role';
+          rl.textContent = m.role + (m.specialties?.length ? ' · ' + m.specialties.join(', ') : '');
+          info.appendChild(nm); info.appendChild(rl);
+
+          const actions = document.createElement('div');
+          actions.className = 'member__actions';
+
+          const edit = document.createElement('button');
+          edit.className = 'member__btn';
+          edit.textContent = 'Edit';
+          edit.onclick = () => openForm(m);
+
+          const del = document.createElement('button');
+          del.className = 'member__btn member__btn--del';
+          del.textContent = 'Delete';
+          del.onclick = async () => {
+            if (!confirm('Remove ' + m.name + ' from the website?')) return;
+            lastDeletedMember = { name: m.name, role: m.role,
+              specialties: m.specialties || [], bio: m.bio || '',
+              founder: !!m.founder, photo: m.photo || '',
+              createdAt: m.createdAt || null };
+            await deleteDoc(doc(db, 'team', m.id));
+            showUndo('team');
+            loadMembers();
+          };
+
+          actions.appendChild(edit); actions.appendChild(del);
+          row.appendChild(photo); row.appendChild(info); row.appendChild(actions);
+          list.appendChild(row);
+        });
+      } catch (e) {
+        list.innerHTML = '<div class="empty">Could not load team. Check your internet connection.</div>';
+      }
     }
   </script>
 
