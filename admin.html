@@ -201,6 +201,32 @@
       font-weight: 500;
     }
 
+    /* Section guide card — gold outline so each section is clear */
+    .section-guide {
+      border:        1px solid var(--gold);
+      border-radius: 8px;
+      background:    rgba(184,134,11,0.05);
+      padding:       16px 18px;
+      margin-bottom: 20px;
+    }
+    .section-guide__badge {
+      display:        inline-block;
+      background:     var(--gold);
+      color:          var(--white);
+      font-size:      9px;
+      font-weight:    500;
+      letter-spacing: 0.12em;
+      padding:        4px 10px;
+      border-radius:  4px;
+      margin-bottom:  10px;
+    }
+    .section-guide__text {
+      font-size:   12px;
+      color:       var(--muted);
+      line-height: 1.7;
+    }
+    .section-guide__text strong { color: var(--white); font-weight: 500; }
+
     /* Upload area */
     .upload {
       background: var(--surface);
@@ -344,9 +370,16 @@
 
       <!-- Section tabs -->
       <div class="tabs">
-        <button class="tab active" data-section="salon">The Salon</button>
+        <button class="tab active" data-section="home">Home Page</button>
+        <button class="tab" data-section="salon">The Salon</button>
         <button class="tab" data-section="clients">Client Transformations</button>
         <button class="tab" data-section="story">Our Story</button>
+      </div>
+
+      <!-- Section guide — explains exactly where these photos appear -->
+      <div class="section-guide" id="section-guide">
+        <div class="section-guide__badge" id="guide-badge">HOME PAGE</div>
+        <p class="section-guide__text" id="guide-text"></p>
       </div>
 
       <!-- Upload area -->
@@ -417,7 +450,26 @@
     const statusEl    = document.getElementById('status');
     const photoGrid   = document.getElementById('photo-grid');
 
-    let currentSection = 'salon';
+    const SECTION_INFO = {
+      home: {
+        badge: 'HOME PAGE',
+        text:  'These photos fill the <strong>5 Gallery frames on the home page</strong> — the first page every visitor sees. The newest 5 photos show automatically. Best choice: your strongest, most beautiful work. Photos scale to fit each frame automatically.'
+      },
+      salon: {
+        badge: 'GALLERY PAGE — THE SALON',
+        text:  'These photos appear in <strong>The Salon section of the Gallery page</strong> — the space, reception, products and styling stations. Wide (landscape) photos look best here.'
+      },
+      clients: {
+        badge: 'GALLERY PAGE — CLIENT TRANSFORMATIONS',
+        text:  'These photos appear in the <strong>Client Transformations grid on the Gallery page</strong>. Add a caption naming the style (e.g. Knotless Braids) — it shows when visitors hover over the photo.'
+      },
+      story: {
+        badge: 'GALLERY PAGE — OUR STORY',
+        text:  'Only the <strong>newest photo</strong> shows here — the large picture beside the Our Story text on the Gallery page. A wide landscape photo of the salon fits this frame best.'
+      }
+    };
+
+    let currentSection = 'home';
     let pendingImage   = null;   /* compressed base64 waiting for caption */
 
     /* ── AUTH STATE ── */
@@ -462,6 +514,7 @@
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         currentSection = tab.dataset.section;
+        updateGuide();
         captionRow.classList.remove('visible');
         pendingImage = null;
         setStatus('');
@@ -606,6 +659,14 @@
         photoGrid.innerHTML = '<div class="empty">Could not load photos. Check your internet connection.</div>';
       }
     }
+
+    /* ── SECTION GUIDE ── */
+    function updateGuide() {
+      const info = SECTION_INFO[currentSection];
+      document.getElementById('guide-badge').textContent = info.badge;
+      document.getElementById('guide-text').innerHTML    = info.text;
+    }
+    updateGuide();
 
     /* ── STATUS HELPER ── */
     function setStatus(msg, type) {

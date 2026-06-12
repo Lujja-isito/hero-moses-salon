@@ -1115,7 +1115,21 @@
     </div>
     <!-- end .gallery__social-cta -->
 
-  </section>
+  
+    <!-- View more photos CTA — same animated style as View Full Menu -->
+    <div style="text-align:center; margin-top: 48px;">
+      <a href="gallery.html" class="services-cta-btn" aria-label="View more photos in the gallery">
+        <span class="services-cta-btn__text">VIEW MORE PHOTOS</span>
+        <span class="services-cta-btn__circle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+      </a>
+    </div>
+
+</section>
   <!-- end #gallery -->
 
 
@@ -1255,6 +1269,53 @@
   <script src="assets/js/hours.js"></script>
   <script src="assets/js/gallery.js"></script>
   <script src="assets/js/scroll.js"></script>
+
+
+  <!-- ══════ FIREBASE HOME GALLERY LOADER ══════
+       Fills the 5 gallery frames with photos uploaded in the
+       admin panel (Home Page tab). Photos automatically scale
+       to fit each frame. Falls back to Client photos if the
+       Home section is empty. -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs }
+      from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBBV1YGdwlA2Q5yU1knZo0Kdayf4Cv_F1g",
+      authDomain: "hero-moses-salon.firebaseapp.com",
+      projectId: "hero-moses-salon",
+      storageBucket: "hero-moses-salon.firebasestorage.app",
+      messagingSenderId: "222681569385",
+      appId: "1:222681569385:web:6390b308ec3de8f3e76af8"
+    };
+    const db = getFirestore(initializeApp(firebaseConfig));
+
+    async function fetchSection(name) {
+      const snap = await getDocs(query(collection(db, 'gallery'), where('section', '==', name)));
+      const docs = []; snap.forEach(d => docs.push(d.data()));
+      docs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      return docs;
+    }
+
+    (async () => {
+      try {
+        let photos = await fetchSection('home');
+        if (!photos.length) photos = await fetchSection('clients');
+        if (!photos.length) return;
+
+        const cells = document.querySelectorAll('.gallery .gallery__cell');
+        cells.forEach((cell, i) => {
+          if (photos[i]) {
+            /* cover = photo scales automatically to fill the frame */
+            cell.style.backgroundImage    = `url('${photos[i].image}')`;
+            cell.style.backgroundSize     = 'cover';
+            cell.style.backgroundPosition = 'center';
+          }
+        });
+      } catch (e) { /* offline — placeholders stay */ }
+    })();
+  </script>
 
 </body>
 </html>
