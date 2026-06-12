@@ -1320,51 +1320,6 @@
   <script src="assets/js/scroll.js"></script>
 
 
-  <!-- ══════ FIREBASE HOME GALLERY LOADER ══════
-       Fills the 5 gallery frames with photos uploaded in the
-       admin panel (Home Page tab). Photos automatically scale
-       to fit each frame. Falls back to Client photos if the
-       Home section is empty. -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs }
-      from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBBV1YGdwlA2Q5yU1knZo0Kdayf4Cv_F1g",
-      authDomain: "hero-moses-salon.firebaseapp.com",
-      projectId: "hero-moses-salon",
-      storageBucket: "hero-moses-salon.firebasestorage.app",
-      messagingSenderId: "222681569385",
-      appId: "1:222681569385:web:6390b308ec3de8f3e76af8"
-    };
-    const db = getFirestore(initializeApp(firebaseConfig));
-
-    async function fetchSection(name) {
-      const snap = await getDocs(query(collection(db, 'gallery'), where('section', '==', name)));
-      const docs = []; snap.forEach(d => docs.push(d.data()));
-      docs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-      return docs;
-    }
-
-    (async () => {
-      try {
-        let photos = await fetchSection('home');
-        if (!photos.length) photos = await fetchSection('clients');
-        if (!photos.length) return;
-
-        const slides = document.querySelectorAll('.home-carousel__slide');
-        slides.forEach((slide, i) => {
-          if (photos[i]) {
-            /* cover = photo scales automatically to fill the frame */
-            slide.style.backgroundImage = `url('${photos[i].image}')`;
-          }
-        });
-      } catch (e) { /* offline — placeholders stay */ }
-    })();
-  </script>
-
-
   <!-- ── CAROUSEL AUTO-ADVANCE ── -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -1409,13 +1364,14 @@
   </script>
 
 
-  <!-- ══════ FIREBASE TEAM → MOSAIC ══════
-       Fills the home mosaic tiles with team members managed
-       in /admin.html. CSS keeps them black & white here. -->
+  <!-- ══════ FIREBASE LOADER (single script) ══════
+       1. Fills the gallery carousel with Home Page photos
+       2. Fills the team mosaic tiles with team members
+       Managed entirely from /admin.html. -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getFirestore, collection, getDocs }
-      from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs }
+      from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBBV1YGdwlA2Q5yU1knZo0Kdayf4Cv_F1g",
@@ -1425,11 +1381,31 @@
       messagingSenderId: "222681569385",
       appId: "1:222681569385:web:6390b308ec3de8f3e76af8"
     };
-    const db2 = getFirestore(initializeApp(firebaseConfig, 'mosaic'));
+    const db = getFirestore(initializeApp(firebaseConfig));
+
+    /* ── 1. Gallery carousel ── */
+    async function fetchSection(name) {
+      const snap = await getDocs(query(collection(db, 'gallery'), where('section', '==', name)));
+      const docs = []; snap.forEach(d => docs.push(d.data()));
+      docs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      return docs;
+    }
 
     (async () => {
       try {
-        const snap = await getDocs(collection(db2, 'team'));
+        let photos = await fetchSection('home');
+        if (!photos.length) photos = await fetchSection('clients');
+        if (!photos.length) return;
+        document.querySelectorAll('.home-carousel__slide').forEach((slide, i) => {
+          if (photos[i]) slide.style.backgroundImage = `url('${photos[i].image}')`;
+        });
+      } catch (e) { console.warn('Gallery load:', e.message); }
+    })();
+
+    /* ── 2. Team mosaic ── */
+    (async () => {
+      try {
+        const snap = await getDocs(collection(db, 'team'));
         const members = [];
         snap.forEach(d => members.push(d.data()));
         if (!members.length) return;
@@ -1437,8 +1413,7 @@
         members.sort((a, b) => (b.founder === true) - (a.founder === true)
           || (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0));
 
-        const tiles = document.querySelectorAll('.team-mosaic__tile--photo');
-        tiles.forEach((tile, i) => {
+        document.querySelectorAll('.team-mosaic__tile--photo').forEach((tile, i) => {
           const m = members[i];
           if (!m) return;
           const initial = tile.querySelector('.team-mosaic__initial');
@@ -1451,7 +1426,7 @@
           }
           if (nameEl) nameEl.textContent = m.founder ? m.name + ' \u00b7 Founder' : m.name;
         });
-      } catch (e) { /* offline — static tiles stay */ }
+      } catch (e) { console.warn('Team load:', e.message); }
     })();
   </script>
 
