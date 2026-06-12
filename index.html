@@ -1068,17 +1068,9 @@
     <!-- end .gallery__topbar -->
 
     <!-- Row 1: 2 tall cells -->
-    <div class="gallery__row gallery__row--two">
-      <div class="gallery__cell gallery__cell--tall" aria-label="Gallery photo placeholder"></div>
-      <div class="gallery__cell gallery__cell--tall" aria-label="Gallery photo placeholder"></div>
-    </div>
+
 
     <!-- Row 2: 3 medium cells -->
-    <div class="gallery__row gallery__row--three">
-      <div class="gallery__cell gallery__cell--medium" aria-label="Gallery photo placeholder"></div>
-      <div class="gallery__cell gallery__cell--medium" aria-label="Gallery photo placeholder"></div>
-      <div class="gallery__cell gallery__cell--medium" aria-label="Gallery photo placeholder"></div>
-    </div>
 
     <!-- Social CTA -->
     <div class="gallery__social-cta">
@@ -1116,6 +1108,96 @@
     <!-- end .gallery__social-cta -->
 
   
+    <!-- ── HOME GALLERY CAROUSEL ──
+         Desktop: one large slide at a time, auto-advances every 4s.
+         Mobile (≤600px): becomes a 2x2 photo grid instead. -->
+    <div class="home-carousel" id="home-carousel">
+      <div class="home-carousel__slide home-carousel__slide--active" aria-label="Gallery photo 1"></div>
+      <div class="home-carousel__slide" aria-label="Gallery photo 2"></div>
+      <div class="home-carousel__slide" aria-label="Gallery photo 3"></div>
+      <div class="home-carousel__slide" aria-label="Gallery photo 4"></div>
+      <div class="home-carousel__slide" aria-label="Gallery photo 5"></div>
+
+      <div class="home-carousel__dots" id="home-carousel-dots">
+        <button class="home-carousel__dot home-carousel__dot--active" data-slide="0" aria-label="Photo 1"></button>
+        <button class="home-carousel__dot" data-slide="1" aria-label="Photo 2"></button>
+        <button class="home-carousel__dot" data-slide="2" aria-label="Photo 3"></button>
+        <button class="home-carousel__dot" data-slide="3" aria-label="Photo 4"></button>
+        <button class="home-carousel__dot" data-slide="4" aria-label="Photo 5"></button>
+      </div>
+    </div>
+
+    <style>
+      /* ── DESKTOP: fading carousel, full-size frame ── */
+      .home-carousel {
+        position:      relative;
+        max-width:     960px;
+        height:        520px;          /* large frame — photos show at real presence */
+        margin:        0 auto;
+        border-radius: var(--radius-lg);
+        overflow:      hidden;
+        border:        1px solid var(--color-border-dark);
+        background:    var(--color-bg-surface);
+      }
+
+      .home-carousel__slide {
+        position:            absolute;
+        inset:               0;
+        opacity:             0;
+        background-size:     cover;     /* photo scales to fill the frame */
+        background-position: center;
+        background-color:    #1d1d1d;
+        transition:          opacity 0.9s ease;
+      }
+      .home-carousel__slide--active { opacity: 1; }
+
+      /* Dots */
+      .home-carousel__dots {
+        position:        absolute;
+        bottom:          16px;
+        left:            0;
+        right:           0;
+        display:         flex;
+        justify-content: center;
+        gap:             8px;
+        z-index:         2;
+      }
+      .home-carousel__dot {
+        width:         24px;
+        height:        4px;
+        border:        none;
+        border-radius: 2px;
+        background:    rgba(255,255,255,0.35);
+        cursor:        pointer;
+        transition:    background 0.3s;
+        padding:       0;
+      }
+      .home-carousel__dot--active { background: var(--color-gold); }
+
+      /* ── MOBILE: 2x2 photo block grid ── */
+      @media (max-width: 600px) {
+        .home-carousel {
+          display:               grid;
+          grid-template-columns: 1fr 1fr;
+          gap:                   10px;
+          height:                auto;
+          border:                none;
+          background:            none;
+          overflow:              visible;
+        }
+        .home-carousel__slide {
+          position:      static;
+          opacity:       1;
+          aspect-ratio:  1;            /* perfect square blocks */
+          border-radius: var(--radius-md);
+          border:        1px solid var(--color-border-dark);
+        }
+        /* 2x2 = 4 photos; the 5th hides on mobile */
+        .home-carousel__slide:nth-child(5) { display: none; }
+        .home-carousel__dots { display: none; }
+      }
+    </style>
+
     <!-- View more photos CTA — same animated style as View Full Menu -->
     <div style="text-align:center; margin-top: 48px;">
       <a href="gallery.html" class="services-cta-btn" aria-label="View more photos in the gallery">
@@ -1304,17 +1386,59 @@
         if (!photos.length) photos = await fetchSection('clients');
         if (!photos.length) return;
 
-        const cells = document.querySelectorAll('.gallery .gallery__cell');
-        cells.forEach((cell, i) => {
+        const slides = document.querySelectorAll('.home-carousel__slide');
+        slides.forEach((slide, i) => {
           if (photos[i]) {
             /* cover = photo scales automatically to fill the frame */
-            cell.style.backgroundImage    = `url('${photos[i].image}')`;
-            cell.style.backgroundSize     = 'cover';
-            cell.style.backgroundPosition = 'center';
+            slide.style.backgroundImage = `url('${photos[i].image}')`;
           }
         });
       } catch (e) { /* offline — placeholders stay */ }
     })();
+  </script>
+
+
+  <!-- ── CAROUSEL AUTO-ADVANCE ── -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var slides = document.querySelectorAll('.home-carousel__slide');
+      var dots   = document.querySelectorAll('.home-carousel__dot');
+      if (!slides.length) return;
+
+      var current = 0;
+      var timer   = null;
+      var mobile  = window.matchMedia('(max-width: 600px)');
+
+      function show(i) {
+        slides.forEach(function (s, n) {
+          s.classList.toggle('home-carousel__slide--active', n === i);
+        });
+        dots.forEach(function (d, n) {
+          d.classList.toggle('home-carousel__dot--active', n === i);
+        });
+        current = i;
+      }
+
+      function start() {
+        stop();
+        if (mobile.matches) return;       /* mobile shows the 2x2 grid — no rotation */
+        timer = setInterval(function () {
+          show((current + 1) % slides.length);
+        }, 4000);                          /* auto-advance every 4 seconds */
+      }
+      function stop() { if (timer) clearInterval(timer); }
+
+      /* Dots — tap to jump, timer restarts */
+      dots.forEach(function (dot) {
+        dot.addEventListener('click', function () {
+          show(parseInt(dot.dataset.slide, 10));
+          start();
+        });
+      });
+
+      mobile.addEventListener('change', start);
+      start();
+    });
   </script>
 
 </body>
