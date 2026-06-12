@@ -285,6 +285,44 @@
     }
     .btn--ghost:hover { background: none; border-color: var(--danger); color: var(--danger); }
 
+    /* Photo edit panel */
+    .photo-edit {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--gold);
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+    .photo-edit.visible { display: block; }
+    .photo-edit__title {
+      font-family: var(--font-d); font-size: 18px; margin-bottom: 14px;
+    }
+    .photo-edit__title em { font-style: italic; color: var(--gold); }
+    .photo-edit__row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+    .photo-edit__row .field { flex: 1; min-width: 180px; margin-bottom: 0; }
+    .photo-edit select {
+      width: 100%; background: var(--bg);
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 12px 14px; color: var(--white);
+      font-family: var(--font-b); font-size: 13px; outline: none;
+    }
+    .photo-edit__row .btn { width: auto; padding: 12px 22px; }
+    .photo__edit-btn {
+      position: absolute;
+      top: 6px; left: 6px;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 12px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .photo__edit-btn:hover { background: var(--gold); color: var(--white); }
+
     /* Undo bar */
     .undo-bar {
       display: none;
@@ -548,6 +586,29 @@
       </div>
 
       <p class="status" id="status"></p>
+
+      <!-- Photo edit panel -->
+      <div class="photo-edit" id="photo-edit">
+        <h3 class="photo-edit__title">Edit <em>Photo</em></h3>
+        <div class="photo-edit__row">
+          <div class="field">
+            <label class="field__label" for="pe-caption">Caption</label>
+            <input class="field__input" type="text" id="pe-caption" placeholder="e.g. Knotless Braids" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="pe-section">Section</label>
+            <select id="pe-section">
+              <option value="home">Home Page</option>
+              <option value="salon">The Salon</option>
+              <option value="clients">Client Transformations</option>
+              <option value="story">Our Story</option>
+            </select>
+          </div>
+          <button class="btn" id="pe-save">SAVE</button>
+          <button class="btn btn--ghost" id="pe-cancel">CANCEL</button>
+        </div>
+        <p class="status" id="pe-status"></p>
+      </div>
 
       <!-- Photo grid -->
       <div class="grid" id="photo-grid">
@@ -854,6 +915,13 @@
           cell.className = 'photo';
           cell.style.backgroundImage = `url('${p.image}')`;
 
+          const editBtn = document.createElement('button');
+          editBtn.className = 'photo__edit-btn';
+          editBtn.innerHTML = '&#9998;';
+          editBtn.title = 'Edit photo';
+          editBtn.onclick = (e) => { e.stopPropagation(); openPhotoEdit(p); };
+          cell.appendChild(editBtn);
+
           const del = document.createElement('button');
           del.className = 'photo__del';
           del.innerHTML = '&times;';
@@ -896,6 +964,49 @@
       statusEl.textContent = msg;
       statusEl.className = 'status' + (type ? ' ' + type : '');
     }
+
+
+    /* ════════════════════════════════════════════
+       PHOTO EDIT (Update) — caption + move section
+       ════════════════════════════════════════════ */
+    const photoEdit  = document.getElementById('photo-edit');
+    const peCaption  = document.getElementById('pe-caption');
+    const peSection  = document.getElementById('pe-section');
+    const peStatus   = document.getElementById('pe-status');
+    let editingPhotoId = null;
+
+    function openPhotoEdit(p) {
+      editingPhotoId = p.id;
+      peCaption.value = p.caption || '';
+      peSection.value = p.section;
+      peStatus.textContent = '';
+      photoEdit.classList.add('visible');
+      photoEdit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    document.getElementById('pe-cancel').addEventListener('click', () => {
+      photoEdit.classList.remove('visible');
+      editingPhotoId = null;
+    });
+
+    document.getElementById('pe-save').addEventListener('click', async () => {
+      if (!editingPhotoId) return;
+      peStatus.textContent = 'Saving...';
+      peStatus.className = 'status';
+      try {
+        await updateDoc(doc(db, 'gallery', editingPhotoId), {
+          caption: peCaption.value.trim(),
+          section: peSection.value
+        });
+        photoEdit.classList.remove('visible');
+        editingPhotoId = null;
+        setStatus('Photo updated — live on the site now.', 'ok');
+        loadPhotos();
+      } catch (e) {
+        peStatus.textContent = 'Save failed. Check your internet and try again.';
+        peStatus.className = 'status err';
+      }
+    });
 
 
     /* ════════════════════════════════════════════
