@@ -326,14 +326,19 @@
       .salon-grid__cell--hero { grid-column: span 2; grid-row: auto; aspect-ratio: 16 / 10; }
     }
     @media (max-width: 768px) {
-      .salon-grid         { grid-template-columns: 1fr; }
-      .salon-grid__cell--hero { grid-column: span 1; height: 260px; }
-      .salon-grid__cell--regular { height: 240px; }
-      .salon-grid__cell--small   { height: 180px; }
-      .clients-grid { grid-template-columns: 1fr 1fr; }
-      .clients-grid__cell--tall   { height: 220px; }
-      .clients-grid__cell--medium { height: 180px; }
-      .clients-grid__cell--short  { height: 140px; }
+      /* Clean 2x2 blocks — both sections, square fit */
+      .salon-grid   { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .clients-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .salon-grid__cell--hero {
+        grid-column: span 2; grid-row: auto; aspect-ratio: 16 / 10; height: auto;
+      }
+      .salon-grid__cell,
+      .salon-grid__cell--regular,
+      .salon-grid__cell--small { aspect-ratio: 1 / 1; height: auto; }
+      .clients-grid__cell,
+      .clients-grid__cell--tall,
+      .clients-grid__cell--medium,
+      .clients-grid__cell--short { aspect-ratio: 3 / 4; height: auto; }
       .about-grid { grid-template-columns: 1fr; gap: 40px; }
       .about-grid__visual { height: 280px; }
       .about-grid__stats  { gap: var(--space-md); }
