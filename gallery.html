@@ -69,32 +69,34 @@
     .salon-grid {
       display:               grid;
       grid-template-columns: repeat(3, 1fr);
-      gap:                   16px;
+      gap:                   14px;
     }
     .salon-grid__cell {
-      background:          var(--color-bg-surface);
-      border:              1px solid var(--color-border-dark);
-      border-radius:       var(--radius-lg);
-      overflow:            hidden;
       position:            relative;
-      cursor:              pointer;
+      overflow:            hidden;
+      border-radius:       14px;
+      border:              1px solid var(--color-border-dark);
+      background:          var(--color-bg-surface);
       background-size:     cover;
       background-position: center;
-      transition:          transform var(--transition-base),
-                           border-color var(--transition-base);
+      aspect-ratio:        1 / 1;            /* perfect square — image always fits */
+      cursor:              pointer;
+      transition:          transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                           box-shadow 0.5s ease;
     }
     .salon-grid__cell:hover {
-      transform:    scale(1.01);
-      border-color: #2e2e2e;
+      transform:  translateY(-6px) scale(1.015);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+      z-index:    2;
     }
-    /* First cell spans 2 columns — hero photo */
+    /* First tile spans 2x2 for an editorial anchor on desktop */
     .salon-grid__cell--hero {
       grid-column: span 2;
-      height:      360px;
+      grid-row:    span 2;
+      aspect-ratio: auto;
     }
-    /* Regular cells */
-    .salon-grid__cell--regular { height: 360px; }
-    .salon-grid__cell--small   { height: 220px; }
+    .salon-grid__cell--regular { aspect-ratio: 1 / 1; }
+    .salon-grid__cell--small   { aspect-ratio: 1 / 1; }
 
     /* Placeholder label inside empty cells */
     .salon-grid__placeholder {
@@ -130,27 +132,29 @@
     .clients-grid {
       display:               grid;
       grid-template-columns: repeat(4, 1fr);
-      gap:                   12px;
+      gap:                   14px;
     }
     .clients-grid__cell {
-      background:          var(--color-bg-surface);
-      border:              1px solid var(--color-border-dark);
-      border-radius:       var(--radius-md);
-      overflow:            hidden;
       position:            relative;
-      cursor:              pointer;
+      overflow:            hidden;
+      border-radius:       14px;
+      border:              1px solid var(--color-border-dark);
+      background:          var(--color-bg-surface);
       background-size:     cover;
-      background-position: center top;
-      transition:          transform var(--transition-base),
-                           border-color var(--transition-base);
+      background-position: center;
+      aspect-ratio:        3 / 4;            /* portrait — flatters hair work */
+      cursor:              pointer;
+      transition:          transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                           box-shadow 0.5s ease;
     }
     .clients-grid__cell:hover {
-      transform:    translateY(-4px);
-      border-color: rgba(184,134,11,0.4);
+      transform:  translateY(-6px) scale(1.02);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.5);
+      z-index:    2;
     }
-    .clients-grid__cell--tall   { height: 320px; }
-    .clients-grid__cell--medium { height: 240px; }
-    .clients-grid__cell--short  { height: 180px; }
+    .clients-grid__cell--tall   { aspect-ratio: 3 / 4; }
+    .clients-grid__cell--medium { aspect-ratio: 3 / 4; }
+    .clients-grid__cell--short  { aspect-ratio: 3 / 4; }
 
     /* Caption overlay on hover */
     .clients-grid__caption {
@@ -158,12 +162,16 @@
       bottom:     0;
       left:       0;
       right:      0;
-      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-      padding:    20px 14px 12px;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 55%, transparent 100%);
+      padding:    28px 14px 14px;
       opacity:    0;
-      transition: opacity var(--transition-base);
+      transform:  translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
-    .clients-grid__cell:hover .clients-grid__caption { opacity: 1; }
+    .clients-grid__cell:hover .clients-grid__caption {
+      opacity: 1;
+      transform: translateY(0);
+    }
     .clients-grid__caption-text {
       font-family:    var(--font-body);
       font-size:      11px;
@@ -313,8 +321,9 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
-      .salon-grid   { grid-template-columns: 1fr 1fr; }
+      .salon-grid   { grid-template-columns: repeat(2, 1fr); }
       .clients-grid { grid-template-columns: repeat(2, 1fr); }
+      .salon-grid__cell--hero { grid-column: span 2; grid-row: auto; aspect-ratio: 16 / 10; }
     }
     @media (max-width: 768px) {
       .salon-grid         { grid-template-columns: 1fr; }
@@ -330,7 +339,10 @@
       .about-grid__stats  { gap: var(--space-md); }
     }
     @media (max-width: 480px) {
-      .clients-grid { grid-template-columns: 1fr; }
+      /* Stay 2x2 — modern, compact, no long scroll */
+      .salon-grid   { grid-template-columns: repeat(2, 1fr); }
+      .clients-grid { grid-template-columns: repeat(2, 1fr); }
+      .salon-grid__cell--hero { grid-column: span 2; aspect-ratio: 16 / 10; }
       .gallery-section { padding: 60px 20px; }
       .about-grid__stats { flex-direction: column; gap: var(--space-sm); }
     }
@@ -338,6 +350,19 @@
   <style>
     .fb-fade { opacity: 0; transition: opacity 0.5s ease; }
     .fb-fade.fb-shown { opacity: 1; }
+  </style>
+  <style>
+    /* Scroll-reveal — tiles swing up gently as they enter view */
+    .reveal-tile {
+      opacity: 0;
+      transform: translateY(40px) scale(0.96);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-tile.revealed {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   </style>
 </head>
 
@@ -705,8 +730,55 @@
     const app = initializeApp(firebaseConfig);
     const db  = getFirestore(app);
 
+    /* Lazy background loader — only fetches the image when the
+       cell is about to scroll into view, so off-screen photos
+       never block the page. */
+    const lazyObserver = ('IntersectionObserver' in window)
+      ? new IntersectionObserver((entries, obs) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              const cell = e.target;
+              const src = cell.dataset.bg;
+              if (src) {
+                const im = new Image();
+                im.onload = () => { cell.style.backgroundImage = `url('${src}')`; cell.classList.add('fb-shown'); };
+                im.src = src;
+              }
+              obs.unobserve(cell);
+            }
+          });
+        }, { rootMargin: '300px' })
+      : null;
+
+    function lazyBg(cell, src) {
+      cell.classList.add('fb-fade');
+      if (lazyObserver) { cell.dataset.bg = src; lazyObserver.observe(cell); }
+      else { cell.style.backgroundImage = `url('${src}')`; cell.classList.add('fb-shown'); }
+    }
+
+    /* Scroll-reveal: tiles swing into view, staggered */
+    const revealObserver = ('IntersectionObserver' in window)
+      ? new IntersectionObserver((entries, obs) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              const cell = e.target;
+              const delay = parseInt(cell.dataset.revealDelay || '0', 10);
+              setTimeout(() => cell.classList.add('revealed'), delay);
+              obs.unobserve(cell);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' })
+      : null;
+
+    function revealTile(cell, index) {
+      cell.classList.add('reveal-tile');
+      cell.dataset.revealDelay = (index % 4) * 90;   /* stagger within a row */
+      if (revealObserver) revealObserver.observe(cell);
+      else cell.classList.add('revealed');
+    }
+
     async function loadSection(sectionName) {
-      const q = query(collection(db, 'gallery'), where('section', '==', sectionName));
+      const q = query(collection(db, 'gallery'), where('section', '==', sectionName), limit(30));
       const snap = await getDocs(q);
       const docs = [];
       snap.forEach(d => docs.push(d.data()));
@@ -727,10 +799,9 @@
       photos.forEach((p, i) => {
         const cell = document.createElement('div');
         const size = i === 0 ? 'hero' : (i === 1 ? 'regular' : 'small');
-        cell.className = 'salon-grid__cell salon-grid__cell--' + size + ' fb-fade';
-        const img = new Image();
-        img.onload = () => { cell.style.backgroundImage = `url('${p.image}')`; cell.classList.add('fb-shown'); };
-        img.src = p.image;
+        cell.className = 'salon-grid__cell salon-grid__cell--' + size;
+        lazyBg(cell, p.image);
+        revealTile(cell, i);
         grid.appendChild(cell);
       });
     }).catch(() => {});
@@ -744,10 +815,9 @@
       const sizes = ['tall', 'medium', 'short'];
       photos.forEach((p, i) => {
         const cell = document.createElement('div');
-        cell.className = 'clients-grid__cell clients-grid__cell--' + sizes[i % 3] + ' fb-fade';
-        const cimg = new Image();
-        cimg.onload = () => { cell.style.backgroundImage = `url('${p.image}')`; cell.classList.add('fb-shown'); };
-        cimg.src = p.image;
+        cell.className = 'clients-grid__cell clients-grid__cell--' + sizes[i % 3];
+        lazyBg(cell, p.image);
+        revealTile(cell, i);
         if (p.caption) {
           const cap = document.createElement('div');
           cap.className = 'clients-grid__caption';
