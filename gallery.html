@@ -335,6 +335,10 @@
       .about-grid__stats { flex-direction: column; gap: var(--space-sm); }
     }
   </style>
+  <style>
+    .fb-fade { opacity: 0; transition: opacity 0.5s ease; }
+    .fb-fade.fb-shown { opacity: 1; }
+  </style>
 </head>
 
 <body>
@@ -723,8 +727,10 @@
       photos.forEach((p, i) => {
         const cell = document.createElement('div');
         const size = i === 0 ? 'hero' : (i === 1 ? 'regular' : 'small');
-        cell.className = 'salon-grid__cell salon-grid__cell--' + size;
-        cell.style.backgroundImage = `url('${p.image}')`;
+        cell.className = 'salon-grid__cell salon-grid__cell--' + size + ' fb-fade';
+        const img = new Image();
+        img.onload = () => { cell.style.backgroundImage = `url('${p.image}')`; cell.classList.add('fb-shown'); };
+        img.src = p.image;
         grid.appendChild(cell);
       });
     }).catch(() => {});
@@ -738,8 +744,10 @@
       const sizes = ['tall', 'medium', 'short'];
       photos.forEach((p, i) => {
         const cell = document.createElement('div');
-        cell.className = 'clients-grid__cell clients-grid__cell--' + sizes[i % 3];
-        cell.style.backgroundImage = `url('${p.image}')`;
+        cell.className = 'clients-grid__cell clients-grid__cell--' + sizes[i % 3] + ' fb-fade';
+        const cimg = new Image();
+        cimg.onload = () => { cell.style.backgroundImage = `url('${p.image}')`; cell.classList.add('fb-shown'); };
+        cimg.src = p.image;
         if (p.caption) {
           const cap = document.createElement('div');
           cap.className = 'clients-grid__caption';

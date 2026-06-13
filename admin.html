@@ -812,7 +812,7 @@
         reader.onload = (e) => {
           const img = new Image();
           img.onload = () => {
-            const MAX = 1200;
+            const MAX = 900;
             let w = img.width, h = img.height;
             if (w > MAX || h > MAX) {
               if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
@@ -823,9 +823,9 @@
             canvas.getContext('2d').drawImage(img, 0, 0, w, h);
 
             /* Try quality levels until under 400KB */
-            let quality = 0.75;
+            let quality = 0.7;
             let dataUrl = canvas.toDataURL('image/jpeg', quality);
-            while (dataUrl.length > 550000 && quality > 0.4) {
+            while (dataUrl.length > 220000 && quality > 0.35) {
               quality -= 0.1;
               dataUrl = canvas.toDataURL('image/jpeg', quality);
             }

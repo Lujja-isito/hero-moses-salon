@@ -1396,8 +1396,14 @@
         let photos = await fetchSection('home');
         if (!photos.length) photos = await fetchSection('clients');
         if (!photos.length) return;
-        document.querySelectorAll('.home-carousel__slide').forEach((slide, i) => {
-          if (photos[i]) slide.style.backgroundImage = `url('${photos[i].image}')`;
+        const slides = document.querySelectorAll('.home-carousel__slide');
+        /* First slide loads immediately so the frame fills fast */
+        if (photos[0]) slides[0].style.backgroundImage = `url('${photos[0].image}')`;
+        /* Remaining slides decode in the background */
+        photos.slice(1).forEach((p, idx) => {
+          const im = new Image();
+          im.onload = () => { if (slides[idx + 1]) slides[idx + 1].style.backgroundImage = `url('${p.image}')`; };
+          im.src = p.image;
         });
       } catch (e) { console.warn('Gallery load:', e.message); }
     })();
