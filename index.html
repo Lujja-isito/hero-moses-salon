@@ -237,69 +237,8 @@
       </p>
     </div>
 
-    <div class="team-mosaic">
-
-      <!-- Row 1 -->
-      <div class="team-mosaic__tile team-mosaic__tile--blank-white"></div>
-      <div class="team-mosaic__tile team-mosaic__tile--blank-dark"></div>
-      <div class="team-mosaic__tile team-mosaic__tile--blank-gray"></div>
-      <div class="team-mosaic__tile team-mosaic__tile--photo" data-photo="moses">
-        <span class="team-mosaic__initial">M</span>
-        <span class="team-mosaic__name">Moses · Founder</span>
-      </div>
-
-      <!-- Row 2 -->
-      <div class="team-mosaic__tile team-mosaic__tile--blank-stripes"></div>
-      <div class="team-mosaic__tile team-mosaic__tile--photo" data-photo="sarah">
-        <span class="team-mosaic__initial">S</span>
-        <span class="team-mosaic__name">Sarah</span>
-      </div>
-      <div class="team-mosaic__tile team-mosaic__tile--photo" data-photo="bob">
-        <span class="team-mosaic__initial">B</span>
-        <span class="team-mosaic__name">Bob</span>
-      </div>
-      <div class="team-mosaic__tile team-mosaic__tile--photo" data-photo="carol">
-        <span class="team-mosaic__initial">C</span>
-        <span class="team-mosaic__name">Carol</span>
-      </div>
-
-      <!-- Row 3 -->
-      <div class="team-mosaic__tile team-mosaic__tile--photo" data-photo="grace">
-        <span class="team-mosaic__initial">G</span>
-        <span class="team-mosaic__name">Grace</span>
-      </div>
-      <div class="team-mosaic__tile team-mosaic__tile--photo" data-photo="esther">
-        <span class="team-mosaic__initial">E</span>
-        <span class="team-mosaic__name">Esther</span>
-      </div>
-      <a href="stylists.html" class="team-mosaic__tile team-mosaic__tile--label" aria-label="View salon leadership">
-        <span class="team-mosaic__label-text">SALON<br>LEADERSHIP</span>
-        <span class="team-mosaic__label-arrow">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </span>
-      </a>
-      <div class="team-mosaic__tile team-mosaic__tile--photo" data-photo="patricia">
-        <span class="team-mosaic__initial">P</span>
-        <span class="team-mosaic__name">Patricia</span>
-      </div>
-
-      <!-- Row 4 -->
-      <div class="team-mosaic__tile team-mosaic__tile--photo" data-photo="diana">
-        <span class="team-mosaic__initial">D</span>
-        <span class="team-mosaic__name">Diana</span>
-      </div>
-      <a href="stylists.html" class="team-mosaic__tile team-mosaic__tile--cta" aria-label="Meet the full team">
-        <span class="team-mosaic__cta-text">MEET<br>THE<br>TEAM</span>
-        <span class="team-mosaic__cta-circle">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </span>
-      </a>
-      <div class="team-mosaic__tile team-mosaic__tile--photo" data-photo="ruth">
-        <span class="team-mosaic__initial">R</span>
-        <span class="team-mosaic__name">Ruth</span>
-      </div>
-      <div class="team-mosaic__tile team-mosaic__tile--blank-stripes"></div>
-
+    <div class="team-mosaic" id="team-mosaic">
+      <div class="team-mosaic__loading" style="grid-column:1/-1;text-align:center;padding:40px 20px;color:#666;font-family:var(--font-body);font-size:13px">Loading our team...</div>
     </div>
 
     <style>
@@ -463,44 +402,6 @@
         .team-mosaic__tile--label { gap: 8px; }
       }
     </style>
-
-    <script>
-      /* Block-building animation — tiles assemble one by one
-         each time the mosaic scrolls into view, and reset when
-         it leaves so it rebuilds on the next pass. */
-      document.addEventListener('DOMContentLoaded', function () {
-        var mosaic = document.querySelector('.team-mosaic');
-        if (!mosaic || !('IntersectionObserver' in window)) {
-          /* Fallback: just show the tiles */
-          document.querySelectorAll('.team-mosaic__tile').forEach(function (t) {
-            t.classList.add('tile-in');
-          });
-          return;
-        }
-
-        var tiles = mosaic.querySelectorAll('.team-mosaic__tile');
-
-        var observer = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              /* Build in — staggered, one block at a time */
-              tiles.forEach(function (tile, i) {
-                setTimeout(function () {
-                  tile.classList.add('tile-in');
-                }, i * 70);
-              });
-            } else {
-              /* Reset so it rebuilds next time */
-              tiles.forEach(function (tile) {
-                tile.classList.remove('tile-in');
-              });
-            }
-          });
-        }, { threshold: 0.15 });
-
-        observer.observe(mosaic);
-      });
-    </script>
 
   </section>
   <!-- end the artists -->
@@ -1408,31 +1309,105 @@
       } catch (e) { console.warn('Gallery load:', e.message); }
     })();
 
-    /* ── 2. Team mosaic ── */
+    /* ── 2. Team mosaic — built entirely from Firestore ── */
     (async () => {
+      const mosaic = document.getElementById('team-mosaic');
       try {
         const snap = await getDocs(collection(db, 'team'));
         const members = [];
         snap.forEach(d => members.push(d.data()));
-        if (!members.length) return;
+
+        if (!members.length) {
+          mosaic.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:#666;font-family:var(--font-body);font-size:13px">Our team will appear here soon.</div>';
+          return;
+        }
 
         members.sort((a, b) => (b.founder === true) - (a.founder === true)
           || (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0));
 
-        document.querySelectorAll('.team-mosaic__tile--photo').forEach((tile, i) => {
-          const m = members[i];
-          if (!m) return;
-          const initial = tile.querySelector('.team-mosaic__initial');
-          const nameEl  = tile.querySelector('.team-mosaic__name');
+        /* Decorative blank tile styles to weave between photos */
+        const blanks = ['blank-white', 'blank-dark', 'blank-gray', 'blank-stripes'];
+
+        /* Build a layout: photos with a few decorative tiles mixed in,
+           plus the SALON LEADERSHIP label and the MEET THE TEAM cta. */
+        mosaic.innerHTML = '';
+        let blankIdx = 0;
+
+        /* Lead with one decorative tile for visual rhythm */
+        function addBlank() {
+          const b = document.createElement('div');
+          b.className = 'team-mosaic__tile team-mosaic__tile--' + blanks[blankIdx % blanks.length];
+          blankIdx++;
+          mosaic.appendChild(b);
+        }
+
+        function addPhoto(m) {
+          const tile = document.createElement('div');
+          tile.className = 'team-mosaic__tile team-mosaic__tile--photo';
+          tile.setAttribute('data-name', m.name);
           if (m.photo) {
             tile.style.backgroundImage = `url('${m.photo}')`;
-            if (initial) initial.style.display = 'none';
-          } else if (initial) {
-            initial.textContent = (m.name || '?')[0];
+          } else {
+            const init = document.createElement('span');
+            init.className = 'team-mosaic__initial';
+            init.textContent = (m.name || '?')[0];
+            tile.appendChild(init);
           }
-          if (nameEl) nameEl.textContent = m.founder ? m.name + ' \u00b7 Founder' : m.name;
+          const nm = document.createElement('span');
+          nm.className = 'team-mosaic__name';
+          nm.textContent = m.founder ? m.name + ' \u00b7 Founder' : m.name;
+          tile.appendChild(nm);
+          mosaic.appendChild(tile);
+        }
+
+        function addLabel() {
+          const a = document.createElement('a');
+          a.href = 'stylists.html';
+          a.className = 'team-mosaic__tile team-mosaic__tile--label';
+          a.setAttribute('aria-label', 'View salon leadership');
+          a.innerHTML = '<span class="team-mosaic__label-text">SALON<br>LEADERSHIP</span><span class="team-mosaic__label-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>';
+          mosaic.appendChild(a);
+        }
+
+        function addCta() {
+          const a = document.createElement('a');
+          a.href = 'stylists.html';
+          a.className = 'team-mosaic__tile team-mosaic__tile--cta';
+          a.setAttribute('aria-label', 'Meet the full team');
+          a.innerHTML = '<span class="team-mosaic__cta-text">MEET<br>THE<br>TEAM</span><span class="team-mosaic__cta-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>';
+          mosaic.appendChild(a);
+        }
+
+        /* Compose the grid: scatter members with occasional blanks,
+           then finish with the label + cta so both are always present. */
+        members.forEach((m, i) => {
+          /* sprinkle a decorative tile before some photos for the mosaic look */
+          if (i === 0 || i === 3) addBlank();
+          addPhoto(m);
+          if (i === 1) addLabel();
         });
-      } catch (e) { console.warn('Team load:', e.message); }
+        addCta();
+
+        /* Trigger the build-in animation on the freshly created tiles */
+        const tiles = mosaic.querySelectorAll('.team-mosaic__tile');
+        if ('IntersectionObserver' in window) {
+          const obs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                tiles.forEach((t, i) => setTimeout(() => t.classList.add('tile-in'), i * 70));
+              } else {
+                tiles.forEach(t => t.classList.remove('tile-in'));
+              }
+            });
+          }, { threshold: 0.15 });
+          obs.observe(mosaic);
+        } else {
+          tiles.forEach(t => t.classList.add('tile-in'));
+        }
+      } catch (e) {
+        console.warn('Team mosaic:', e.message);
+        if (mosaic) mosaic.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#666;font-family:var(--font-body);font-size:13px">Team loading failed. Check your connection.</div>';
+      }
     })();
   </script>
 
