@@ -2,53 +2,42 @@
  * ============================================================
  * logo.js
  * ============================================================
- * Injects the real Hero Moses Hair Salon logo image into
- * every location it appears on the page.
+ * Injects the Hero Moses Hair Salon logo into every location.
  *
- * The logo is a PNG file stored at:
- *   assets/images/logo.png
- *
- * It appears in 4 places:
- *   - Navbar        (#navbar-logo)  → 38×38px
- *   - Hero panel    (#hero-logo)    → 140×140px
- *   - Modal header  (#modal-logo)   → 38×38px
- *   - Footer        (#footer-logo)  → 52×52px
- *
- * WHY USE JS TO INJECT?
- *   Keeps index.html clean. One place to update the image
- *   path if it ever changes — no hunting through HTML.
+ * The logo is now served from CLOUDINARY (fast CDN, optimized
+ * per device) instead of a local PNG. Each placement requests
+ * the image already resized to its display size, so the navbar
+ * never downloads a huge file for a 38px slot.
  * ============================================================
  */
 
+/* Base Cloudinary image (without transforms) */
+var LOGO_BASE = 'https://res.cloudinary.com/dkfutt4jr/image/upload';
+var LOGO_ID   = 'v1781345172/kfwdez5yd5v9zlgrhf1j.jpg';
 
-/* ----------------------------------------------------------
-   buildLogo(size)
-   Returns an <img> tag string pointing to the real logo PNG.
-
-   @param {number} size  - The display size in pixels (width = height)
-   @returns {string}     - HTML string for the logo image
-   ---------------------------------------------------------- */
-function buildLogo(size) {
-  return `
-    <img
-      src="assets/images/logo.png"
-      alt="Hero Moses Hair Salon logo"
-      class="logo-img"
-      width="${size}"
-      height="${size}"
-      loading="eager"
-    />
-  `;
+/* Build a Cloudinary URL sized for the slot.
+   - w_,h_,c_fill  → deliver exactly the pixels needed (retina x2)
+   - f_auto,q_auto → lightest modern format, auto quality
+   - dpr_2.0       → crisp on high-resolution phone screens */
+function logoUrl(size) {
+  var px = size * 2; /* 2x for retina sharpness */
+  return LOGO_BASE
+    + '/f_auto,q_auto,dpr_2.0,w_' + px + ',h_' + px + ',c_fill'
+    + '/' + LOGO_ID;
 }
 
+function buildLogo(size) {
+  return '\n    <img\n      src="' + logoUrl(size) + '"\n'
+    + '      alt="Hero Moses Hair Salon logo"\n'
+    + '      class="logo-img"\n'
+    + '      width="' + size + '"\n'
+    + '      height="' + size + '"\n'
+    + '      loading="eager"\n'
+    + '      fetchpriority="high"\n'
+    + '    />\n  ';
+}
 
-/* ----------------------------------------------------------
-   injectLogos()
-   Finds all 4 logo placeholder divs and fills each one
-   with the correct size logo image.
-   ---------------------------------------------------------- */
 function injectLogos() {
-
   var logoSlots = [
     { id: 'navbar-logo', size: 38  },
     { id: 'hero-logo',   size: 140 },
@@ -56,18 +45,10 @@ function injectLogos() {
     { id: 'cta-logo',    size: 72  },
     { id: 'footer-logo', size: 52  },
   ];
-
   logoSlots.forEach(function(slot) {
     var el = document.getElementById(slot.id);
-    if (el) {
-      el.innerHTML = buildLogo(slot.size);
-    }
+    if (el) el.innerHTML = buildLogo(slot.size);
   });
-
 }
 
-
-/* ----------------------------------------------------------
-   Run on page load
-   ---------------------------------------------------------- */
 document.addEventListener('DOMContentLoaded', injectLogos);
