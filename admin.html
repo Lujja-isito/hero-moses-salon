@@ -806,13 +806,71 @@
     /* ── IMAGE COMPRESSION ──
        Resizes to max 1200px and compresses to JPEG.
        Keeps each photo under ~400KB so Firestore stays fast. */
+    /* ══════ CLOUDINARY IMAGE UPLOAD ══════
+       Images are stored on Cloudinary (fast CDN) instead of as
+       base64 in Firestore. Firestore keeps only the short URL.
+       Unsigned preset = safe browser upload, no secret keys. */
+    const CLOUDINARY_CLOUD  = 'dkfutt4jr';
+    const CLOUDINARY_PRESET = 'ml_josh';
+
+    async function uploadToCloudinary(file) {
+      /* First downscale in-browser so uploads are quick even on
+         mobile data, then send to Cloudinary. */
+      const resized = await resizeForUpload(file);
+      const form = new FormData();
+      form.append('file', resized);
+      form.append('upload_preset', CLOUDINARY_PRESET);
+
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`,
+        { method: 'POST', body: form }
+      );
+      if (!res.ok) throw new Error('Cloudinary upload failed');
+      const data = await res.json();
+
+      /* Insert auto-format + auto-quality so each viewer gets the
+         lightest possible version (f_auto,q_auto). */
+      return data.secure_url.replace('/upload/', '/upload/f_auto,q_auto/');
+    }
+
+    /* Downscale a File to a Blob (max 1280px) before uploading */
+    function resizeForUpload(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const MAX = 1280;
+            let w = img.width, h = img.height;
+            if (w > MAX || h > MAX) {
+              if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+              else       { w = Math.round(w * MAX / h); h = MAX; }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            canvas.toBlob(
+              (blob) => blob ? resolve(blob) : reject(new Error('resize failed')),
+              'image/jpeg', 0.82
+            );
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    /* Legacy base64 compressor — kept only as a fallback if
+       Cloudinary is ever unreachable. */
     function compressImage(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = (e) => {
           const img = new Image();
           img.onload = () => {
-            const MAX = 900;
+            const MAX = 700;
             let w = img.width, h = img.height;
             if (w > MAX || h > MAX) {
               if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
@@ -823,9 +881,9 @@
             canvas.getContext('2d').drawImage(img, 0, 0, w, h);
 
             /* Try quality levels until under 400KB */
-            let quality = 0.7;
+            let quality = 0.62;
             let dataUrl = canvas.toDataURL('image/jpeg', quality);
-            while (dataUrl.length > 220000 && quality > 0.35) {
+            while (dataUrl.length > 120000 && quality > 0.3) {
               quality -= 0.1;
               dataUrl = canvas.toDataURL('image/jpeg', quality);
             }
@@ -843,23 +901,28 @@
     fileInput.addEventListener('change', async () => {
       const file = fileInput.files[0];
       if (!file) return;
-      setStatus('Compressing photo...', '');
+      setStatus('Uploading photo...', '');
 
       try {
-        const compressed = await compressImage(file);
+        let imageUrl;
+        try {
+          imageUrl = await uploadToCloudinary(file);
+        } catch (cloudErr) {
+          /* Fallback: store as base64 in Firestore if Cloudinary fails */
+          imageUrl = await compressImage(file);
+        }
 
         if (currentSection === 'clients') {
-          /* Ask for caption first */
-          pendingImage = compressed;
+          pendingImage = imageUrl;
           captionRow.classList.add('visible');
           captionInput.value = '';
           captionInput.focus();
           setStatus('Add a caption then tap Upload', '');
         } else {
-          await uploadPhoto(compressed, '');
+          await uploadPhoto(imageUrl, '');
         }
       } catch (err) {
-        setStatus('Could not read that photo. Try another one.', 'err');
+        setStatus('Could not upload that photo. Try another one.', 'err');
       }
       fileInput.value = '';
     });
@@ -1122,7 +1185,11 @@
 
       try {
         if (mPhoto.files[0]) {
-          data.photo = await compressImage(mPhoto.files[0]);
+          try {
+            data.photo = await uploadToCloudinary(mPhoto.files[0]);
+          } catch (cloudErr) {
+            data.photo = await compressImage(mPhoto.files[0]);
+          }
         }
         if (editingId) {
           await updateDoc(doc(db, 'team', editingId), data);
