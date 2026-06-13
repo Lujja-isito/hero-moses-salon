@@ -373,3 +373,26 @@ input[type="date"] {
 .modal__footnote-link:hover {
   opacity: 0.8;
 }
+
+/* ===========================================================
+   PHONE FIELD WITH COUNTRY CODE
+   Country-code dropdown sits beside the number input.
+   =========================================================== */
+.phone-row {
+  display: flex;
+  gap: 8px;
+}
+.phone-code {
+  flex: 0 0 110px;
+  width: 110px;
+  cursor: pointer;
+  padding-right: 6px;
+  background-position: right 8px center;
+}
+.phone-number {
+  flex: 1;
+  min-width: 0;
+}
+@media (max-width: 400px) {
+  .phone-code { flex: 0 0 96px; width: 96px; font-size: 13px; }
+}

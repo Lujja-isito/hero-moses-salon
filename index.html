@@ -232,7 +232,7 @@
     <div class="stylists__header">
       <h2 class="section-title">The <em>Artists</em></h2>
       <p class="section-subtitle">
-        Meet the team of expert stylists, led by Moses himself,
+        Meet the team of eight expert stylists, led by Moses himself,
         dedicated to making every client look extraordinary.
       </p>
     </div>
@@ -453,14 +453,27 @@
         <!-- Field 2: Phone -->
         <div class="form-field">
           <label class="form-field__label" for="booking-phone">PHONE NUMBER</label>
-          <input
-            class="form-field__input"
-            type="tel"
-            id="booking-phone"
-            name="phone"
-            placeholder="07XX XXX XXX"
-            autocomplete="tel"
-          />
+          <div class="phone-row">
+            <select class="form-field__input phone-code" id="booking-code" name="code" aria-label="Country code">
+              <option value="+256" data-min="9" data-max="9" selected>🇺🇬 +256</option>
+              <option value="+254" data-min="9" data-max="9">🇰🇪 +254</option>
+              <option value="+255" data-min="9" data-max="9">🇹🇿 +255</option>
+              <option value="+250" data-min="9" data-max="9">🇷🇼 +250</option>
+              <option value="+257" data-min="8" data-max="8">🇧🇮 +257</option>
+              <option value="+243" data-min="9" data-max="9">🇨🇩 +243</option>
+              <option value="+211" data-min="9" data-max="9">🇸🇸 +211</option>
+              <option value="+251" data-min="9" data-max="9">🇪🇹 +251</option>
+              <option value="+260" data-min="9" data-max="9">🇿🇲 +260</option>
+              <option value="+27"  data-min="9" data-max="9">🇿🇦 +27</option>
+              <option value="+234" data-min="10" data-max="10">🇳🇬 +234</option>
+              <option value="+44"  data-min="10" data-max="10">🇬🇧 +44</option>
+              <option value="+1"   data-min="10" data-max="10">🇺🇸 +1</option>
+              <option value="+971" data-min="9" data-max="9">🇦🇪 +971</option>
+              <option value="+91"  data-min="10" data-max="10">🇮🇳 +91</option>
+              <option value="" data-min="6" data-max="15">🌍 Other</option>
+            </select>
+            <input class="form-field__input phone-number" type="tel" id="booking-phone" name="phone" placeholder="7XX XXX XXX" autocomplete="tel" inputmode="numeric" />
+          </div>
           <span class="form-field__error" id="error-phone" aria-live="polite"></span>
         </div>
 
@@ -1271,7 +1284,7 @@
        Managed entirely from /admin.html. -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs }
+    import { getFirestore, collection, query, where, getDocs, limit }
       from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -1286,7 +1299,7 @@
 
     /* ── 1. Gallery carousel ── */
     async function fetchSection(name) {
-      const snap = await getDocs(query(collection(db, 'gallery'), where('section', '==', name)));
+      const snap = await getDocs(query(collection(db, 'gallery'), where('section', '==', name), limit(5)));
       const docs = []; snap.forEach(d => docs.push(d.data()));
       docs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
       return docs;

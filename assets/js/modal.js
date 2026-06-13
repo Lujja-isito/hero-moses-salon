@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var nameInput    = document.getElementById('booking-name');
   var phoneInput   = document.getElementById('booking-phone');
+  var codeInput    = document.getElementById('booking-code');
   var serviceInput = document.getElementById('booking-service');
   var dateInput    = document.getElementById('booking-date');
 
@@ -113,9 +114,24 @@ document.addEventListener('DOMContentLoaded', function() {
       isValid = false;
     }
 
-    if (!phoneInput.value.trim()) {
+    /* Phone: strip non-digits, drop a leading 0, check length range
+       for the selected country (data-min / data-max on the option). */
+    var rawPhone = phoneInput.value.replace(/\D/g, '').replace(/^0+/, '');
+    if (!rawPhone) {
       showError(phoneInput, errorPhone, 'Please enter your phone number');
       isValid = false;
+    } else if (codeInput) {
+      var opt = codeInput.options[codeInput.selectedIndex];
+      var min = parseInt(opt.getAttribute('data-min') || '6', 10);
+      var max = parseInt(opt.getAttribute('data-max') || '15', 10);
+      if (rawPhone.length < min || rawPhone.length > max) {
+        if (min === max) {
+          showError(phoneInput, errorPhone, 'That number should be ' + min + ' digits for this country');
+        } else {
+          showError(phoneInput, errorPhone, 'Please enter a valid phone number');
+        }
+        isValid = false;
+      }
     }
 
     if (!serviceInput.value) {
@@ -157,6 +173,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  if (codeInput) codeInput.addEventListener('change', function() {
+    phoneInput.classList.remove('input--error');
+    if (errorPhone) errorPhone.textContent = '';
+  });
+
   [nameInput, phoneInput, serviceInput, dateInput].forEach(function(input) {
     input.addEventListener('input', function() {
       input.classList.remove('input--error');
@@ -178,7 +199,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
       /* Build the WhatsApp message with all booking details */
       var name    = nameInput.value.trim();
-      var phone   = phoneInput.value.trim();
+      /* Build full international number: code + digits (no leading 0) */
+      var phoneDigits = phoneInput.value.replace(/\D/g, '').replace(/^0+/, '');
+      var countryCode = codeInput ? codeInput.value : '';
+      var phone = (countryCode ? countryCode + ' ' : '') + phoneDigits;
       var service = serviceInput.options[serviceInput.selectedIndex].text;
       var date    = dateInput.value;
 
