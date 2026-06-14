@@ -91,6 +91,20 @@
     }
 
     /* Contact + hours callout box */
+    .services__bridal-note {
+      font-family: var(--font-body);
+      font-size: 12px;
+      color: var(--color-gold);
+      font-style: italic;
+      padding: 10px 0 4px;
+    }
+    .service-row__bridal-info { display: flex; flex-direction: column; gap: 3px; }
+    .service-row__desc {
+      font-family: var(--font-body);
+      font-size: 11px;
+      color: var(--color-text-dim);
+    }
+
     .services__callout {
       margin-top:    60px;
       padding:       32px;
@@ -127,7 +141,21 @@
     .services__callout a:hover { opacity: 0.8; }
 
     @media (max-width: 600px) {
-      .services__callout { grid-template-columns: 1fr; gap: 28px; }
+      .services__bridal-note {
+      font-family: var(--font-body);
+      font-size: 12px;
+      color: var(--color-gold);
+      font-style: italic;
+      padding: 10px 0 4px;
+    }
+    .service-row__bridal-info { display: flex; flex-direction: column; gap: 3px; }
+    .service-row__desc {
+      font-family: var(--font-body);
+      font-size: 11px;
+      color: var(--color-text-dim);
+    }
+
+    .services__callout { grid-template-columns: 1fr; gap: 28px; }
     }
   </style>
 </head>
@@ -396,6 +424,48 @@
 
 
         <!-- ═══════════════════════════════
+             BRIDAL SERVICES
+             ═══════════════════════════════ -->
+        <div class="services__category">
+          <h2 class="services__category-title">Bridal <em>Services</em></h2>
+        </div>
+
+        <p class="services__bridal-note">Matron &amp; Bridal packages. Prices shown as within Kampala / outside Kampala.</p>
+
+        <div class="service-row">
+          <div class="service-row__bridal-info">
+            <span class="service-row__name">Half-day Bridal Hair</span>
+          </div>
+          <span class="service-row__price">1,000,000 / 1,500,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <div class="service-row__bridal-info">
+            <span class="service-row__name">Half-day Bridal Hair &amp; Makeup</span>
+          </div>
+          <span class="service-row__price">1,600,000 / 2,200,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <div class="service-row__bridal-info">
+            <span class="service-row__name">Full-day Bridal Hair</span>
+          </div>
+          <span class="service-row__price">1,800,000 / 2,000,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <div class="service-row__bridal-info">
+            <span class="service-row__name">Full-day Bridal Hair &amp; Makeup</span>
+          </div>
+          <span class="service-row__price">2,000,000 / 2,500,000 UGX</span>
+        </div>
+        <div class="service-row">
+          <div class="service-row__bridal-info">
+            <span class="service-row__name">Full Package with Bridesmaids</span>
+            <span class="service-row__desc">For 3 to 6 bridesmaids</span>
+          </div>
+          <span class="service-row__price">3,500,000 UGX</span>
+        </div>
+
+
+        <!-- ═══════════════════════════════
              CONTACT + HOURS CALLOUT
              ═══════════════════════════════ -->
         <div class="services__callout">
@@ -540,6 +610,17 @@
                 <option>Wig 32 inches - 620,000 UGX</option>
                 <option>Wig 34 inches - 670,000 UGX</option>
                 <option>Wig 36 inches - 700,000 UGX</option>
+              </optgroup>
+              <optgroup label="Bridal Services">
+                <option>Half-day Bridal Hair - within Kampala 1,000,000 UGX</option>
+                <option>Half-day Bridal Hair - outside Kampala 1,500,000 UGX</option>
+                <option>Half-day Bridal Hair + Makeup - within Kampala 1,600,000 UGX</option>
+                <option>Half-day Bridal Hair + Makeup - outside Kampala 2,200,000 UGX</option>
+                <option>Full-day Bridal Hair - within Kampala 1,800,000 UGX</option>
+                <option>Full-day Bridal Hair - outside Kampala 2,000,000 UGX</option>
+                <option>Full-day Bridal Hair + Makeup - within Kampala 2,000,000 UGX</option>
+                <option>Full-day Bridal Hair + Makeup - outside Kampala 2,500,000 UGX</option>
+                <option>Full Package with Bridesmaids (3 to 6) - 3,500,000 UGX</option>
               </optgroup>
             </select>
             <svg class="form-field__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
