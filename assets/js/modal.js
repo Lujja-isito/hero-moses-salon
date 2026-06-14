@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
   var closeBtn  = document.getElementById('modal-close');
   var form      = document.getElementById('booking-form');
   var submitBtn = document.getElementById('booking-submit');
-  var openBtns  = document.querySelectorAll('.open-modal');
 
   var nameInput    = document.getElementById('booking-name');
   var phoneInput   = document.getElementById('booking-phone');
@@ -40,10 +39,15 @@ document.addEventListener('DOMContentLoaded', function() {
   /* ========================================================
      1. OPEN MODAL
      ======================================================== */
-  openBtns.forEach(function(btn) {
-    btn.addEventListener('click', function() {
+  /* Event delegation — works for open-modal buttons present now
+     AND any created later (e.g. dynamic stylist "Book With" cards
+     loaded from Firestore). */
+  document.addEventListener('click', function(e) {
+    var trigger = e.target.closest('.open-modal');
+    if (trigger) {
+      e.preventDefault();
       openModal();
-    });
+    }
   });
 
   function openModal() {
