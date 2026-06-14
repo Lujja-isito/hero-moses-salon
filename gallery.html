@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Gallery — Hero Moses Hair Salon. See our salon, our work, and the transformations we create for our clients in Kampala." />
-  <title>Gallery | Hero Moses Hair Salon</title>
+  <meta name="description" content="Meet the Artists at Hero Moses Hair Salon — our expert team of stylists dedicated to making every client look extraordinary." />
+  <title>Our Stylists | Hero Moses Hair Salon</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,360 +15,10 @@
   <link rel="stylesheet" href="assets/css/reset.css" />
   <link rel="stylesheet" href="assets/css/navbar.css" />
   <link rel="stylesheet" href="assets/css/pages.css" />
-  <link rel="stylesheet" href="assets/css/gallery.css" />
+  <link rel="stylesheet" href="assets/css/stylists.css" />
   <link rel="stylesheet" href="assets/css/modal.css" />
   <link rel="stylesheet" href="assets/css/footer.css" />
   <link rel="stylesheet" href="assets/css/responsive.css" />
-
-  <style>
-    /* Gallery page specific styles */
-
-    /* Section wrapper shared by all 3 gallery sections */
-    .gallery-section {
-      padding: var(--section-padding-y) var(--section-padding-x);
-      border-bottom: 1px solid var(--color-border-dark);
-    }
-    .gallery-section:last-of-type { border-bottom: none; }
-
-    /* Section heading block */
-    .gallery-section__head {
-      margin-bottom: 40px;
-    }
-    .gallery-section__label {
-      font-family:    var(--font-body);
-      font-size:      10px;
-      font-weight:    var(--fw-medium);
-      letter-spacing: var(--ls-wider);
-      text-transform: uppercase;
-      color:          var(--color-gold);
-      margin-bottom:  var(--space-sm);
-      display:        block;
-    }
-    .gallery-section__title {
-      font-family:   var(--font-display);
-      font-size:     clamp(28px, 3.5vw, 40px);
-      font-weight:   var(--fw-regular);
-      color:         var(--color-text-white);
-      margin-bottom: var(--space-sm);
-      line-height:   1.15;
-    }
-    .gallery-section__title em {
-      font-style:  italic;
-      color:       var(--color-gold);
-    }
-    .gallery-section__desc {
-      font-family: var(--font-body);
-      font-size:   var(--fs-body);
-      color:       var(--color-text-muted);
-      max-width:   600px;
-      line-height: var(--lh-body);
-    }
-
-    /* ── SECTION 1: SALON SET PHOTOS ── */
-    /* 3-column grid for salon photos */
-    .salon-grid {
-      display:               grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:                   14px;
-    }
-    .salon-grid__cell {
-      position:            relative;
-      overflow:            hidden;
-      border-radius:       14px;
-      border:              1px solid var(--color-border-dark);
-      background:          var(--color-bg-surface);
-      background-size:     cover;
-      background-position: center;
-      aspect-ratio:        1 / 1;            /* perfect square — image always fits */
-      cursor:              pointer;
-      transition:          transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-                           box-shadow 0.5s ease;
-    }
-    .salon-grid__cell:hover {
-      transform:  translateY(-6px) scale(1.015);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.45);
-      z-index:    2;
-    }
-    /* First tile spans 2x2 for an editorial anchor on desktop */
-    .salon-grid__cell--hero {
-      grid-column: span 2;
-      grid-row:    span 2;
-      aspect-ratio: auto;
-    }
-    .salon-grid__cell--regular { aspect-ratio: 1 / 1; }
-    .salon-grid__cell--small   { aspect-ratio: 1 / 1; }
-
-    /* Placeholder label inside empty cells */
-    .salon-grid__placeholder {
-      position:        absolute;
-      inset:           0;
-      display:         flex;
-      flex-direction:  column;
-      align-items:     center;
-      justify-content: center;
-      gap:             8px;
-    }
-    .salon-grid__ph-icon {
-      width:         40px;
-      height:        40px;
-      border:        1px solid #333;
-      border-radius: 50%;
-      display:       flex;
-      align-items:   center;
-      justify-content: center;
-      color:         #333;
-    }
-    .salon-grid__ph-text {
-      font-family:    var(--font-body);
-      font-size:      10px;
-      color:          #333;
-      letter-spacing: 0.06em;
-      text-align:     center;
-      text-transform: uppercase;
-    }
-
-    /* ── SECTION 2: CLIENT PHOTOS ── */
-    /* Masonry-style grid — 4 columns */
-    .clients-grid {
-      display:               grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap:                   14px;
-    }
-    .clients-grid__cell {
-      position:            relative;
-      overflow:            hidden;
-      border-radius:       14px;
-      border:              1px solid var(--color-border-dark);
-      background:          var(--color-bg-surface);
-      background-size:     cover;
-      background-position: center;
-      aspect-ratio:        3 / 4;            /* portrait — flatters hair work */
-      cursor:              pointer;
-      transition:          transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-                           box-shadow 0.5s ease;
-    }
-    .clients-grid__cell:hover {
-      transform:  translateY(-6px) scale(1.02);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.5);
-      z-index:    2;
-    }
-    .clients-grid__cell--tall   { aspect-ratio: 3 / 4; }
-    .clients-grid__cell--medium { aspect-ratio: 3 / 4; }
-    .clients-grid__cell--short  { aspect-ratio: 3 / 4; }
-
-    /* Caption overlay on hover */
-    .clients-grid__caption {
-      position:   absolute;
-      bottom:     0;
-      left:       0;
-      right:      0;
-      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 55%, transparent 100%);
-      padding:    28px 14px 14px;
-      opacity:    0;
-      transform:  translateY(8px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
-    .clients-grid__cell:hover .clients-grid__caption {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .clients-grid__caption-text {
-      font-family:    var(--font-body);
-      font-size:      11px;
-      color:          var(--color-text-white);
-      letter-spacing: 0.04em;
-    }
-    .clients-grid__placeholder {
-      position:        absolute;
-      inset:           0;
-      display:         flex;
-      align-items:     center;
-      justify-content: center;
-    }
-    .clients-grid__ph-text {
-      font-family:    var(--font-body);
-      font-size:      9px;
-      color:          #2a2a2a;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    /* ── SECTION 3: ABOUT THE SALON ── */
-    .about-grid {
-      display:     grid;
-      grid-template-columns: 1fr 1fr;
-      gap:         60px;
-      align-items: start;
-    }
-    .about-grid__visual {
-      background:    var(--color-bg-surface);
-      border:        1px solid var(--color-border-dark);
-      border-radius: var(--radius-lg);
-      height:        420px;
-      position:      relative;
-      overflow:      hidden;
-      background-size:     cover;
-      background-position: center;
-    }
-    /* Decorative gold corner accent */
-    .about-grid__visual::before {
-      content:       '';
-      position:      absolute;
-      top:           16px;
-      left:          16px;
-      width:         40px;
-      height:        40px;
-      border-top:    2px solid var(--color-gold);
-      border-left:   2px solid var(--color-gold);
-      border-radius: 2px 0 0 0;
-    }
-    .about-grid__visual::after {
-      content:       '';
-      position:      absolute;
-      bottom:        16px;
-      right:         16px;
-      width:         40px;
-      height:        40px;
-      border-bottom: 2px solid var(--color-gold);
-      border-right:  2px solid var(--color-gold);
-      border-radius: 0 0 2px 0;
-    }
-    .about-grid__visual-placeholder {
-      position:        absolute;
-      inset:           0;
-      display:         flex;
-      flex-direction:  column;
-      align-items:     center;
-      justify-content: center;
-      gap:             10px;
-    }
-    .about-grid__content { padding-top: 8px; }
-    .about-grid__tag {
-      display:        inline-block;
-      font-family:    var(--font-body);
-      font-size:      10px;
-      font-weight:    var(--fw-medium);
-      letter-spacing: var(--ls-wider);
-      text-transform: uppercase;
-      color:          var(--color-gold);
-      border:         1px solid rgba(184,134,11,0.3);
-      border-radius:  var(--radius-sm);
-      padding:        4px 12px;
-      margin-bottom:  var(--space-md);
-    }
-    .about-grid__heading {
-      font-family:   var(--font-display);
-      font-size:     clamp(28px, 3vw, 38px);
-      font-weight:   var(--fw-regular);
-      color:         var(--color-text-white);
-      line-height:   1.2;
-      margin-bottom: var(--space-md);
-    }
-    .about-grid__heading em {
-      font-style: italic;
-      color:      var(--color-gold);
-    }
-    .about-grid__text {
-      font-family:   var(--font-body);
-      font-size:     var(--fs-body);
-      color:         var(--color-text-muted);
-      line-height:   var(--lh-body);
-      margin-bottom: var(--space-md);
-    }
-    /* Stats row */
-    .about-grid__stats {
-      display:         flex;
-      gap:             var(--space-lg);
-      margin:          var(--space-lg) 0;
-      padding:         var(--space-md) 0;
-      border-top:      1px solid var(--color-border-dark);
-      border-bottom:   1px solid var(--color-border-dark);
-    }
-    .about-stat__number {
-      font-family:   var(--font-display);
-      font-size:     36px;
-      font-weight:   var(--fw-regular);
-      color:         var(--color-gold);
-      line-height:   1;
-      display:       block;
-      margin-bottom: 4px;
-    }
-    .about-stat__label {
-      font-family:    var(--font-body);
-      font-size:      11px;
-      color:          var(--color-text-muted);
-      letter-spacing: 0.04em;
-    }
-
-    /* Social follow CTA at the bottom */
-    .gallery-social-cta {
-      padding:    60px var(--section-padding-x);
-      text-align: center;
-      background: var(--color-bg-surface);
-    }
-    .gallery-social-cta__text {
-      font-family:   var(--font-body);
-      font-size:     var(--fs-body);
-      color:         var(--color-text-muted);
-      margin-bottom: var(--space-md);
-    }
-    .gallery-social-cta__pills {
-      display:         flex;
-      justify-content: center;
-      gap:             12px;
-      flex-wrap:       wrap;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 1024px) {
-      .salon-grid   { grid-template-columns: repeat(2, 1fr); }
-      .clients-grid { grid-template-columns: repeat(2, 1fr); }
-      .salon-grid__cell--hero { grid-column: span 2; grid-row: auto; aspect-ratio: 16 / 10; }
-    }
-    @media (max-width: 768px) {
-      /* Clean 2x2 blocks — both sections, square fit */
-      .salon-grid   { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .clients-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .salon-grid__cell--hero {
-        grid-column: span 2; grid-row: auto; aspect-ratio: 16 / 10; height: auto;
-      }
-      .salon-grid__cell,
-      .salon-grid__cell--regular,
-      .salon-grid__cell--small { aspect-ratio: 1 / 1; height: auto; }
-      .clients-grid__cell,
-      .clients-grid__cell--tall,
-      .clients-grid__cell--medium,
-      .clients-grid__cell--short { aspect-ratio: 3 / 4; height: auto; }
-      .about-grid { grid-template-columns: 1fr; gap: 40px; }
-      .about-grid__visual { height: 280px; }
-      .about-grid__stats  { gap: var(--space-md); }
-    }
-    @media (max-width: 480px) {
-      /* Stay 2x2 — modern, compact, no long scroll */
-      .salon-grid   { grid-template-columns: repeat(2, 1fr); }
-      .clients-grid { grid-template-columns: repeat(2, 1fr); }
-      .salon-grid__cell--hero { grid-column: span 2; aspect-ratio: 16 / 10; }
-      .gallery-section { padding: 60px 20px; }
-      .about-grid__stats { flex-direction: column; gap: var(--space-sm); }
-    }
-  </style>
-  <style>
-    .fb-fade { opacity: 0; transition: opacity 0.5s ease; }
-    .fb-fade.fb-shown { opacity: 1; }
-  </style>
-  <style>
-    /* Scroll-reveal — tiles swing up gently as they enter view */
-    .reveal-tile {
-      opacity: 0;
-      transform: translateY(40px) scale(0.96);
-      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-                  transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .reveal-tile.revealed {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  </style>
 </head>
 
 <body>
@@ -390,8 +40,8 @@
       <li><a href="index.html"       class="navbar__link">Home</a></li>
       <li><a href="services.html"    class="navbar__link">Services</a></li>
       <li><a href="index.html#hours" class="navbar__link">Hours</a></li>
-      <li><a href="gallery.html"     class="navbar__link active">Gallery</a></li>
-      <li><a href="stylists.html"    class="navbar__link">Stylists</a></li>
+      <li><a href="gallery.html"     class="navbar__link">Gallery</a></li>
+      <li><a href="stylists.html"    class="navbar__link active">Stylists</a></li>
     </ul>
 
     <button class="btn btn--gold open-modal" aria-label="Book an appointment">
@@ -417,153 +67,42 @@
     <div class="page-hero__breadcrumb">
       <a href="index.html">Home</a>
       <span class="page-hero__breadcrumb-sep">/</span>
-      <span class="page-hero__breadcrumb-current">Gallery</span>
+      <span class="page-hero__breadcrumb-current">Stylists</span>
     </div>
-    <h1 class="page-hero__title">The <em>Gallery</em></h1>
+    <h1 class="page-hero__title">The <em>Artists</em></h1>
     <p class="page-hero__sub">
-      A glimpse into our world , precision, artistry, and the
-      pursuit of perfection in every look.
+      Meet our team of eight expert stylists, led by founder Moses,
+      dedicated to making every client look and feel extraordinary.
     </p>
   </div>
 
 
-  <!-- ══════════════════════════════════════
-       SECTION 1 — THE SALON
-       Photos of the salon space and setup
-       ══════════════════════════════════════ -->
+  <!-- STYLISTS CONTENT -->
   <div class="page-body">
+    <section class="stylists" id="stylists" style="padding-top: 80px;">
 
-    <div class="gallery-section">
-      <div class="gallery-section__head">
-        <span class="gallery-section__label">Section 01</span>
-        <h2 class="gallery-section__title">The <em>Salon</em></h2>
-        <p class="gallery-section__desc">
-          Step inside Hero Moses Hair Salon at Mabirizi Complex, Level 4,
-          Room 22. A premium, upscale space designed to make every client
-          feel comfortable, pampered, and truly special from the moment
-          they walk through the door.
+            <div class="stylists__grid" id="stylists-grid">
+        <p style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#666;font-family:var(--font-body);font-size:14px">Loading our team...</p>
+      </div>
+
+      <!-- Bottom CTA -->
+      <div class="stylists__bottom-cta">
+        <p class="stylists__bottom-text">
+          Not sure who to book with? Our team will match you with the
+          perfect stylist for your needs.
         </p>
+        <button class="btn btn--gold open-modal" aria-label="Book an appointment">
+          <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8"  y1="2" x2="8"  y2="6"></line>
+            <line x1="3"  y1="10" x2="21" y2="10"></line>
+          </svg>
+          BOOK AN APPOINTMENT
+        </button>
       </div>
 
-      <div class="salon-grid" id="salon-grid">
-        <p class="fb-empty" style="grid-column:1/-1;text-align:center;padding:50px 20px;color:#555;font-family:var(--font-body);font-size:13px;border:1px dashed #2a2a2a;border-radius:8px">Photos loading...</p>
-      </div>
-    </div>
-
-
-    <!-- ══════════════════════════════════════
-         SECTION 2 — CLIENT TRANSFORMATIONS
-         Before/after and finished look photos
-         ══════════════════════════════════════ -->
-    <div class="gallery-section">
-      <div class="gallery-section__head">
-        <span class="gallery-section__label">Section 02</span>
-        <h2 class="gallery-section__title">Client <em>Transformations</em></h2>
-        <p class="gallery-section__desc">
-          Every client who sits in our chair deserves to feel extraordinary.
-          These are the transformations we create every day - braids, colour,
-          wings, weaves, and styles that turn heads across Kampala.
-        </p>
-      </div>
-
-      <div class="clients-grid" id="clients-grid">
-        <p class="fb-empty" style="grid-column:1/-1;text-align:center;padding:50px 20px;color:#555;font-family:var(--font-body);font-size:13px;border:1px dashed #2a2a2a;border-radius:8px">Photos loading...</p>
-      </div>
-    </div>
-
-
-    <!-- ══════════════════════════════════════
-         SECTION 3 — ABOUT THE SALON
-         Story, description, stats
-         ══════════════════════════════════════ -->
-    <div class="gallery-section">
-      <div class="gallery-section__head">
-        <span class="gallery-section__label">Section 03</span>
-        <h2 class="gallery-section__title">Our <em>Story</em></h2>
-      </div>
-
-      <div class="about-grid">
-
-        <!-- Visual side — add your photo here when ready -->
-        <div class="about-grid__visual">
-        </div>
-
-        <!-- Text side -->
-        <div class="about-grid__content">
-          <span class="about-grid__tag">Mabirizi Complex, Kampala</span>
-          <h3 class="about-grid__heading">Where every woman <em>deserves</em> to feel beautiful</h3>
-          <p class="about-grid__text">
-            Hero Moses Hair Salon was founded with one simple belief that
-            every woman who walks through our doors deserves to leave feeling
-            transformed, confident, and utterly beautiful.
-          </p>
-          <p class="about-grid__text">
-            Located at Level 4, Room 22 of Mabirizi Complex in the heart of
-            Kampala, we offer a premium, upscale experience at prices that
-            celebrate every woman not just a few. From everyday styling
-            to bridal transformations, our team of expert stylists brings
-            skill, care, and artistry to every single appointment.
-          </p>
-          <p class="about-grid__text">
-            We are open 6 days a week. Walk-ins are always welcome,
-            appointments are recommended on weekends and for special services.
-          </p>
-
-          <!-- Stats -->
-          <div class="about-grid__stats">
-            <div>
-              <span class="about-stat__number">8+</span>
-              <span class="about-stat__label">Years of experience</span>
-            </div>
-            <div>
-              <span class="about-stat__number">4</span>
-              <span class="about-stat__label">Expert stylists</span>
-            </div>
-            <div>
-              <span class="about-stat__number">38+</span>
-              <span class="about-stat__label">Services offered</span>
-            </div>
-            <div>
-              <span class="about-stat__number">6</span>
-              <span class="about-stat__label">Days a week open</span>
-            </div>
-          </div>
-
-          <!-- CTA -->
-          <button class="btn btn--gold open-modal" aria-label="Book an appointment">
-            <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-              <line x1="16" y1="2" x2="16" y2="6"></line>
-              <line x1="8"  y1="2" x2="8"  y2="6"></line>
-              <line x1="3"  y1="10" x2="21" y2="10"></line>
-            </svg>
-            BOOK YOUR APPOINTMENT
-          </button>
-        </div>
-
-      </div>
-    </div>
-
-
-    <!-- Social follow CTA -->
-    <div class="gallery-social-cta">
-      <p class="gallery-social-cta__text">Follow us on social media for daily inspiration</p>
-      <div class="gallery-social-cta__pills">
-        <a href="https://www.instagram.com/heromoseshair" class="gallery__pill" target="_blank" rel="noopener noreferrer">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-          Instagram
-        </a>
-        <a href="https://www.facebook.com/YOUR_PAGE" class="gallery__pill" target="_blank" rel="noopener noreferrer">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-          Facebook
-        </a>
-        <a href="https://www.tiktok.com/@hero_moseshair" class="gallery__pill" target="_blank" rel="noopener noreferrer">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
-          TikTok
-        </a>
-      </div>
-    </div>
-
+    </section>
   </div>
 
 
@@ -614,7 +153,7 @@
           <div class="form-field__select-wrap">
             <select class="form-field__input form-field__select" id="booking-service" name="service">
               <option value="" disabled selected>Select a service</option>
-              <optgroup label="── WIG INSTALLATION ──">
+              <optgroup label="Wig Installation">
                 <option>Wig Installation - 80,000 UGX</option>
                 <option>Buying in from our shop - 70,000 UGX</option>
                 <option>Installation + Lashes - 120,000 UGX</option>
@@ -626,33 +165,33 @@
                 <option>Ponytail Gel - 50,000 UGX</option>
                 <option>Ponytail Closure - 70,000 UGX</option>
               </optgroup>
-              <optgroup label="── BOHO BRAIDS WITH HAIR ──">
+              <optgroup label="Boho Braids with Hair">
                 <option>Boho Braids Small - 150,000 UGX</option>
                 <option>Boho Braids Normal - 140,000 UGX</option>
                 <option>Boho Braids Big - 110,000 UGX</option>
               </optgroup>
-              <optgroup label="── FULANI BRAIDS ──">
+              <optgroup label="Fulani Braids">
                 <option>Fulani Braids Small - 150,000 UGX</option>
                 <option>Fulani Braids Medium - 130,000 UGX</option>
                 <option>Fulani Braids Large - 100,000 UGX</option>
               </optgroup>
-              <optgroup label="── KNOTLESS BRAIDS ──">
+              <optgroup label="Knotless Braids">
                 <option>Knotless Small - 180,000 UGX</option>
                 <option>Knotless Small-Medium - 150,000 UGX</option>
                 <option>Knotless Medium - 130,000 UGX</option>
                 <option>Knotless Large - 100,000 UGX</option>
               </optgroup>
-              <optgroup label="── FRENCH CURLS ──">
+              <optgroup label="French Curls">
                 <option>French Curls for Pencil - 140,000 UGX</option>
                 <option>French Curls for Braids - 150,000 UGX</option>
               </optgroup>
-              <optgroup label="── WIGS - SHORT ──">
+              <optgroup label="Wigs - Short">
                 <option>Short Jerry Wig - 150,000 UGX</option>
                 <option>Pixie Wig - 150,000 UGX</option>
                 <option>Bob 10 inches - 180,000 UGX</option>
                 <option>Bob 12 inches - 200,000 UGX</option>
               </optgroup>
-              <optgroup label="── WIGS - STRAIGHT, BODY & CURLS ──">
+              <optgroup label="Wigs - Straight, Body and Curls">
                 <option>Wig 14 inches - 220,000 UGX</option>
                 <option>Wig 16 inches - 250,000 UGX</option>
                 <option>Wig 18 inches - 300,000 UGX</option>
@@ -678,7 +217,9 @@
                 <option>Full Package with Bridesmaids (3 to 6) - 3,500,000 UGX</option>
               </optgroup>
             </select>
-            <svg class="form-field__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <svg class="form-field__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
           </div>
           <span class="form-field__error" id="error-service" aria-live="polite"></span>
         </div>
@@ -688,7 +229,10 @@
           <span class="form-field__error" id="error-date" aria-live="polite"></span>
         </div>
         <button type="submit" class="modal__submit" id="booking-submit">CONFIRM BOOKING</button>
-        <p class="modal__footnote">Or call us directly at <a href="tel:+256757541061" class="modal__footnote-link">+256 757541061</a></p>
+        <p class="modal__footnote">
+          Or call us directly at
+          <a href="tel:+256757541061" class="modal__footnote-link">+256 757541061</a>
+        </p>
       </form>
     </div>
   </div>
@@ -705,11 +249,21 @@
             <span class="footer__wordmark-sub">HAIR SALON</span>
           </div>
         </div>
-        <p class="footer__desc">A premium ladies hair salon offering professional styling, wing installations, luxury braiding, and every hair service a woman deserves , at an upscale atmosphere in the heart of Kampala.</p>
+        <p class="footer__desc">
+          A premium ladies hair salon offering professional styling, wing
+          installations, luxury braiding, and every hair service a woman
+          deserves , at an upscale atmosphere in the heart of Kampala.
+        </p>
         <div class="footer__social">
-          <a href="https://www.instagram.com/heromoseshair" class="footer__social-btn" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-          <a href="https://www.facebook.com/YOUR_PAGE" class="footer__social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-          <a href="https://www.tiktok.com/@hero_moseshair" class="footer__social-btn" aria-label="TikTok" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg></a>
+          <a href="https://www.instagram.com/heromoseshair" class="footer__social-btn" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+          <a href="https://www.facebook.com/YOUR_PAGE" class="footer__social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          </a>
+          <a href="https://www.tiktok.com/@hero_moseshair" class="footer__social-btn" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+          </a>
         </div>
       </div>
       <div class="footer__col">
@@ -723,9 +277,18 @@
       </div>
       <div class="footer__col">
         <h4 class="footer__col-title">CONTACT</h4>
-        <div class="footer__contact-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"></path></svg><a href="tel:+256757541061" class="footer__contact-link">+256 757541061</a></div>
-        <div class="footer__contact-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><a href="mailto:blessingbutsigho@gmail.com" class="footer__contact-link">blessingbutsigho@gmail.com</a></div>
-        <button class="btn btn--gold open-modal" style="margin-top: 24px;" aria-label="Book an appointment"><svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>BOOK NOW</button>
+        <div class="footer__contact-row">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"></path></svg>
+          <a href="tel:+256757541061" class="footer__contact-link">+256 757541061</a>
+        </div>
+        <div class="footer__contact-row">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <a href="mailto:blessingbutsigho@gmail.com" class="footer__contact-link">blessingbutsigho@gmail.com</a>
+        </div>
+        <button class="btn btn--gold open-modal" style="margin-top: 24px;" aria-label="Book an appointment">
+          <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          BOOK NOW
+        </button>
       </div>
     </div>
     <div class="footer__bottom">
@@ -733,6 +296,7 @@
     </div>
   </footer>
 
+  <!-- FLOATING BTN -->
   <button class="floating-btn open-modal" id="floating-btn" aria-label="Book an appointment">
     <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
     BOOK NOW
@@ -741,18 +305,18 @@
   <script src="assets/js/logo.js"></script>
   <script src="assets/js/modal.js"></script>
   <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/stylists.js"></script>
   <script src="assets/js/scroll.js"></script>
 
 
-  <!-- ══════════════ FIREBASE GALLERY LOADER ══════════════
-       Loads photos uploaded by the admin panel and displays
-       them in their matching sections, newest first.
-       Static photos coded in the HTML above remain untouched. -->
+  <!-- ══════ FIREBASE TEAM LOADER ══════
+       If team members exist in the database, the static cards
+       below are replaced with live ones managed in /admin.html.
+       Photos display in full colour on this page. -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-    import {
-      getFirestore, collection, query, where, getDocs, limit
-    } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs }
+      from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBBV1YGdwlA2Q5yU1knZo0Kdayf4Cv_F1g",
@@ -762,119 +326,103 @@
       messagingSenderId: "222681569385",
       appId: "1:222681569385:web:6390b308ec3de8f3e76af8"
     };
+    const db = getFirestore(initializeApp(firebaseConfig));
 
-    const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
+    const CAL_SVG = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>';
 
-    /* Lazy background loader — only fetches the image when the
-       cell is about to scroll into view, so off-screen photos
-       never block the page. */
-    const lazyObserver = ('IntersectionObserver' in window)
-      ? new IntersectionObserver((entries, obs) => {
-          entries.forEach(e => {
-            if (e.isIntersecting) {
-              const cell = e.target;
-              const src = cell.dataset.bg;
-              if (src) {
-                const im = new Image();
-                im.onload = () => { cell.style.backgroundImage = `url('${src}')`; cell.classList.add('fb-shown'); };
-                im.src = src;
-              }
-              obs.unobserve(cell);
-            }
-          });
-        }, { rootMargin: '300px' })
-      : null;
-
-    function lazyBg(cell, src) {
-      cell.classList.add('fb-fade');
-      if (lazyObserver) { cell.dataset.bg = src; lazyObserver.observe(cell); }
-      else { cell.style.backgroundImage = `url('${src}')`; cell.classList.add('fb-shown'); }
-    }
-
-    /* Scroll-reveal: tiles swing into view, staggered */
-    const revealObserver = ('IntersectionObserver' in window)
-      ? new IntersectionObserver((entries, obs) => {
-          entries.forEach(e => {
-            if (e.isIntersecting) {
-              const cell = e.target;
-              const delay = parseInt(cell.dataset.revealDelay || '0', 10);
-              setTimeout(() => cell.classList.add('revealed'), delay);
-              obs.unobserve(cell);
-            }
-          });
-        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' })
-      : null;
-
-    function revealTile(cell, index) {
-      cell.classList.add('reveal-tile');
-      cell.dataset.revealDelay = (index % 4) * 90;   /* stagger within a row */
-      if (revealObserver) revealObserver.observe(cell);
-      else cell.classList.add('revealed');
-    }
-
-    async function loadSection(sectionName) {
-      const q = query(collection(db, 'gallery'), where('section', '==', sectionName), limit(30));
-      const snap = await getDocs(q);
-      const docs = [];
-      snap.forEach(d => docs.push(d.data()));
-      docs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-      return docs;
-    }
-
-    function emptyMsg(grid, text) {
-      grid.innerHTML = '<p class="fb-empty" style="grid-column:1/-1;text-align:center;padding:50px 20px;color:#555;font-family:var(--font-body);font-size:13px;border:1px dashed #2a2a2a;border-radius:8px">' + text + '</p>';
-    }
-
-    /* ── THE SALON section ── */
-    loadSection('salon').then(photos => {
-      const grid = document.getElementById('salon-grid');
-      if (!grid) return;
-      if (!photos.length) { emptyMsg(grid, 'Salon photos coming soon.'); return; }
-      grid.innerHTML = '';
-      photos.forEach((p, i) => {
-        const cell = document.createElement('div');
-        const size = i === 0 ? 'hero' : (i === 1 ? 'regular' : 'small');
-        cell.className = 'salon-grid__cell salon-grid__cell--' + size;
-        lazyBg(cell, p.image);
-        revealTile(cell, i);
-        grid.appendChild(cell);
-      });
-    }).catch(() => {});
-
-    /* ── CLIENT TRANSFORMATIONS section ── */
-    loadSection('clients').then(photos => {
-      const grid = document.getElementById('clients-grid');
-      if (!grid) return;
-      if (!photos.length) { emptyMsg(grid, 'Client transformations coming soon.'); return; }
-      grid.innerHTML = '';
-      const sizes = ['tall', 'medium', 'short'];
-      photos.forEach((p, i) => {
-        const cell = document.createElement('div');
-        cell.className = 'clients-grid__cell clients-grid__cell--' + sizes[i % 3];
-        lazyBg(cell, p.image);
-        revealTile(cell, i);
-        if (p.caption) {
-          const cap = document.createElement('div');
-          cap.className = 'clients-grid__caption';
-          cap.innerHTML = '<span class="clients-grid__caption-text"></span>';
-          cap.querySelector('span').textContent = p.caption;
-          cell.appendChild(cap);
+    (async () => {
+      try {
+        const snap = await getDocs(collection(db, 'team'));
+        const members = [];
+        snap.forEach(d => members.push(d.data()));
+        if (!members.length) {
+          const g = document.getElementById('stylists-grid');
+          if (g) g.innerHTML = '<p style=\"grid-column:1/-1;text-align:center;padding:60px 20px;color:#666;font-family:var(--font-body);font-size:14px\">Our team will be introduced here soon.</p>';
+          return;
         }
-        grid.appendChild(cell);
-      });
-    }).catch(() => {});
 
-    /* ── OUR STORY visual ── */
-    loadSection('story').then(photos => {
-      if (!photos.length) return;
-      const visual = document.querySelector('.about-grid__visual');
-      if (visual) {
-        visual.style.backgroundImage = `url('${photos[0].image}')`;
-        const ph = visual.querySelector('.about-grid__visual-placeholder');
-        if (ph) ph.style.display = 'none';
-      }
-    }).catch(() => {});
+        members.sort((a, b) => (b.founder === true) - (a.founder === true)
+          || (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0));
+
+        const grid = document.getElementById('stylists-grid') || document.querySelector('.stylists__grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+
+        members.forEach(m => {
+          const card = document.createElement('div');
+          card.className = 'stylist-card';
+          card.setAttribute('data-stylist', m.name);
+          card.setAttribute('role', 'button');
+          card.setAttribute('tabindex', '0');
+          card.setAttribute('aria-label', 'Select ' + m.name);
+
+          const img = document.createElement('div');
+          img.className = 'stylist-card__image';
+          if (m.photo) {
+            img.style.backgroundImage = `url('${m.photo}')`;
+            img.style.backgroundSize = 'cover';
+            img.style.backgroundPosition = 'center top';
+          } else {
+            const init = document.createElement('span');
+            init.className = 'stylist-card__initial';
+            init.textContent = (m.name || '?')[0];
+            img.appendChild(init);
+          }
+          if (m.founder) {
+            const badge = document.createElement('span');
+            badge.className = 'stylist-card__founder';
+            badge.textContent = 'FOUNDER';
+            img.appendChild(badge);
+          }
+          card.appendChild(img);
+
+          const nm = document.createElement('p');
+          nm.className = 'stylist-card__name';
+          nm.textContent = m.name;
+          card.appendChild(nm);
+
+          const role = document.createElement('span');
+          role.className = 'stylist-card__role';
+          role.textContent = m.role || 'Stylist';
+          card.appendChild(role);
+
+          if (m.specialties?.length) {
+            const specs = document.createElement('div');
+            specs.className = 'stylist-card__specialties';
+            m.specialties.forEach(s => {
+              const pill = document.createElement('span');
+              pill.className = 'stylist-card__spec';
+              pill.textContent = s;
+              specs.appendChild(pill);
+            });
+            card.appendChild(specs);
+          }
+
+          if (m.bio) {
+            const bio = document.createElement('p');
+            bio.className = 'stylist-card__bio';
+            bio.textContent = m.bio;
+            card.appendChild(bio);
+          }
+
+          const hint = document.createElement('span');
+          hint.className = 'stylist-card__hint';
+          hint.textContent = '\u2726 Tap to book';
+          card.appendChild(hint);
+
+          const ctaWrap = document.createElement('div');
+          ctaWrap.className = 'stylist-card__cta-wrap';
+          const cta = document.createElement('button');
+          cta.className = 'stylist-card__cta open-modal';
+          cta.setAttribute('aria-label', 'Book appointment with ' + m.name);
+          cta.innerHTML = CAL_SVG + ' BOOK WITH ' + m.name.toUpperCase();
+          ctaWrap.appendChild(cta);
+          card.appendChild(ctaWrap);
+
+          grid.appendChild(card);
+        });
+      } catch (e) { /* offline — static cards stay */ }
+    })();
   </script>
 
 </body>
