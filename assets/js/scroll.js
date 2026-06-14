@@ -60,31 +60,34 @@ document.addEventListener('DOMContentLoaded', function() {
      Only applies to same-site page links (not anchors,
      not external links, not Book Now buttons).
      ======================================================== */
-  var allLinks = document.querySelectorAll('a[href]');
+  /* Event delegation — one handler on the document reads the href
+     from the ACTUAL clicked link at click time. This avoids the
+     closure bug where a delayed navigation could use the wrong
+     link's href and send the user to the wrong page. */
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a[href]');
+    if (!link) return;
 
-  allLinks.forEach(function(link) {
     var href = link.getAttribute('href');
 
     /* Only intercept internal page links */
     if (!href) return;
-    if (href.charAt(0) === '#') return;          /* anchor — skip */
+    if (href.charAt(0) === '#') return;           /* anchor — skip */
     if (href.startsWith('http')) return;          /* external — skip */
     if (href.startsWith('mailto')) return;        /* email — skip */
     if (href.startsWith('tel')) return;           /* phone — skip */
-    if (href.includes('#') && !href.startsWith('index')) return; /* anchor on page — skip */
+    if (href.indexOf('#') !== -1 && href.indexOf('index') !== 0) return; /* on-page anchor — skip */
 
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      var target = link.getAttribute('href');
+    e.preventDefault();
 
-      /* Fade out body */
-      document.body.classList.remove('page--loaded');
+    /* Capture the target now, from the clicked link itself */
+    var target = href;
 
-      /* Navigate after fade completes (300ms) */
-      setTimeout(function() {
-        window.location.href = target;
-      }, 280);
-    });
+    /* Fade out body, then navigate */
+    document.body.classList.remove('page--loaded');
+    setTimeout(function() {
+      window.location.href = target;
+    }, 280);
   });
 
 });
