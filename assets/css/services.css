@@ -2,328 +2,282 @@
  * ============================================================
  * services.css
  * ============================================================
- * Styles for the Services section (#services).
+ * Shared styles for everything "services" across the site:
  *
- * Layout:
- *   Centred header (heading + subtitle)
- *   3-column grid below — 4 service rows per column
+ *   index.html     — the 3-up service teaser grid + the CTA
+ *                     banner that follows the team section
+ *   services.html  — the full price list (quick-nav, category
+ *                     cards, price rows, hours/contact callout)
+ *                     + the same CTA banner at the page end
  *
- * Each service row (.service-row):
- *   Left  — service name + description stacked
- *   Right — price in gold, right-aligned
- *
- * A gold bottom border separates each row.
- * The last row in each column has no bottom border.
+ * Depends on the token set defined in each page's own <style>
+ * block (--espresso, --ivory, --gold, --sienna, --line-onLight,
+ * --line-onDark, --font-display, --r-lg, --ease, etc.) — load
+ * this file after that block and before responsive.css.
  * ============================================================
  */
 
 
-/* ----------------------------------------------------------
-   SECTION CONTAINER
-   ---------------------------------------------------------- */
-.services {
-  padding:    var(--section-padding-y) var(--section-padding-x);
-  background: var(--color-bg-page);
+/* ============================================================
+   SERVICES TEASER (index.html)
+   3-up grid of service categories with an icon, name, short
+   description and starting price. Sits inside the homepage's
+   #services section, above the "View Full Menu" link.
+   ============================================================ */
+.services-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--line-onLight);
+  border: 1px solid var(--line-onLight);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-top: 8px;
+}
+.service-card{
+  background: var(--ivory);
+  padding: 38px 30px;
+  transition: background .3s var(--ease);
+}
+.service-card:hover{ background: var(--ivory-2); }
+.service-card__icon{ color: var(--sienna); margin-bottom: 22px; }
+.service-card__name{
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+.service-card__desc{
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-muted-l);
+  margin: 0 0 18px;
+}
+.service-card__price{
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--sienna);
+}
+.services-cta{ text-align: center; margin-top: 56px; }
+.services-cta p{ font-size: 14px; color: var(--text-muted-l); margin-bottom: 26px; }
+
+
+/* ============================================================
+   PRICE LIST QUICK NAV (services.html)
+   Horizontally scrollable pills under the page hero, one per
+   category, linking to the matching .cat-card below.
+   ============================================================ */
+.quicknav{
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+.quicknav::-webkit-scrollbar{ display: none; }
+.quicknav a{
+  flex-shrink: 0;
+  padding: 9px 18px;
+  border: 1px solid var(--line-onDark);
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted-d);
+  text-decoration: none;
+  transition: border-color .25s var(--ease), color .25s var(--ease), background .25s var(--ease);
+}
+.quicknav a:hover, .quicknav a.is-active{
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201,161,90,.1);
 }
 
 
-/* ----------------------------------------------------------
-   SECTION HEADER — centred heading + subtitle
-   ---------------------------------------------------------- */
-.services__header {
-  text-align:    center;
-  margin-bottom: 60px;
+/* ============================================================
+   PRICE LIST (services.html)
+   Category cards flow in a two-column layout (CSS multi-column,
+   so each card's height decides where it breaks) and collapse
+   to a single column on smaller screens.
+   ============================================================ */
+.price-section{ padding: 64px 6vw 0; }
+.price-section__note{
+  max-width: 1000px;
+  margin: 0 auto 40px;
+  font-size: 13.5px;
+  color: var(--text-muted-l);
+  text-align: center;
 }
-
-.services__header .section-subtitle {
+.cats-columns{
+  column-count: 2;
+  column-gap: 32px;
+  max-width: 1000px;
   margin: 0 auto;
 }
+@media (max-width: 800px){ .cats-columns{ column-count: 1; } }
 
-
-/* ----------------------------------------------------------
-   3-COLUMN GRID
-   Three equal columns with a horizontal gap between them.
-   No row gap — each column manages its own internal spacing.
-   ---------------------------------------------------------- */
-.services__grid {
-  display:               grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap:                   0 60px;   /* 0 vertical, 60px horizontal */
-  align-items:           start;    /* columns align to their own top */
+.cat-card{
+  break-inside: avoid;
+  margin-bottom: 32px;
+  border: 1px solid var(--line-onLight);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: #fff;
+  scroll-margin-top: 100px;   /* keeps the quick-nav target clear of the fixed navbar */
 }
-
-
-/* ----------------------------------------------------------
-   INDIVIDUAL COLUMN
-   Each column holds 4 service rows stacked vertically.
-   A thin vertical separator line sits between columns —
-   created using a right border on columns 1 and 2.
-   ---------------------------------------------------------- */
-.services__col {
-  /* No extra styles needed — rows handle their own spacing */
+.cat-card__head{
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--line-onLight);
+  background: var(--ivory-2);
 }
-
-/* Right border on the first two columns only
-   Creates a visual divider between the 3 columns */
-.services__col:not(:last-child) {
-  border-right: 1px solid var(--color-border-dark);
-  padding-right: 60px;   /* matches the gap so content doesn't touch border */
+.cat-card__title{
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
 }
+.cat-card__title em{ font-style: italic; color: var(--sienna); font-weight: 500; }
+.cat-card__note{ font-size: 12px; color: var(--text-muted-l); font-style: italic; margin: 8px 0 0; }
+.cat-card__body{ padding: 4px 24px 8px; }
 
-/* Left padding for columns 2 and 3 to balance the border */
-.services__col:not(:first-child) {
-  padding-left: 0;   /* gap already handles this */
-}
-
-
-/* ----------------------------------------------------------
-   SERVICE ROW
-   Each row is a flex container:
-     Left  — .service-row__info (name + description)
-     Right — .service-row__price
-   Separated by a bottom border.
-   ---------------------------------------------------------- */
-.service-row {
-  display:         flex;
-  align-items:     flex-start;
-  justify-content: space-between;
-  gap:             var(--space-md);   /* 24px between info and price */
-
-  padding:         20px 0;
-  border-bottom:   1px solid var(--color-border-dark);  /* #222222 */
-
-  /* Smooth hover highlight */
-  transition:      background var(--transition-fast);
-}
-
-/* Remove bottom border from the last row in each column */
-.service-row:last-child {
-  border-bottom: none;
-}
-
-/* Subtle hover — very faint gold tint */
-.service-row:hover {
-  background: rgba(184, 134, 11, 0.02);
-}
-
-
-/* ----------------------------------------------------------
-   LEFT SIDE — service name + description
-   ---------------------------------------------------------- */
-.service-row__info {
-  display:        flex;
-  flex-direction: column;
-  gap:            4px;
-  flex:           1;
-  min-width:      0;
-}
-
-/* Service name — "Professional Hair Styling" etc */
-.service-row__name {
-  display:     block;
-  font-family: var(--font-body);
-  font-size:   var(--fs-body);     /* 15px */
-  font-weight: var(--fw-regular);
-  color:       var(--color-text-white);
-  line-height: 1.3;
-
-  /* Smooth colour transition on hover */
-  transition:  color var(--transition-fast);
-}
-
-.service-row:hover .service-row__name {
-  color: #e8e8e8;
-}
-
-/* Short description below the name */
-.service-row__desc {
-  display:     block;
-  font-family: var(--font-body);
-  font-size:   12px;
-  color:       var(--color-text-dim);   /* #555555 */
-  line-height: 1.5;
-}
-
-
-/* ----------------------------------------------------------
-   RIGHT SIDE — price in gold
-   Right-aligned, Cormorant Garamond for an elegant look.
-   ---------------------------------------------------------- */
-.service-row__price {
-  flex-shrink:    0;              /* never shrinks — price always fully visible */
-  font-family:    var(--font-display);  /* Cormorant Garamond */
-  font-size:      var(--fs-price);      /* 16px */
-  font-weight:    var(--fw-semibold);   /* 600 */
-  color:          var(--color-gold);
-  white-space:    nowrap;         /* price never wraps to a new line */
-  padding-top:    2px;            /* slight nudge to align with name baseline */
-
-  transition:     color var(--transition-fast);
-}
-
-.service-row:hover .service-row__price {
-  color: var(--color-gold-light);
-}
-
-
-/* ===========================================================
-   CTA BANNER — "Ready for your transformation?"
-   Sits immediately below the Services section.
-   Dark panel with logo, heading, subtitle, two buttons.
-   =========================================================== */
-.cta-banner {
-  padding:    0 var(--section-padding-x) var(--section-padding-y);
-  background: var(--color-bg-page);
-}
-
-/* Inner dark card — matches the look in the screenshot */
-.cta-banner__inner {
-  display:         flex;
-  flex-direction:  column;
-  align-items:     center;
-  justify-content: center;
-  text-align:      center;
-
-  background:    var(--color-bg-surface);   /* #1a1a1a */
-  border:        1px solid var(--color-border-panel);
-  border-radius: var(--radius-lg);          /* 8px */
-  padding:       60px var(--section-padding-x);
-
-  /* Subtle gradient to give it depth */
-  background: linear-gradient(
-    135deg,
-    #1a1a1a 0%,
-    #161616 100%
-  );
-}
-
-/* Logo slot — circular, warm white background */
-.cta-banner__logo {
-  width:         72px;
-  height:        72px;
-  border-radius: 50%;
-  overflow:      hidden;
-  background:    #f5f5f0;
-  margin-bottom: var(--space-md);   /* 24px */
-
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-}
-
-/* Logo image inside the slot */
-.cta-banner__logo .logo-img {
-  width:         72px;
-  height:        72px;
-  border-radius: 0;
-  object-fit:    contain;
-}
-
-/* "Ready for your transformation?" */
-.cta-banner__heading {
-  font-family:   var(--font-display);
-  font-size:     clamp(24px, 3vw, 36px);
-  font-weight:   var(--fw-regular);
-  color:         var(--color-text-white);
-  line-height:   1.2;
-  margin-bottom: var(--space-sm);   /* 16px */
-}
-
-/* Subtitle paragraph */
-.cta-banner__sub {
-  font-family:   var(--font-body);
-  font-size:     var(--fs-body);    /* 15px */
-  color:         var(--color-text-muted);
-  line-height:   var(--lh-body);
-  max-width:     480px;
-  margin-bottom: var(--space-lg);   /* 32px */
-}
-
-/* Buttons row */
-.cta-banner__btns {
-  display:     flex;
-  align-items: center;
-  gap:         var(--space-sm);     /* 16px */
-  flex-wrap:   wrap;
-  justify-content: center;
-}
-
-/* Call button — gold outline style matching screenshot */
-.cta-banner__call {
-  background:   transparent;
-  color:        var(--color-gold);
-  border:       1.5px solid var(--color-gold);
-  padding:      14px 28px;
-  border-radius: var(--radius-sm);
-  font-family:  var(--font-body);
-  font-size:    var(--fs-xs);
-  font-weight:  var(--fw-medium);
-  letter-spacing: var(--ls-wide);
+.cat-sub{
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
   text-transform: uppercase;
-  text-decoration: none;
-  display:      inline-flex;
-  align-items:  center;
-  gap:          8px;
-  cursor:       pointer;
-  transition:   background var(--transition-fast),
-                color      var(--transition-fast);
+  color: var(--sienna);
+  padding: 14px 0 6px;
+  display: block;
 }
 
-.cta-banner__call:hover {
-  background: rgba(184, 134, 11, 0.08);
+.price-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line-onLight);
+}
+.price-row:last-child{ border-bottom: none; }
+.price-row__name{
+  font-size: 13.5px;
+  color: var(--text-onlight);
+  flex: 1;
+  padding-top: 1px;
+}
+.price-row__name small{
+  display: block;
+  font-size: 11.5px;
+  color: var(--text-muted-l);
+  margin-top: 3px;
+  font-weight: 400;
+}
+.price-row__price{
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sienna);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+/* Bridal rows show two prices stacked (within Kampala / outside Kampala) */
+.price-row__dual{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+.price-row__dual span{ font-size: 10.5px; color: var(--text-muted-l); white-space: nowrap; }
+.price-row__dual strong{
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--sienna);
+  font-weight: 600;
+  margin-left: 5px;
 }
 
-/* Responsive — stack buttons on mobile */
-@media (max-width: 480px) {
-  .cta-banner__inner {
-    padding: 40px var(--space-md);
-  }
 
-  .cta-banner__btns {
-    flex-direction: column;
-    width:          100%;
-  }
-
-  .cta-banner__btns .btn,
-  .cta-banner__call {
-    width:           100%;
-    justify-content: center;
-    max-width:       320px;
-  }
+/* ============================================================
+   CALLOUT — hours + contact (services.html)
+   Two-column card beneath the price list.
+   ============================================================ */
+.callout{
+  max-width: 1000px;
+  margin: 8px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 36px;
+  border: 1px solid var(--line-onLight);
+  border-radius: var(--r-lg);
+  background: var(--ivory-2);
 }
-
-
-/* Services page extras */
-.services__note {
-  text-align:    center;
-  font-family:   var(--font-body);
-  font-size:     13px;
-  color:         var(--color-text-muted);
-  margin-bottom: var(--space-xl);
-  padding:       var(--space-sm) var(--space-md);
-  border:        0.5px solid var(--color-border-dark);
-  border-radius: var(--radius-sm);
-  background:    var(--color-bg-surface);
-  max-width:     600px;
-  margin-left:   auto;
-  margin-right:  auto;
+.callout__title{
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--sienna);
+  margin: 0 0 14px;
 }
-
-.services__book-cta {
-  margin-top:      64px;
-  padding-top:     48px;
-  border-top:      1px solid var(--color-border-dark);
-  text-align:      center;
-  display:         flex;
-  flex-direction:  column;
-  align-items:     center;
-  gap:             var(--space-md);
+.callout__row{
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13.5px;
+  color: var(--text-muted-l);
+  line-height: 1.7;
+  margin-bottom: 10px;
 }
+.callout__row:last-child{ margin-bottom: 0; }
+.callout__row svg{ color: var(--sienna); flex-shrink: 0; margin-top: 3px; }
+.callout__row a{ color: var(--sienna); text-decoration: none; font-weight: 600; }
+.callout__row a:hover{ opacity: .8; }
+@media (max-width: 700px){ .callout{ grid-template-columns: 1fr; padding: 26px; } }
 
-.services__book-text {
-  font-family: var(--font-body);
-  font-size:   var(--fs-body);
-  color:       var(--color-text-muted);
-  max-width:   480px;
-  line-height: var(--lh-body);
+
+/* ============================================================
+   CTA BANNER
+   Shared by index.html (after the team section) and
+   services.html (after the price list). index.html adds a
+   centred wordmark above the heading via .cta-banner__logo;
+   services.html uses the banner without it.
+   ============================================================ */
+.cta-banner{
+  background: linear-gradient(135deg, var(--sienna), #8f3d20);
+  color: var(--ivory);
+  padding: 80px 6vw;
+  text-align: center;
+}
+.cta-banner__logo{ margin-bottom: 20px; display: flex; justify-content: center; }
+.cta-banner__logo .brand__name{ font-size: 20px; }
+.cta-banner__logo .brand__name .is-hero,
+.cta-banner__logo .brand__name .is-moses{ color: var(--ivory); }
+.cta-banner__logo .brand__sub{ color: var(--ivory); opacity: .75; }
+.cta-banner__heading{
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(24px, 3.6vw, 38px);
+  margin: 0 0 12px;
+}
+.cta-banner__sub{
+  font-size: 14px;
+  color: rgba(251,246,236,.85);
+  margin-bottom: 30px;
+}
+.cta-banner__btns{ display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.cta-banner .btn--gold{ background: var(--espresso); color: var(--gold); }
+.cta-banner .btn--gold:hover{ background: #000; }
+.cta-banner .btn--line-dark{ border-color: rgba(251,246,236,.4); }
+.cta-banner .btn--line-dark:hover{ border-color: var(--ivory); color: var(--ivory); }
+
+@media (max-width: 480px){
+  .cta-banner{ padding: 56px 6vw; }
+  .cta-banner__btns{ flex-direction: column; width: 100%; align-items: center; }
+  .cta-banner__btns .btn{ width: 100%; max-width: 320px; justify-content: center; }
 }

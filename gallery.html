@@ -1,758 +1,759 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Gallery — Hero Moses Hair Salon. See our salon, our work, and the transformations we create for our clients in Kampala." />
-  <title>Gallery | Hero Moses Hair Salon</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Gallery: Hero Moses Hair Salon. See our salon, our work, and the transformations we create for our clients in Kampala." />
+<title>Gallery | Hero Moses Hair Salon</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/css/variables.css" />
-  <link rel="stylesheet" href="assets/css/reset.css" />
-  <link rel="stylesheet" href="assets/css/navbar.css" />
-  <link rel="stylesheet" href="assets/css/pages.css" />
-  <link rel="stylesheet" href="assets/css/gallery.css" />
-  <link rel="stylesheet" href="assets/css/modal.css" />
-  <link rel="stylesheet" href="assets/css/footer.css" />
-  <link rel="stylesheet" href="assets/css/responsive.css" />
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --espresso:      #1B140F;
+  --espresso-2:    #241C15;
+  --espresso-3:    #2E241B;
+  --ivory:         #FBF6EC;
+  --ivory-2:       #F2E9D8;
+  --gold:          #C9A15A;
+  --gold-light:    #E4C685;
+  --sienna:        #B5502B;
+  --text-onlight:  #241B14;
+  --text-muted-l:  #6E6252;
+  --text-onDark:   #FBF6EC;
+  --text-muted-d:  #A9977F;
+  --line-onDark:   rgba(251,246,236,0.14);
+  --line-onLight:  rgba(36,27,20,0.12);
+  --font-display:  'Fraunces', serif;
+  --font-body:     'Inter', sans-serif;
+  --r-sm: 4px; --r-md: 10px; --r-lg: 20px;
+  --ease: cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0; background:var(--espresso); color:var(--text-onDark);
+  font-family:var(--font-body); -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{ color:inherit; }
+button{ font-family:inherit; cursor:pointer; }
+:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
 
-  <style>
-    /* Gallery page specific styles */
+/* buttons */
+.btn{
+  display:inline-flex; align-items:center; gap:9px; padding:15px 28px;
+  border-radius:100px; font-size:12px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; border:1px solid transparent; text-decoration:none;
+  transition:transform .25s var(--ease), background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease);
+  white-space:nowrap;
+}
+.btn:hover{ transform:translateY(-2px); }
+.btn--gold{ background:var(--gold); color:var(--espresso); }
+.btn--gold:hover{ background:var(--gold-light); }
+.btn--line-dark{ border-color:var(--line-onDark); color:var(--text-onDark); }
+.btn--line-dark:hover{ border-color:var(--gold); color:var(--gold); }
+.btn__icon{ flex-shrink:0; }
 
-    /* Section wrapper shared by all 3 gallery sections */
-    .gallery-section {
-      padding: var(--section-padding-y) var(--section-padding-x);
-      border-bottom: 1px solid var(--color-border-dark);
-    }
-    .gallery-section:last-of-type { border-bottom: none; }
+/* ============================================================
+   BRAID DIVIDER — signature element
+   ============================================================ */
+.braid{ width:100%; height:44px; display:block; overflow:hidden; background:var(--espresso); }
+.braid svg{ width:100%; height:100%; display:block; }
 
-    /* Section heading block */
-    .gallery-section__head {
-      margin-bottom: 40px;
-    }
-    .gallery-section__label {
-      font-family:    var(--font-body);
-      font-size:      10px;
-      font-weight:    var(--fw-medium);
-      letter-spacing: var(--ls-wider);
-      text-transform: uppercase;
-      color:          var(--color-gold);
-      margin-bottom:  var(--space-sm);
-      display:        block;
-    }
-    .gallery-section__title {
-      font-family:   var(--font-display);
-      font-size:     clamp(28px, 3.5vw, 40px);
-      font-weight:   var(--fw-regular);
-      color:         var(--color-text-white);
-      margin-bottom: var(--space-sm);
-      line-height:   1.15;
-    }
-    .gallery-section__title em {
-      font-style:  italic;
-      color:       var(--color-gold);
-    }
-    .gallery-section__desc {
-      font-family: var(--font-body);
-      font-size:   var(--fs-body);
-      color:       var(--color-text-muted);
-      max-width:   600px;
-      line-height: var(--lh-body);
-    }
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 6vw; transition:background .35s var(--ease), padding .35s var(--ease), box-shadow .35s var(--ease);
+}
+.navbar.is-scrolled{ background:var(--espresso); padding:12px 6vw; box-shadow:0 8px 24px rgba(0,0,0,.25); }
+.navbar__brand{ display:flex; align-items:center; gap:12px; text-decoration:none; }
+.navbar__links{ display:flex; gap:36px; list-style:none; margin:0; padding:0; }
+.navbar__link{ text-decoration:none; font-size:12px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--text-muted-d); transition:color .25s var(--ease); }
+.navbar__link.active, .navbar__link:hover{ color:var(--gold); }
+.navbar__right{ display:flex; align-items:center; gap:18px; }
+.navbar__hamburger{ display:none; flex-direction:column; gap:5px; background:none; border:none; padding:6px; }
+.navbar__hamburger-bar{ width:22px; height:2px; background:var(--text-onDark); border-radius:2px; transition:transform .3s var(--ease), opacity .3s var(--ease); }
+.navbar__mobile-panel{
+  position:fixed; inset:0; background:var(--espresso); z-index:99; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:30px; opacity:0; pointer-events:none; transition:opacity .3s var(--ease);
+}
+.navbar__mobile-panel.is-open{ opacity:1; pointer-events:auto; }
+.navbar__mobile-panel a{ font-family:var(--font-display); font-size:26px; color:var(--text-onDark); text-decoration:none; }
 
-    /* ── SECTION 1: SALON SET PHOTOS ── */
-    /* 3-column grid for salon photos */
-    .salon-grid {
-      display:               grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:                   14px;
-    }
-    .salon-grid__cell {
-      position:            relative;
-      overflow:            hidden;
-      border-radius:       14px;
-      border:              1px solid var(--color-border-dark);
-      background:          var(--color-bg-surface);
-      background-size:     cover;
-      background-position: center;
-      aspect-ratio:        1 / 1;            /* perfect square — image always fits */
-      cursor:              pointer;
-      transition:          transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-                           box-shadow 0.5s ease;
-    }
-    .salon-grid__cell:hover {
-      transform:  translateY(-6px) scale(1.015);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.45);
-      z-index:    2;
-    }
-    /* First tile spans 2x2 for an editorial anchor on desktop */
-    .salon-grid__cell--hero {
-      grid-column: span 2;
-      grid-row:    span 2;
-      aspect-ratio: auto;
-    }
-    .salon-grid__cell--regular { aspect-ratio: 1 / 1; }
-    .salon-grid__cell--small   { aspect-ratio: 1 / 1; }
+/* ============================================================
+   BRAND WORDMARK
+   ============================================================ */
+.brand{ display:flex; flex-direction:column; line-height:1; }
+.brand__name{ font-family:var(--font-display); font-size:18px; letter-spacing:.01em; white-space:nowrap; }
+.brand__name .is-hero{ font-weight:700; letter-spacing:.02em; }
+.brand__name .is-moses{ font-style:italic; font-weight:500; margin-left:5px; }
+.brand__sub{ display:block; font-size:9px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; margin-top:5px; }
+.brand--sm .brand__name{ font-size:14px; }
+.brand--sm .brand__sub{ font-size:7.5px; margin-top:3px; }
+.brand--dark .brand__name{ color:var(--text-onDark); }
+.brand--dark .is-hero{ color:var(--gold); }
+.brand--dark .brand__sub{ color:var(--gold); opacity:.8; }
+.brand--light .brand__name{ color:var(--text-onlight); }
+.brand--light .is-hero{ color:var(--sienna); }
+.brand--light .brand__sub{ color:var(--text-muted-l); }
 
-    /* Placeholder label inside empty cells */
-    .salon-grid__placeholder {
-      position:        absolute;
-      inset:           0;
-      display:         flex;
-      flex-direction:  column;
-      align-items:     center;
-      justify-content: center;
-      gap:             8px;
-    }
-    .salon-grid__ph-icon {
-      width:         40px;
-      height:        40px;
-      border:        1px solid #333;
-      border-radius: 50%;
-      display:       flex;
-      align-items:   center;
-      justify-content: center;
-      color:         #333;
-    }
-    .salon-grid__ph-text {
-      font-family:    var(--font-body);
-      font-size:      10px;
-      color:          #333;
-      letter-spacing: 0.06em;
-      text-align:     center;
-      text-transform: uppercase;
-    }
+/* ============================================================
+   PAGE HERO
+   ============================================================ */
+.page-hero{ background:var(--espresso); color:var(--text-onDark); padding:150px 6vw 52px; }
+.page-hero__breadcrumb{ display:flex; align-items:center; gap:8px; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted-d); margin-bottom:22px; }
+.page-hero__breadcrumb a{ text-decoration:none; color:var(--text-muted-d); transition:color .2s var(--ease); }
+.page-hero__breadcrumb a:hover{ color:var(--gold); }
+.page-hero__breadcrumb-current{ color:var(--gold); }
+.page-hero__title{ font-family:var(--font-display); font-weight:500; font-size:clamp(32px,5vw,54px); margin:0 0 14px; line-height:1.06; }
+.page-hero__title em{ font-style:italic; color:var(--gold); }
+.page-hero__sub{ font-size:15px; line-height:1.7; color:var(--text-muted-d); max-width:560px; margin:0; }
 
-    /* ── SECTION 2: CLIENT PHOTOS ── */
-    /* Masonry-style grid — 4 columns */
-    .clients-grid {
-      display:               grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap:                   14px;
-    }
-    .clients-grid__cell {
-      position:            relative;
-      overflow:            hidden;
-      border-radius:       14px;
-      border:              1px solid var(--color-border-dark);
-      background:          var(--color-bg-surface);
-      background-size:     cover;
-      background-position: center;
-      aspect-ratio:        3 / 4;            /* portrait — flatters hair work */
-      cursor:              pointer;
-      transition:          transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-                           box-shadow 0.5s ease;
-    }
-    .clients-grid__cell:hover {
-      transform:  translateY(-6px) scale(1.02);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.5);
-      z-index:    2;
-    }
-    .clients-grid__cell--tall   { aspect-ratio: 3 / 4; }
-    .clients-grid__cell--medium { aspect-ratio: 3 / 4; }
-    .clients-grid__cell--short  { aspect-ratio: 3 / 4; }
+/* ============================================================
+   GALLERY SECTIONS
+   ============================================================ */
+.gallery-section{ padding:76px 6vw; border-bottom:1px solid var(--line-onDark); }
+.gallery-section:last-of-type{ border-bottom:none; }
+.gallery-section__head{ margin-bottom:40px; max-width:720px; }
+.gallery-section__label{ display:block; font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+.gallery-section__title{ font-family:var(--font-display); font-weight:500; font-size:clamp(28px,3.5vw,40px); line-height:1.15; margin:0 0 12px; }
+.gallery-section__title em{ font-style:italic; color:var(--gold); }
+.gallery-section__desc{ font-size:14.5px; line-height:1.75; color:var(--text-muted-d); max-width:600px; }
 
-    /* Caption overlay on hover */
-    .clients-grid__caption {
-      position:   absolute;
-      bottom:     0;
-      left:       0;
-      right:      0;
-      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 55%, transparent 100%);
-      padding:    28px 14px 14px;
-      opacity:    0;
-      transform:  translateY(8px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
-    .clients-grid__cell:hover .clients-grid__caption {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .clients-grid__caption-text {
-      font-family:    var(--font-body);
-      font-size:      11px;
-      color:          var(--color-text-white);
-      letter-spacing: 0.04em;
-    }
-    .clients-grid__placeholder {
-      position:        absolute;
-      inset:           0;
-      display:         flex;
-      align-items:     center;
-      justify-content: center;
-    }
-    .clients-grid__ph-text {
-      font-family:    var(--font-body);
-      font-size:      9px;
-      color:          #2a2a2a;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
+/* ── SALON GRID ── */
+.salon-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.salon-grid__cell{
+  position:relative; overflow:hidden; border-radius:var(--r-lg); border:1px solid var(--line-onDark);
+  background:var(--espresso-2); background-size:cover; background-position:center; aspect-ratio:1/1; cursor:pointer;
+  transition:transform .5s cubic-bezier(.22,1,.36,1), box-shadow .5s var(--ease);
+}
+.salon-grid__cell:hover{ transform:translateY(-6px) scale(1.015); box-shadow:0 18px 40px rgba(0,0,0,.45); z-index:2; }
+.salon-grid__cell--hero{ grid-column:span 2; grid-row:span 2; aspect-ratio:auto; }
 
-    /* ── SECTION 3: ABOUT THE SALON ── */
-    .about-grid {
-      display:     grid;
-      grid-template-columns: 1fr 1fr;
-      gap:         60px;
-      align-items: start;
-    }
-    .about-grid__visual {
-      background:    var(--color-bg-surface);
-      border:        1px solid var(--color-border-dark);
-      border-radius: var(--radius-lg);
-      height:        420px;
-      position:      relative;
-      overflow:      hidden;
-      background-size:     cover;
-      background-position: center;
-    }
-    /* Decorative gold corner accent */
-    .about-grid__visual::before {
-      content:       '';
-      position:      absolute;
-      top:           16px;
-      left:          16px;
-      width:         40px;
-      height:        40px;
-      border-top:    2px solid var(--color-gold);
-      border-left:   2px solid var(--color-gold);
-      border-radius: 2px 0 0 0;
-    }
-    .about-grid__visual::after {
-      content:       '';
-      position:      absolute;
-      bottom:        16px;
-      right:         16px;
-      width:         40px;
-      height:        40px;
-      border-bottom: 2px solid var(--color-gold);
-      border-right:  2px solid var(--color-gold);
-      border-radius: 0 0 2px 0;
-    }
-    .about-grid__visual-placeholder {
-      position:        absolute;
-      inset:           0;
-      display:         flex;
-      flex-direction:  column;
-      align-items:     center;
-      justify-content: center;
-      gap:             10px;
-    }
-    .about-grid__content { padding-top: 8px; }
-    .about-grid__tag {
-      display:        inline-block;
-      font-family:    var(--font-body);
-      font-size:      10px;
-      font-weight:    var(--fw-medium);
-      letter-spacing: var(--ls-wider);
-      text-transform: uppercase;
-      color:          var(--color-gold);
-      border:         1px solid rgba(184,134,11,0.3);
-      border-radius:  var(--radius-sm);
-      padding:        4px 12px;
-      margin-bottom:  var(--space-md);
-    }
-    .about-grid__heading {
-      font-family:   var(--font-display);
-      font-size:     clamp(28px, 3vw, 38px);
-      font-weight:   var(--fw-regular);
-      color:         var(--color-text-white);
-      line-height:   1.2;
-      margin-bottom: var(--space-md);
-    }
-    .about-grid__heading em {
-      font-style: italic;
-      color:      var(--color-gold);
-    }
-    .about-grid__text {
-      font-family:   var(--font-body);
-      font-size:     var(--fs-body);
-      color:         var(--color-text-muted);
-      line-height:   var(--lh-body);
-      margin-bottom: var(--space-md);
-    }
-    /* Stats row */
-    .about-grid__stats {
-      display:         flex;
-      gap:             var(--space-lg);
-      margin:          var(--space-lg) 0;
-      padding:         var(--space-md) 0;
-      border-top:      1px solid var(--color-border-dark);
-      border-bottom:   1px solid var(--color-border-dark);
-    }
-    .about-stat__number {
-      font-family:   var(--font-display);
-      font-size:     36px;
-      font-weight:   var(--fw-regular);
-      color:         var(--color-gold);
-      line-height:   1;
-      display:       block;
-      margin-bottom: 4px;
-    }
-    .about-stat__label {
-      font-family:    var(--font-body);
-      font-size:      11px;
-      color:          var(--color-text-muted);
-      letter-spacing: 0.04em;
-    }
+/* ── CLIENTS GRID ── */
+.clients-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.clients-grid__cell{
+  position:relative; overflow:hidden; border-radius:var(--r-lg); border:1px solid var(--line-onDark);
+  background:var(--espresso-2); background-size:cover; background-position:center; aspect-ratio:3/4; cursor:pointer;
+  transition:transform .5s cubic-bezier(.22,1,.36,1), box-shadow .5s var(--ease);
+}
+.clients-grid__cell:hover{ transform:translateY(-6px) scale(1.02); box-shadow:0 18px 40px rgba(0,0,0,.5); z-index:2; }
+.clients-grid__caption{
+  position:absolute; bottom:0; left:0; right:0;
+  background:linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.35) 55%, transparent 100%);
+  padding:28px 14px 14px; opacity:0; transform:translateY(8px); transition:opacity .4s var(--ease), transform .4s var(--ease);
+}
+.clients-grid__cell:hover .clients-grid__caption{ opacity:1; transform:translateY(0); }
+.clients-grid__caption-text{ font-size:11px; color:var(--text-onDark); letter-spacing:.04em; }
 
-    /* Social follow CTA at the bottom */
-    .gallery-social-cta {
-      padding:    60px var(--section-padding-x);
-      text-align: center;
-      background: var(--color-bg-surface);
-    }
-    .gallery-social-cta__text {
-      font-family:   var(--font-body);
-      font-size:     var(--fs-body);
-      color:         var(--color-text-muted);
-      margin-bottom: var(--space-md);
-    }
-    .gallery-social-cta__pills {
-      display:         flex;
-      justify-content: center;
-      gap:             12px;
-      flex-wrap:       wrap;
-    }
+/* ── EMPTY STATE ── */
+.fb-empty{ grid-column:1/-1; text-align:center; padding:50px 20px; color:var(--text-muted-d); font-size:13px; border:1px dashed var(--line-onDark); border-radius:var(--r-md); }
+.fb-fade{ opacity:0; transition:opacity .5s var(--ease); }
+.fb-fade.fb-shown{ opacity:1; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 1024px) {
-      .salon-grid   { grid-template-columns: repeat(2, 1fr); }
-      .clients-grid { grid-template-columns: repeat(2, 1fr); }
-      .salon-grid__cell--hero { grid-column: span 2; grid-row: auto; aspect-ratio: 16 / 10; }
-    }
-    @media (max-width: 768px) {
-      /* Clean 2x2 blocks — both sections, square fit */
-      .salon-grid   { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .clients-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .salon-grid__cell--hero {
-        grid-column: span 2; grid-row: auto; aspect-ratio: 16 / 10; height: auto;
-      }
-      .salon-grid__cell,
-      .salon-grid__cell--regular,
-      .salon-grid__cell--small { aspect-ratio: 1 / 1; height: auto; }
-      .clients-grid__cell,
-      .clients-grid__cell--tall,
-      .clients-grid__cell--medium,
-      .clients-grid__cell--short { aspect-ratio: 3 / 4; height: auto; }
-      .about-grid { grid-template-columns: 1fr; gap: 40px; }
-      .about-grid__visual { height: 280px; }
-      .about-grid__stats  { gap: var(--space-md); }
-    }
-    @media (max-width: 480px) {
-      /* Stay 2x2 — modern, compact, no long scroll */
-      .salon-grid   { grid-template-columns: repeat(2, 1fr); }
-      .clients-grid { grid-template-columns: repeat(2, 1fr); }
-      .salon-grid__cell--hero { grid-column: span 2; aspect-ratio: 16 / 10; }
-      .gallery-section { padding: 60px 20px; }
-      .about-grid__stats { flex-direction: column; gap: var(--space-sm); }
-    }
-  </style>
-  <style>
-    .fb-fade { opacity: 0; transition: opacity 0.5s ease; }
-    .fb-fade.fb-shown { opacity: 1; }
-  </style>
-  <style>
-    /* Scroll-reveal — tiles swing up gently as they enter view */
-    .reveal-tile {
-      opacity: 0;
-      transform: translateY(40px) scale(0.96);
-      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-                  transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .reveal-tile.revealed {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  </style>
+/* ── SCROLL REVEAL ── */
+.reveal-tile{ opacity:0; transform:translateY(40px) scale(.96); transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+.reveal-tile.revealed{ opacity:1; transform:translateY(0) scale(1); }
+
+/* ── ABOUT / STORY ── */
+.about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; }
+.about-grid__visual{
+  background:var(--espresso-2); border:1px solid var(--line-onDark); border-radius:var(--r-lg);
+  height:420px; position:relative; overflow:hidden; background-size:cover; background-position:center;
+}
+.about-grid__visual::before{ content:''; position:absolute; top:16px; left:16px; width:40px; height:40px; border-top:2px solid var(--gold); border-left:2px solid var(--gold); border-radius:2px 0 0 0; }
+.about-grid__visual::after{ content:''; position:absolute; bottom:16px; right:16px; width:40px; height:40px; border-bottom:2px solid var(--gold); border-right:2px solid var(--gold); border-radius:0 0 2px 0; }
+.about-grid__content{ padding-top:8px; }
+.about-grid__tag{
+  display:inline-block; font-size:10px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--gold);
+  border:1px solid rgba(201,161,90,.3); border-radius:var(--r-sm); padding:5px 13px; margin-bottom:18px;
+}
+.about-grid__heading{ font-family:var(--font-display); font-weight:500; font-size:clamp(26px,3vw,36px); line-height:1.2; margin:0 0 18px; }
+.about-grid__heading em{ font-style:italic; color:var(--gold); }
+.about-grid__text{ font-size:14.5px; line-height:1.75; color:var(--text-muted-d); margin:0 0 16px; }
+.about-grid__stats{ display:flex; gap:32px; margin:26px 0; padding:22px 0; border-top:1px solid var(--line-onDark); border-bottom:1px solid var(--line-onDark); flex-wrap:wrap; }
+.about-stat__number{ display:block; font-family:var(--font-display); font-size:32px; color:var(--gold); line-height:1; margin-bottom:5px; }
+.about-stat__label{ font-size:10.5px; color:var(--text-muted-d); letter-spacing:.04em; }
+
+/* ── SOCIAL CTA ── */
+.gallery-social-cta{ padding:64px 6vw; text-align:center; background:var(--espresso-2); }
+.gallery-social-cta__text{ font-size:14px; color:var(--text-muted-d); margin:0 0 22px; }
+.gallery-social-cta__pills{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+.gallery-social-cta__pills a{
+  display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border:1px solid var(--line-onDark);
+  border-radius:100px; font-size:11.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--text-onDark); text-decoration:none; transition:border-color .25s var(--ease), color .25s var(--ease);
+}
+.gallery-social-cta__pills a:hover{ border-color:var(--gold); color:var(--gold); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{ background:var(--espresso); color:var(--text-onDark); padding:80px 6vw 30px; border-top:1px solid var(--line-onDark); }
+.footer__grid{ display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:50px; padding-bottom:44px; border-bottom:1px solid var(--line-onDark); }
+.footer__brand-row{ display:flex; align-items:center; margin-bottom:18px; }
+.footer__desc{ font-size:13.5px; line-height:1.75; color:var(--text-muted-d); max-width:340px; margin-bottom:24px; }
+.footer__social{ display:flex; gap:10px; }
+.footer__social a{ width:34px; height:34px; border-radius:50%; border:1px solid var(--line-onDark); display:flex; align-items:center; justify-content:center; color:var(--text-onDark); text-decoration:none; transition:border-color .25s var(--ease), color .25s var(--ease); }
+.footer__social a:hover{ border-color:var(--gold); color:var(--gold); }
+.footer__col-title{ font-size:11px; font-weight:700; letter-spacing:.14em; color:var(--gold); margin:0 0 18px; }
+.footer__address, .footer__hours-summary{ font-size:13.5px; line-height:1.9; color:var(--text-muted-d); margin:0; }
+.footer__divider{ border:none; border-top:1px solid var(--line-onDark); margin:16px 0; }
+.footer__contact-row{ display:flex; align-items:center; gap:10px; margin-bottom:12px; font-size:13.5px; }
+.footer__contact-row svg{ color:var(--gold); flex-shrink:0; }
+.footer__contact-link{ text-decoration:none; color:var(--text-muted-d); transition:color .25s var(--ease); }
+.footer__contact-link:hover{ color:var(--gold); }
+.footer__bottom{ padding-top:26px; text-align:center; font-size:11px; letter-spacing:.08em; color:var(--text-muted-d); }
+
+/* ============================================================
+   BOOKING MODAL
+   ============================================================ */
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(15,10,7,.7); backdrop-filter:blur(3px); z-index:200;
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  opacity:0; pointer-events:none; transition:opacity .3s var(--ease);
+}
+.modal-overlay.is-open{ opacity:1; pointer-events:auto; }
+.modal{
+  background:var(--ivory); color:var(--text-onlight); border-radius:var(--r-lg); max-width:460px; width:100%;
+  max-height:88vh; overflow-y:auto; transform:translateY(16px) scale(.98); transition:transform .3s var(--ease);
+}
+.modal-overlay.is-open .modal{ transform:translateY(0) scale(1); }
+.modal__header{ display:flex; align-items:center; gap:14px; padding:26px 26px 20px; border-bottom:1px solid var(--line-onLight); }
+.modal__title-block{ flex:1; }
+.modal__title{ font-family:var(--font-display); font-size:19px; font-weight:600; margin:0; }
+.modal__subtitle{ font-size:11.5px; color:var(--text-muted-l); margin:2px 0 0; }
+.modal__close{ background:none; border:none; font-size:22px; line-height:1; color:var(--text-muted-l); padding:4px; }
+.modal__close:hover{ color:var(--sienna); }
+.modal__form{ padding:22px 26px 26px; display:flex; flex-direction:column; gap:16px; }
+.form-field__label{ display:block; font-size:10px; font-weight:700; letter-spacing:.1em; color:var(--text-muted-l); margin-bottom:7px; }
+.form-field__input{ width:100%; padding:12px 14px; border:1px solid var(--line-onLight); border-radius:var(--r-md); background:#fff; font-family:inherit; font-size:14px; color:var(--text-onlight); transition:border-color .2s var(--ease); }
+.form-field__input:focus{ border-color:var(--sienna); }
+.phone-row{ display:flex; gap:8px; }
+.phone-code{ flex:0 0 148px; text-overflow:ellipsis; }
+.phone-number{ flex:1; }
+.form-field__select-wrap{ position:relative; }
+.form-field__select{ appearance:none; padding-right:38px; }
+.form-field__chevron{ position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--text-muted-l); pointer-events:none; }
+.form-field__error{ display:block; font-size:11px; color:var(--sienna); min-height:14px; margin-top:4px; }
+.modal__submit{ background:var(--sienna); color:var(--ivory); border:none; border-radius:100px; padding:15px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; transition:background .25s var(--ease); }
+.modal__submit:hover{ background:#8f3d20; }
+.modal__footnote{ text-align:center; font-size:12.5px; color:var(--text-muted-l); margin:0; }
+.modal__footnote-link{ color:var(--sienna); text-decoration:none; font-weight:600; }
+.modal__success{ display:none; padding:40px 26px; text-align:center; }
+.modal__success.is-visible{ display:block; }
+.modal__success-icon{ width:56px; height:56px; border-radius:50%; background:rgba(181,80,43,.12); color:var(--sienna); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; }
+.modal__success h4{ font-family:var(--font-display); font-size:20px; margin:0 0 10px; }
+.modal__success p{ font-size:13.5px; color:var(--text-muted-l); line-height:1.6; margin:0 0 24px; }
+
+/* ============================================================
+   FLOATING BOOK BUTTON
+   ============================================================ */
+.floating-btn{
+  position:fixed; bottom:26px; right:26px; z-index:80; background:var(--sienna); color:var(--ivory);
+  border:none; border-radius:100px; padding:16px 24px; font-size:11.5px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; display:flex; align-items:center; gap:9px; box-shadow:0 10px 30px rgba(0,0,0,.35);
+  opacity:0; transform:translateY(16px); pointer-events:none; transition:opacity .3s var(--ease), transform .3s var(--ease), background .25s var(--ease);
+}
+.floating-btn.is-visible{ opacity:1; transform:translateY(0); pointer-events:auto; }
+.floating-btn:hover{ background:#8f3d20; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1024px){
+  .salon-grid{ grid-template-columns:repeat(2,1fr); }
+  .clients-grid{ grid-template-columns:repeat(2,1fr); }
+  .salon-grid__cell--hero{ grid-column:span 2; grid-row:auto; aspect-ratio:16/10; }
+  .footer__grid{ grid-template-columns:1fr 1fr; }
+  .footer__col--brand{ grid-column:1/-1; }
+}
+@media(max-width:768px){
+  .about-grid{ grid-template-columns:1fr; gap:40px; }
+  .about-grid__visual{ height:280px; }
+}
+@media(max-width:700px){
+  .navbar__links{ display:none; }
+  .navbar__hamburger{ display:flex; }
+  .page-hero{ padding-top:120px; }
+  .gallery-section{ padding:56px 6vw; }
+  .salon-grid, .clients-grid{ gap:10px; }
+  .about-grid__stats{ gap:20px; }
+  .footer__grid{ grid-template-columns:1fr; }
+}
+</style>
 </head>
-
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar" id="navbar">
-    <div class="navbar__brand">
-      <div class="navbar__logo" id="navbar-logo"></div>
-      <div class="navbar__wordmark">
-        <span class="navbar__wordmark-name">
-          <span class="navbar__wordmark-hero">HERO</span>
-          <span class="navbar__wordmark-moses">MOSES</span>
-        </span>
-        <span class="navbar__wordmark-sub">HAIR SALON</span>
-      </div>
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="navbar__brand">
+    <div class="brand brand--dark">
+      <span class="brand__name"><span class="is-hero">Hero</span><span class="is-moses">Moses</span></span>
+      <span class="brand__sub">Hair Salon</span>
     </div>
+  </a>
 
-        <ul class="navbar__links" id="navbar-links">
-      <li><a href="index.html"       class="navbar__link">Home</a></li>
-      <li><a href="services.html"    class="navbar__link">Services</a></li>
-      <li><a href="index.html#hours" class="navbar__link">Hours</a></li>
-      <li><a href="gallery.html"     class="navbar__link active">Gallery</a></li>
-      <li><a href="stylists.html"    class="navbar__link">Stylists</a></li>
-    </ul>
+  <ul class="navbar__links">
+    <li><a href="index.html" class="navbar__link">Home</a></li>
+    <li><a href="services.html" class="navbar__link">Services</a></li>
+    <li><a href="index.html#hours" class="navbar__link">Hours</a></li>
+    <li><a href="gallery.html" class="navbar__link active">Gallery</a></li>
+    <li><a href="stylists.html" class="navbar__link">Stylists</a></li>
+  </ul>
 
-    <button class="btn btn--gold open-modal" aria-label="Book an appointment">
-      <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-        <line x1="16" y1="2" x2="16" y2="6"></line>
-        <line x1="8"  y1="2" x2="8"  y2="6"></line>
-        <line x1="3"  y1="10" x2="21" y2="10"></line>
-      </svg>
-      BOOK NOW
+  <div class="navbar__right">
+    <button class="btn btn--gold open-modal">
+      <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Book Now
     </button>
-
     <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
       <span class="navbar__hamburger-bar"></span>
       <span class="navbar__hamburger-bar"></span>
       <span class="navbar__hamburger-bar"></span>
     </button>
-  </nav>
+  </div>
+</nav>
 
+<div class="navbar__mobile-panel" id="mobile-panel">
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="index.html#hours">Hours</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="stylists.html">Stylists</a>
+</div>
 
-  <!-- PAGE HERO BANNER -->
-  <div class="page-hero">
-    <div class="page-hero__breadcrumb">
-      <a href="index.html">Home</a>
-      <span class="page-hero__breadcrumb-sep">/</span>
-      <span class="page-hero__breadcrumb-current">Gallery</span>
-    </div>
-    <h1 class="page-hero__title">The <em>Gallery</em></h1>
-    <p class="page-hero__sub">
-      A glimpse into our world , precision, artistry, and the
-      pursuit of perfection in every look.
+<!-- ============================================================
+     PAGE HERO
+     ============================================================ -->
+<div class="page-hero">
+  <div class="page-hero__breadcrumb">
+    <a href="index.html">Home</a>
+    <span>/</span>
+    <span class="page-hero__breadcrumb-current">Gallery</span>
+  </div>
+  <h1 class="page-hero__title">The <em>Gallery</em></h1>
+  <p class="page-hero__sub">A glimpse into our world: precision, artistry, and the pursuit of perfection in every look.</p>
+</div>
+
+<div class="braid">
+  <svg viewBox="0 0 1600 44" preserveAspectRatio="none">
+    <path d="M0,22 C40,4 80,40 120,22 C160,4 200,40 240,22 C280,4 320,40 360,22 C400,4 440,40 480,22 C520,4 560,40 600,22 C640,4 680,40 720,22 C760,4 800,40 840,22 C880,4 920,40 960,22 C1000,4 1040,40 1080,22 C1120,4 1160,40 1200,22 C1240,4 1280,40 1320,22 C1360,4 1400,40 1440,22 C1480,4 1520,40 1560,22 C1580,13 1600,22 1600,22" stroke="#C9A15A" stroke-width="2" fill="none" opacity=".7"/>
+    <path d="M0,22 C40,40 80,4 120,22 C160,40 200,4 240,22 C280,40 320,4 360,22 C400,40 440,4 480,22 C520,40 560,4 600,22 C640,40 680,4 720,22 C760,40 800,4 840,22 C880,40 920,4 960,22 C1000,40 1040,4 1080,22 C1120,40 1160,4 1200,22 C1240,40 1280,4 1320,22 C1360,40 1400,4 1440,22 C1480,40 1520,4 1560,22 C1580,31 1600,22 1600,22" stroke="#B5502B" stroke-width="2" fill="none" opacity=".7"/>
+  </svg>
+</div>
+
+<!-- ============================================================
+     SECTION 1 — THE SALON
+     ============================================================ -->
+<div class="gallery-section">
+  <div class="gallery-section__head">
+    <span class="gallery-section__label">Section 01</span>
+    <h2 class="gallery-section__title">The <em>Salon</em></h2>
+    <p class="gallery-section__desc">
+      Step inside Hero Moses Hair Salon at Mabirizi Complex, Level 4, Room 22.
+      A premium, upscale space designed to make every client feel comfortable,
+      pampered, and truly special from the moment they walk through the door.
     </p>
   </div>
 
+  <div class="salon-grid" id="salon-grid">
+    <p class="fb-empty" style="grid-column:1/-1;">Photos loading.</p>
+  </div>
+</div>
 
-  <!-- ══════════════════════════════════════
-       SECTION 1 — THE SALON
-       Photos of the salon space and setup
-       ══════════════════════════════════════ -->
-  <div class="page-body">
-
-    <div class="gallery-section">
-      <div class="gallery-section__head">
-        <span class="gallery-section__label">Section 01</span>
-        <h2 class="gallery-section__title">The <em>Salon</em></h2>
-        <p class="gallery-section__desc">
-          Step inside Hero Moses Hair Salon at Mabirizi Complex, Level 4,
-          Room 22. A premium, upscale space designed to make every client
-          feel comfortable, pampered, and truly special from the moment
-          they walk through the door.
-        </p>
-      </div>
-
-      <div class="salon-grid" id="salon-grid">
-        <p class="fb-empty" style="grid-column:1/-1;text-align:center;padding:50px 20px;color:#555;font-family:var(--font-body);font-size:13px;border:1px dashed #2a2a2a;border-radius:8px">Photos loading...</p>
-      </div>
-    </div>
-
-
-    <!-- ══════════════════════════════════════
-         SECTION 2 — CLIENT TRANSFORMATIONS
-         Before/after and finished look photos
-         ══════════════════════════════════════ -->
-    <div class="gallery-section">
-      <div class="gallery-section__head">
-        <span class="gallery-section__label">Section 02</span>
-        <h2 class="gallery-section__title">Client <em>Transformations</em></h2>
-        <p class="gallery-section__desc">
-          Every client who sits in our chair deserves to feel extraordinary.
-          These are the transformations we create every day - braids, colour,
-          wings, weaves, and styles that turn heads across Kampala.
-        </p>
-      </div>
-
-      <div class="clients-grid" id="clients-grid">
-        <p class="fb-empty" style="grid-column:1/-1;text-align:center;padding:50px 20px;color:#555;font-family:var(--font-body);font-size:13px;border:1px dashed #2a2a2a;border-radius:8px">Photos loading...</p>
-      </div>
-    </div>
-
-
-    <!-- ══════════════════════════════════════
-         SECTION 3 — ABOUT THE SALON
-         Story, description, stats
-         ══════════════════════════════════════ -->
-    <div class="gallery-section">
-      <div class="gallery-section__head">
-        <span class="gallery-section__label">Section 03</span>
-        <h2 class="gallery-section__title">Our <em>Story</em></h2>
-      </div>
-
-      <div class="about-grid">
-
-        <!-- Visual side — add your photo here when ready -->
-        <div class="about-grid__visual">
-        </div>
-
-        <!-- Text side -->
-        <div class="about-grid__content">
-          <span class="about-grid__tag">Mabirizi Complex, Kampala</span>
-          <h3 class="about-grid__heading">Where every woman <em>deserves</em> to feel beautiful</h3>
-          <p class="about-grid__text">
-            Hero Moses Hair Salon was founded with one simple belief that
-            every woman who walks through our doors deserves to leave feeling
-            transformed, confident, and utterly beautiful.
-          </p>
-          <p class="about-grid__text">
-            Located at Level 4, Room 22 of Mabirizi Complex in the heart of
-            Kampala, we offer a premium, upscale experience at prices that
-            celebrate every woman not just a few. From everyday styling
-            to bridal transformations, our team of expert stylists brings
-            skill, care, and artistry to every single appointment.
-          </p>
-          <p class="about-grid__text">
-            We are open 6 days a week. Walk-ins are always welcome,
-            appointments are recommended on weekends and for special services.
-          </p>
-
-          <!-- Stats -->
-          <div class="about-grid__stats">
-            <div>
-              <span class="about-stat__number">8+</span>
-              <span class="about-stat__label">Years of experience</span>
-            </div>
-            <div>
-              <span class="about-stat__number">4</span>
-              <span class="about-stat__label">Expert stylists</span>
-            </div>
-            <div>
-              <span class="about-stat__number">38+</span>
-              <span class="about-stat__label">Services offered</span>
-            </div>
-            <div>
-              <span class="about-stat__number">6</span>
-              <span class="about-stat__label">Days a week open</span>
-            </div>
-          </div>
-
-          <!-- CTA -->
-          <button class="btn btn--gold open-modal" aria-label="Book an appointment">
-            <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-              <line x1="16" y1="2" x2="16" y2="6"></line>
-              <line x1="8"  y1="2" x2="8"  y2="6"></line>
-              <line x1="3"  y1="10" x2="21" y2="10"></line>
-            </svg>
-            BOOK YOUR APPOINTMENT
-          </button>
-        </div>
-
-      </div>
-    </div>
-
-
-    <!-- Social follow CTA -->
-    <div class="gallery-social-cta">
-      <p class="gallery-social-cta__text">Follow us on social media for daily inspiration</p>
-      <div class="gallery-social-cta__pills">
-        <a href="https://www.instagram.com/heromoseshair" class="gallery__pill" target="_blank" rel="noopener noreferrer">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-          Instagram
-        </a>
-        <a href="https://www.facebook.com/YOUR_PAGE" class="gallery__pill" target="_blank" rel="noopener noreferrer">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-          Facebook
-        </a>
-        <a href="https://www.tiktok.com/@hero_moseshair" class="gallery__pill" target="_blank" rel="noopener noreferrer">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
-          TikTok
-        </a>
-      </div>
-    </div>
-
+<!-- ============================================================
+     SECTION 2 — CLIENT TRANSFORMATIONS
+     ============================================================ -->
+<div class="gallery-section">
+  <div class="gallery-section__head">
+    <span class="gallery-section__label">Section 02</span>
+    <h2 class="gallery-section__title">Client <em>Transformations</em></h2>
+    <p class="gallery-section__desc">
+      Every client who sits in our chair deserves to feel extraordinary. These
+      are the transformations we create every day: braids, color, wigs, weaves,
+      and styles that turn heads across Kampala.
+    </p>
   </div>
 
+  <div class="clients-grid" id="clients-grid">
+    <p class="fb-empty" style="grid-column:1/-1;">Photos loading.</p>
+  </div>
+</div>
 
-  <!-- BOOKING MODAL -->
-  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal" id="modal">
-      <div class="modal__header">
-        <div class="modal__logo" id="modal-logo"></div>
-        <div class="modal__title-block">
-          <h3 class="modal__title" id="modal-title">Book an Appointment</h3>
-          <p class="modal__subtitle">Hero Moses Hair Salon</p>
-        </div>
-        <button class="modal__close" id="modal-close" aria-label="Close booking modal">&times;</button>
-      </div>
-      <form class="modal__form" id="booking-form" novalidate>
-        <div class="form-field">
-          <label class="form-field__label" for="booking-name">YOUR NAME</label>
-          <input class="form-field__input" type="text" id="booking-name" name="name" placeholder="Full name" autocomplete="name" />
-          <span class="form-field__error" id="error-name" aria-live="polite"></span>
-        </div>
-        <div class="form-field">
-          <label class="form-field__label" for="booking-phone">PHONE NUMBER</label>
-          <div class="phone-row">
-            <select class="form-field__input phone-code" id="booking-code" name="code" aria-label="Country code">
-              <option value="+256" data-min="9" data-max="9" selected>🇺🇬 +256</option>
-              <option value="+254" data-min="9" data-max="9">🇰🇪 +254</option>
-              <option value="+255" data-min="9" data-max="9">🇹🇿 +255</option>
-              <option value="+250" data-min="9" data-max="9">🇷🇼 +250</option>
-              <option value="+257" data-min="8" data-max="8">🇧🇮 +257</option>
-              <option value="+243" data-min="9" data-max="9">🇨🇩 +243</option>
-              <option value="+211" data-min="9" data-max="9">🇸🇸 +211</option>
-              <option value="+251" data-min="9" data-max="9">🇪🇹 +251</option>
-              <option value="+260" data-min="9" data-max="9">🇿🇲 +260</option>
-              <option value="+27"  data-min="9" data-max="9">🇿🇦 +27</option>
-              <option value="+234" data-min="10" data-max="10">🇳🇬 +234</option>
-              <option value="+44"  data-min="10" data-max="10">🇬🇧 +44</option>
-              <option value="+1"   data-min="10" data-max="10">🇺🇸 +1</option>
-              <option value="+971" data-min="9" data-max="9">🇦🇪 +971</option>
-              <option value="+91"  data-min="10" data-max="10">🇮🇳 +91</option>
-              <option value="" data-min="6" data-max="15">🌍 Other</option>
-            </select>
-            <input class="form-field__input phone-number" type="tel" id="booking-phone" name="phone" placeholder="7XX XXX XXX" autocomplete="tel" inputmode="numeric" />
-          </div>
-          <span class="form-field__error" id="error-phone" aria-live="polite"></span>
-        </div>
-        <div class="form-field">
-          <label class="form-field__label" for="booking-service">SERVICE</label>
-          <div class="form-field__select-wrap">
-            <select class="form-field__input form-field__select" id="booking-service" name="service">
-              <option value="" disabled selected>Select a service</option>
-              <optgroup label="Wig Installation">
-                <option>Wig Installation - 80,000 UGX</option>
-                <option>Buying in from our shop - 70,000 UGX</option>
-                <option>Installation + Lashes - 120,000 UGX</option>
-                <option>Installation + Washing + Lashes - 130,000 UGX</option>
-                <option>Wig Washing - 20,000 UGX</option>
-                <option>Lashes - 40,000 UGX</option>
-                <option>Weaving - 80,000 UGX</option>
-                <option>Masterpiece with hair - 150,000 UGX</option>
-                <option>Ponytail Gel - 50,000 UGX</option>
-                <option>Ponytail Closure - 70,000 UGX</option>
-              </optgroup>
-              <optgroup label="Boho Braids with Hair">
-                <option>Boho Braids Small - 150,000 UGX</option>
-                <option>Boho Braids Normal - 140,000 UGX</option>
-                <option>Boho Braids Big - 110,000 UGX</option>
-              </optgroup>
-              <optgroup label="Fulani Braids">
-                <option>Fulani Braids Small - 150,000 UGX</option>
-                <option>Fulani Braids Medium - 130,000 UGX</option>
-                <option>Fulani Braids Large - 100,000 UGX</option>
-              </optgroup>
-              <optgroup label="Knotless Braids">
-                <option>Knotless Small - 180,000 UGX</option>
-                <option>Knotless Small-Medium - 150,000 UGX</option>
-                <option>Knotless Medium - 130,000 UGX</option>
-                <option>Knotless Large - 100,000 UGX</option>
-              </optgroup>
-              <optgroup label="French Curls">
-                <option>French Curls for Pencil - 140,000 UGX</option>
-                <option>French Curls for Braids - 150,000 UGX</option>
-              </optgroup>
-              <optgroup label="Wigs - Short">
-                <option>Short Jerry Wig - 150,000 UGX</option>
-                <option>Pixie Wig - 150,000 UGX</option>
-                <option>Bob 10 inches - 180,000 UGX</option>
-                <option>Bob 12 inches - 200,000 UGX</option>
-              </optgroup>
-              <optgroup label="Wigs - Straight, Body and Curls">
-                <option>Wig 14 inches - 220,000 UGX</option>
-                <option>Wig 16 inches - 250,000 UGX</option>
-                <option>Wig 18 inches - 300,000 UGX</option>
-                <option>Wig 20 inches - 350,000 UGX</option>
-                <option>Wig 22 inches - 400,000 UGX</option>
-                <option>Wig 24 inches - 450,000 UGX</option>
-                <option>Wig 26 inches - 500,000 UGX</option>
-                <option>Wig 28 inches - 550,000 UGX</option>
-                <option>Wig 30 inches - 600,000 UGX</option>
-                <option>Wig 32 inches - 620,000 UGX</option>
-                <option>Wig 34 inches - 670,000 UGX</option>
-                <option>Wig 36 inches - 700,000 UGX</option>
-              </optgroup>
-              <optgroup label="Bridal Services">
-                <option>Half-day Bridal Hair - within Kampala 1,000,000 UGX</option>
-                <option>Half-day Bridal Hair - outside Kampala 1,500,000 UGX</option>
-                <option>Half-day Bridal Hair + Makeup - within Kampala 1,600,000 UGX</option>
-                <option>Half-day Bridal Hair + Makeup - outside Kampala 2,200,000 UGX</option>
-                <option>Full-day Bridal Hair - within Kampala 1,800,000 UGX</option>
-                <option>Full-day Bridal Hair - outside Kampala 2,000,000 UGX</option>
-                <option>Full-day Bridal Hair + Makeup - within Kampala 2,000,000 UGX</option>
-                <option>Full-day Bridal Hair + Makeup - outside Kampala 2,500,000 UGX</option>
-                <option>Full Package with Bridesmaids (3 to 6) - 3,500,000 UGX</option>
-              </optgroup>
-            </select>
-            <svg class="form-field__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </div>
-          <span class="form-field__error" id="error-service" aria-live="polite"></span>
-        </div>
-        <div class="form-field">
-          <label class="form-field__label" for="booking-date">PREFERRED DATE</label>
-          <input class="form-field__input" type="date" id="booking-date" name="date" />
-          <span class="form-field__error" id="error-date" aria-live="polite"></span>
-        </div>
-        <button type="submit" class="modal__submit" id="booking-submit">CONFIRM BOOKING</button>
-        <p class="modal__footnote">Or call us directly at <a href="tel:+256757541061" class="modal__footnote-link">+256 757541061</a></p>
-      </form>
-    </div>
+<!-- ============================================================
+     SECTION 3 — OUR STORY
+     ============================================================ -->
+<div class="gallery-section">
+  <div class="gallery-section__head">
+    <span class="gallery-section__label">Section 03</span>
+    <h2 class="gallery-section__title">Our <em>Story</em></h2>
   </div>
 
+  <div class="about-grid">
+    <div class="about-grid__visual" id="story-visual"></div>
 
-  <!-- FOOTER -->
-  <footer class="footer" id="footer">
-    <div class="footer__grid">
-      <div class="footer__col footer__col--brand">
-        <div class="footer__brand-row">
-          <div class="footer__logo" id="footer-logo"></div>
-          <div class="footer__wordmark">
-            <span class="footer__wordmark-name">HERO MOSES</span>
-            <span class="footer__wordmark-sub">HAIR SALON</span>
-          </div>
-        </div>
-        <p class="footer__desc">A premium ladies hair salon offering professional styling, wing installations, luxury braiding, and every hair service a woman deserves , at an upscale atmosphere in the heart of Kampala.</p>
-        <div class="footer__social">
-          <a href="https://www.instagram.com/heromoseshair" class="footer__social-btn" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-          <a href="https://www.facebook.com/YOUR_PAGE" class="footer__social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-          <a href="https://www.tiktok.com/@hero_moseshair" class="footer__social-btn" aria-label="TikTok" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg></a>
+    <div class="about-grid__content">
+      <span class="about-grid__tag">Mabirizi Complex, Kampala</span>
+      <h3 class="about-grid__heading">Where every woman <em>deserves</em> to feel beautiful</h3>
+      <p class="about-grid__text">
+        Hero Moses Hair Salon was founded on one simple belief: every woman who
+        walks through our doors deserves to leave feeling transformed, confident,
+        and utterly beautiful.
+      </p>
+      <p class="about-grid__text">
+        Located at Level 4, Room 22 of Mabirizi Complex in the heart of Kampala,
+        we offer a premium, upscale experience at prices that celebrate every
+        woman, not just a few. From everyday styling to bridal transformations,
+        our team of expert stylists brings skill, care, and artistry to every
+        single appointment.
+      </p>
+      <p class="about-grid__text">
+        We are open six days a week. Walk-ins are always welcome, and appointments
+        are recommended on weekends and for special services.
+      </p>
+
+      <div class="about-grid__stats">
+        <div><span class="about-stat__number">8+</span><span class="about-stat__label">Years of experience</span></div>
+        <div><span class="about-stat__number">4</span><span class="about-stat__label">Expert stylists</span></div>
+        <div><span class="about-stat__number">38+</span><span class="about-stat__label">Services offered</span></div>
+        <div><span class="about-stat__number">6</span><span class="about-stat__label">Days a week open</span></div>
+      </div>
+
+      <button class="btn btn--gold open-modal">
+        <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book Your Appointment
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SOCIAL CTA
+     ============================================================ -->
+<div class="gallery-social-cta">
+  <p class="gallery-social-cta__text">Follow us on social media for daily inspiration</p>
+  <div class="gallery-social-cta__pills">
+    <a href="https://www.instagram.com/heromoseshair" target="_blank" rel="noopener noreferrer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      Instagram
+    </a>
+    <a href="https://www.facebook.com/YOUR_PAGE" target="_blank" rel="noopener noreferrer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      Facebook
+    </a>
+    <a href="https://www.tiktok.com/@hero_moseshair" target="_blank" rel="noopener noreferrer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+      TikTok
+    </a>
+  </div>
+</div>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer" id="footer">
+  <div class="footer__grid">
+    <div class="footer__col--brand">
+      <div class="footer__brand-row">
+        <div class="brand brand--dark">
+          <span class="brand__name"><span class="is-hero">Hero</span><span class="is-moses">Moses</span></span>
+          <span class="brand__sub">Hair Salon</span>
         </div>
       </div>
-      <div class="footer__col">
-        <h4 class="footer__col-title">VISIT US</h4>
-        <p class="footer__address">Mabirizi Complex<br>Level 4, Room 22<br>Kampala, Uganda</p>
-        <hr class="footer__divider" />
-        <p class="footer__hours-summary">
-          Mon - Thu: 8:40 AM - 8:30 PM<br>
-          Fri - Sat: 8:00 AM - 9:00 PM
-        </p>
-      </div>
-      <div class="footer__col">
-        <h4 class="footer__col-title">CONTACT</h4>
-        <div class="footer__contact-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"></path></svg><a href="tel:+256757541061" class="footer__contact-link">+256 757541061</a></div>
-        <div class="footer__contact-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><a href="mailto:blessingbutsigho@gmail.com" class="footer__contact-link">blessingbutsigho@gmail.com</a></div>
-        <button class="btn btn--gold open-modal" style="margin-top: 24px;" aria-label="Book an appointment"><svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>BOOK NOW</button>
+      <p class="footer__desc">A premium ladies hair salon offering professional styling, wig installations and luxury braiding, in an upscale atmosphere in the heart of Kampala.</p>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/heromoseshair" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://www.facebook.com/YOUR_PAGE" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="https://www.tiktok.com/@hero_moseshair" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
       </div>
     </div>
-    <div class="footer__bottom">
-      <span class="footer__copyright">&copy; 2026 HERO MOSES HAIR SALON. ALL RIGHTS RESERVED.</span>
+    <div>
+      <h4 class="footer__col-title">Visit Us</h4>
+      <p class="footer__address">Mabirizi Complex<br>Level 4, Room 22<br>Kampala, Uganda</p>
+      <hr class="footer__divider" />
+      <p class="footer__hours-summary">Mon–Thu: 8:40 AM–8:30 PM<br>Fri–Sat: 8:00 AM–9:00 PM</p>
     </div>
-  </footer>
+    <div>
+      <h4 class="footer__col-title">Contact</h4>
+      <div class="footer__contact-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"/></svg><a href="tel:+256757541061" class="footer__contact-link">+256 757 541 061</a></div>
+      <div class="footer__contact-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:blessingbutsigho@gmail.com" class="footer__contact-link">blessingbutsigho@gmail.com</a></div>
+      <button class="btn btn--gold open-modal" style="margin-top:22px;">
+        <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book Now
+      </button>
+    </div>
+  </div>
+  <div class="footer__bottom">© 2026 Hero Moses Hair Salon. All rights reserved.</div>
+</footer>
 
-  <button class="floating-btn open-modal" id="floating-btn" aria-label="Book an appointment">
-    <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-    BOOK NOW
-  </button>
+<!-- ============================================================
+     BOOKING MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal" id="modal">
+    <div class="modal__header">
+      <div class="brand brand--light brand--sm">
+        <span class="brand__name"><span class="is-hero">Hero</span><span class="is-moses">Moses</span></span>
+        <span class="brand__sub">Hair Salon</span>
+      </div>
+      <div class="modal__title-block">
+        <h3 class="modal__title" id="modal-title">Book an Appointment</h3>
+        <p class="modal__subtitle">Hero Moses Hair Salon</p>
+      </div>
+      <button class="modal__close" id="modal-close" aria-label="Close">&times;</button>
+    </div>
 
-  <script src="assets/js/logo.js"></script>
-  <script src="assets/js/modal.js"></script>
-  <script src="assets/js/navbar.js"></script>
-  <script src="assets/js/scroll.js"></script>
+    <form class="modal__form" id="booking-form" novalidate>
+      <div class="form-field">
+        <label class="form-field__label" for="booking-name">Your Name</label>
+        <input class="form-field__input" type="text" id="booking-name" name="name" placeholder="Full name" autocomplete="name" />
+        <span class="form-field__error" id="error-name"></span>
+      </div>
 
+      <div class="form-field">
+        <label class="form-field__label" for="booking-phone">Phone Number</label>
+        <div class="phone-row">
+          <select class="form-field__input phone-code" id="booking-code" name="code" aria-label="Country code">
+            <option value="256" data-min="9" data-max="9" selected>+256 Uganda</option>
+            <option value="254" data-min="9" data-max="9">+254 Kenya</option>
+            <option value="255" data-min="9" data-max="9">+255 Tanzania</option>
+            <option value="250" data-min="9" data-max="9">+250 Rwanda</option>
+            <option value="257" data-min="8" data-max="8">+257 Burundi</option>
+            <option value="243" data-min="9" data-max="9">+243 DR Congo</option>
+            <option value="211" data-min="9" data-max="9">+211 South Sudan</option>
+            <option value="44"  data-min="10" data-max="10">+44 United Kingdom</option>
+            <option value="1"   data-min="10" data-max="10">+1 United States</option>
+            <option value="" data-min="6" data-max="15">Other</option>
+          </select>
+          <input class="form-field__input phone-number" type="tel" id="booking-phone" name="phone" placeholder="7XX XXX XXX" autocomplete="tel" inputmode="numeric" />
+        </div>
+        <span class="form-field__error" id="error-phone"></span>
+      </div>
 
-  <!-- ══════════════ FIREBASE GALLERY LOADER ══════════════
-       Loads photos uploaded by the admin panel and displays
-       them in their matching sections, newest first.
-       Static photos coded in the HTML above remain untouched. -->
-  <script type="module">
+      <div class="form-field">
+        <label class="form-field__label" for="booking-service">Service</label>
+        <div class="form-field__select-wrap">
+          <select class="form-field__input form-field__select" id="booking-service" name="service">
+            <option value="" disabled selected>Select a service</option>
+            <optgroup label="Wig Installation">
+              <option>Wig Installation - 80,000 UGX</option>
+              <option>Buying in from our shop - 70,000 UGX</option>
+              <option>Installation + Lashes - 120,000 UGX</option>
+              <option>Installation + Washing + Lashes - 130,000 UGX</option>
+              <option>Wig Washing - 20,000 UGX</option>
+              <option>Lashes - 40,000 UGX</option>
+              <option>Weaving - 80,000 UGX</option>
+              <option>Masterpiece with hair - 150,000 UGX</option>
+              <option>Ponytail Gel - 50,000 UGX</option>
+              <option>Ponytail Closure - 70,000 UGX</option>
+            </optgroup>
+            <optgroup label="Boho Braids with Hair">
+              <option>Boho Braids Small - 150,000 UGX</option>
+              <option>Boho Braids Normal - 140,000 UGX</option>
+              <option>Boho Braids Big - 110,000 UGX</option>
+            </optgroup>
+            <optgroup label="Fulani Braids">
+              <option>Fulani Braids Small - 150,000 UGX</option>
+              <option>Fulani Braids Medium - 130,000 UGX</option>
+              <option>Fulani Braids Large - 100,000 UGX</option>
+            </optgroup>
+            <optgroup label="Knotless Braids">
+              <option>Knotless Small - 180,000 UGX</option>
+              <option>Knotless Small-Medium - 150,000 UGX</option>
+              <option>Knotless Medium - 130,000 UGX</option>
+              <option>Knotless Large - 100,000 UGX</option>
+            </optgroup>
+            <optgroup label="French Curls">
+              <option>French Curls for Pencil - 140,000 UGX</option>
+              <option>French Curls for Braids - 150,000 UGX</option>
+            </optgroup>
+            <optgroup label="Wigs - Short">
+              <option>Short Jerry Wig - 150,000 UGX</option>
+              <option>Pixie Wig - 150,000 UGX</option>
+              <option>Bob 10 inches - 180,000 UGX</option>
+              <option>Bob 12 inches - 200,000 UGX</option>
+            </optgroup>
+            <optgroup label="Wigs - Straight, Body and Curls">
+              <option>Wig 14 inches - 220,000 UGX</option>
+              <option>Wig 16 inches - 250,000 UGX</option>
+              <option>Wig 18 inches - 300,000 UGX</option>
+              <option>Wig 20 inches - 350,000 UGX</option>
+              <option>Wig 22 inches - 400,000 UGX</option>
+              <option>Wig 24 inches - 450,000 UGX</option>
+              <option>Wig 26 inches - 500,000 UGX</option>
+              <option>Wig 28 inches - 550,000 UGX</option>
+              <option>Wig 30 inches - 600,000 UGX</option>
+              <option>Wig 32 inches - 620,000 UGX</option>
+              <option>Wig 34 inches - 670,000 UGX</option>
+              <option>Wig 36 inches - 700,000 UGX</option>
+            </optgroup>
+            <optgroup label="Bridal Services">
+              <option>Half-day Bridal Hair - within Kampala 1,000,000 UGX</option>
+              <option>Half-day Bridal Hair - outside Kampala 1,500,000 UGX</option>
+              <option>Half-day Bridal Hair + Makeup - within Kampala 1,600,000 UGX</option>
+              <option>Half-day Bridal Hair + Makeup - outside Kampala 2,200,000 UGX</option>
+              <option>Full-day Bridal Hair - within Kampala 1,800,000 UGX</option>
+              <option>Full-day Bridal Hair - outside Kampala 2,000,000 UGX</option>
+              <option>Full-day Bridal Hair + Makeup - within Kampala 2,000,000 UGX</option>
+              <option>Full-day Bridal Hair + Makeup - outside Kampala 2,500,000 UGX</option>
+              <option>Full Package with Bridesmaids (3 to 6) - 3,500,000 UGX</option>
+            </optgroup>
+          </select>
+          <svg class="form-field__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <span class="form-field__error" id="error-service"></span>
+      </div>
+
+      <div class="form-field">
+        <label class="form-field__label" for="booking-date">Preferred Date</label>
+        <input class="form-field__input" type="date" id="booking-date" name="date" />
+        <span class="form-field__error" id="error-date"></span>
+      </div>
+
+      <button type="submit" class="modal__submit" id="booking-submit">Confirm Booking</button>
+      <p class="modal__footnote">Or call us directly at <a href="tel:+256757541061" class="modal__footnote-link">+256 757 541 061</a></p>
+    </form>
+
+    <div class="modal__success" id="modal-success">
+      <div class="modal__success-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <h4>Almost there!</h4>
+      <p>Tap below to send your booking details to us on WhatsApp, and we will confirm your appointment shortly.</p>
+      <a href="#" class="btn btn--gold" id="whatsapp-link" target="_blank" rel="noopener noreferrer" style="width:100%;justify-content:center;margin-bottom:10px;">
+        <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.6.1s-.7.8-.9 1c-.2.2-.3.2-.5.1a6.6 6.6 0 0 1-2-1.2 7.3 7.3 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.1.2-.3.2-.4a.5.5 0 0 0 0-.5c-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.6 1.1 2.8.1.2 1.9 2.9 4.6 4a15.6 15.6 0 0 0 1.5.6 3.6 3.6 0 0 0 1.7.1 2.8 2.8 0 0 0 1.8-1.3c.2-.4.2-.7.1-.8z"/></svg>
+        Continue on WhatsApp
+      </a>
+      <button type="button" class="btn btn--line-light" id="modal-success-close" style="width:100%;justify-content:center; border-color:var(--line-onLight); color:var(--text-onlight);">Close</button>
+    </div>
+  </div>
+</div>
+
+<button class="floating-btn" id="floating-btn">
+  <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+  Book Now
+</button>
+
+<script>
+/* ============================================================
+   NAVBAR — scroll state + hamburger
+   ============================================================ */
+(function(){
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('is-scrolled', window.scrollY > 40);
+  }, { passive:true });
+
+  const burger = document.getElementById('hamburger');
+  const panel = document.getElementById('mobile-panel');
+  burger.addEventListener('click', () => {
+    const open = panel.classList.toggle('is-open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    panel.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
+  }));
+})();
+
+/* ============================================================
+   FLOATING BOOK BUTTON
+   ============================================================ */
+(function(){
+  const btn = document.getElementById('floating-btn');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('is-visible', window.scrollY > 400);
+  }, { passive:true });
+})();
+
+/* ============================================================
+   BOOKING MODAL — open/close, validation, WhatsApp handoff
+   ============================================================ */
+(function(){
+  const overlay = document.getElementById('modal-overlay');
+  const form = document.getElementById('booking-form');
+  const success = document.getElementById('modal-success');
+  const closeBtn = document.getElementById('modal-close');
+  const successCloseBtn = document.getElementById('modal-success-close');
+
+  function openModal(){
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      form.style.display = '';
+      success.classList.remove('is-visible');
+      form.reset();
+      document.querySelectorAll('.form-field__error').forEach(e => e.textContent = '');
+    }, 300);
+  }
+
+  document.querySelectorAll('.open-modal').forEach(btn => btn.addEventListener('click', openModal));
+  closeBtn.addEventListener('click', closeModal);
+  successCloseBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeModal(); });
+
+  const minDateInput = document.getElementById('booking-date');
+  minDateInput.min = new Date().toISOString().split('T')[0];
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    let valid = true;
+    const name = document.getElementById('booking-name').value.trim();
+    const phoneDigits = document.getElementById('booking-phone').value.replace(/\D/g,'');
+    const codeSelect = document.getElementById('booking-code');
+    const code = codeSelect.value;
+    const min = parseInt(codeSelect.selectedOptions[0].dataset.min, 10);
+    const max = parseInt(codeSelect.selectedOptions[0].dataset.max, 10);
+    const service = document.getElementById('booking-service').value;
+    const date = document.getElementById('booking-date').value;
+
+    document.getElementById('error-name').textContent = '';
+    document.getElementById('error-phone').textContent = '';
+    document.getElementById('error-service').textContent = '';
+    document.getElementById('error-date').textContent = '';
+
+    if (!name){ document.getElementById('error-name').textContent = 'Please enter your name.'; valid = false; }
+    if (!phoneDigits || phoneDigits.length < min || phoneDigits.length > max){ document.getElementById('error-phone').textContent = 'Enter a valid phone number.'; valid = false; }
+    if (!service){ document.getElementById('error-service').textContent = 'Please select a service.'; valid = false; }
+    if (!date){ document.getElementById('error-date').textContent = 'Please choose a date.'; valid = false; }
+
+    if (!valid) return;
+
+    const msg = `Hello Hero Moses Hair Salon! I'd like to book:%0A%0AName: ${name}%0APhone: +${code}${phoneDigits}%0AService: ${service}%0ADate: ${date}`;
+    document.getElementById('whatsapp-link').href = `https://wa.me/256757541061?text=${msg}`;
+
+    form.style.display = 'none';
+    success.classList.add('is-visible');
+  });
+})();
+
+/* ============================================================
+   FIREBASE GALLERY LOADER
+   Loads photos uploaded by the admin panel and displays them in
+   their matching sections, newest first. Same project and data
+   shape as the rest of the site (managed from /admin.html).
+   ============================================================ */
+(function(){
+  const s = document.createElement('script');
+  s.type = 'module';
+  s.textContent = `
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-    import {
-      getFirestore, collection, query, where, getDocs, limit
-    } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+    import { getFirestore, collection, query, where, getDocs, limit } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBBV1YGdwlA2Q5yU1knZo0Kdayf4Cv_F1g",
@@ -762,13 +763,8 @@
       messagingSenderId: "222681569385",
       appId: "1:222681569385:web:6390b308ec3de8f3e76af8"
     };
+    const db = getFirestore(initializeApp(firebaseConfig));
 
-    const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
-
-    /* Lazy background loader — only fetches the image when the
-       cell is about to scroll into view, so off-screen photos
-       never block the page. */
     const lazyObserver = ('IntersectionObserver' in window)
       ? new IntersectionObserver((entries, obs) => {
           entries.forEach(e => {
@@ -777,7 +773,7 @@
               const src = cell.dataset.bg;
               if (src) {
                 const im = new Image();
-                im.onload = () => { cell.style.backgroundImage = `url('${src}')`; cell.classList.add('fb-shown'); };
+                im.onload = () => { cell.style.backgroundImage = \`url('\${src}')\`; cell.classList.add('fb-shown'); };
                 im.src = src;
               }
               obs.unobserve(cell);
@@ -786,13 +782,12 @@
         }, { rootMargin: '300px' })
       : null;
 
-    function lazyBg(cell, src) {
+    function lazyBg(cell, src){
       cell.classList.add('fb-fade');
       if (lazyObserver) { cell.dataset.bg = src; lazyObserver.observe(cell); }
-      else { cell.style.backgroundImage = `url('${src}')`; cell.classList.add('fb-shown'); }
+      else { cell.style.backgroundImage = \`url('\${src}')\`; cell.classList.add('fb-shown'); }
     }
 
-    /* Scroll-reveal: tiles swing into view, staggered */
     const revealObserver = ('IntersectionObserver' in window)
       ? new IntersectionObserver((entries, obs) => {
           entries.forEach(e => {
@@ -806,14 +801,14 @@
         }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' })
       : null;
 
-    function revealTile(cell, index) {
+    function revealTile(cell, index){
       cell.classList.add('reveal-tile');
-      cell.dataset.revealDelay = (index % 4) * 90;   /* stagger within a row */
+      cell.dataset.revealDelay = (index % 4) * 90;
       if (revealObserver) revealObserver.observe(cell);
       else cell.classList.add('revealed');
     }
 
-    async function loadSection(sectionName) {
+    async function loadSection(sectionName){
       const q = query(collection(db, 'gallery'), where('section', '==', sectionName), limit(30));
       const snap = await getDocs(q);
       const docs = [];
@@ -822,11 +817,10 @@
       return docs;
     }
 
-    function emptyMsg(grid, text) {
-      grid.innerHTML = '<p class="fb-empty" style="grid-column:1/-1;text-align:center;padding:50px 20px;color:#555;font-family:var(--font-body);font-size:13px;border:1px dashed #2a2a2a;border-radius:8px">' + text + '</p>';
+    function emptyMsg(grid, text){
+      grid.innerHTML = '<p class="fb-empty" style="grid-column:1/-1;">' + text + '</p>';
     }
 
-    /* ── THE SALON section ── */
     loadSection('salon').then(photos => {
       const grid = document.getElementById('salon-grid');
       if (!grid) return;
@@ -834,24 +828,22 @@
       grid.innerHTML = '';
       photos.forEach((p, i) => {
         const cell = document.createElement('div');
-        const size = i === 0 ? 'hero' : (i === 1 ? 'regular' : 'small');
-        cell.className = 'salon-grid__cell salon-grid__cell--' + size;
+        const size = i === 0 ? 'hero' : '';
+        cell.className = 'salon-grid__cell' + (size ? ' salon-grid__cell--' + size : '');
         lazyBg(cell, p.image);
         revealTile(cell, i);
         grid.appendChild(cell);
       });
     }).catch(() => {});
 
-    /* ── CLIENT TRANSFORMATIONS section ── */
     loadSection('clients').then(photos => {
       const grid = document.getElementById('clients-grid');
       if (!grid) return;
       if (!photos.length) { emptyMsg(grid, 'Client transformations coming soon.'); return; }
       grid.innerHTML = '';
-      const sizes = ['tall', 'medium', 'short'];
       photos.forEach((p, i) => {
         const cell = document.createElement('div');
-        cell.className = 'clients-grid__cell clients-grid__cell--' + sizes[i % 3];
+        cell.className = 'clients-grid__cell';
         lazyBg(cell, p.image);
         revealTile(cell, i);
         if (p.caption) {
@@ -865,17 +857,15 @@
       });
     }).catch(() => {});
 
-    /* ── OUR STORY visual ── */
     loadSection('story').then(photos => {
       if (!photos.length) return;
-      const visual = document.querySelector('.about-grid__visual');
-      if (visual) {
-        visual.style.backgroundImage = `url('${photos[0].image}')`;
-        const ph = visual.querySelector('.about-grid__visual-placeholder');
-        if (ph) ph.style.display = 'none';
-      }
+      const visual = document.getElementById('story-visual');
+      if (visual) visual.style.backgroundImage = \`url('\${photos[0].image}')\`;
     }).catch(() => {});
-  </script>
+  `;
+  document.body.appendChild(s);
+})();
+</script>
 
 </body>
 </html>

@@ -1,1302 +1,893 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Hero Moses Hair Salon: a premium ladies hair salon in Mabirizi Complex, Kampala. Wig installation, braiding, bridal styling and more." />
+<title>Hero Moses Hair Salon | Kampala, Uganda</title>
 
-  <!-- ============================================================
-       META & PAGE SETUP
-       ============================================================ -->
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Hero Moses Hair Salon — Premium ladies hair salon in Mabirizi Complex, Kampala. Expert styling, wing installations, luxury braiding and more." />
-  <title>Hero Moses Hair Salon | Kampala, Uganda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- ============================================================
-       GOOGLE FONTS
-       Cormorant Garamond — display headings, section titles, logo text
-       Inter           — body text, nav links, buttons, form labels
-       ============================================================ -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,700&family=Inter:wght@400;500&display=swap"
-    rel="stylesheet"
-  />
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --espresso:      #1B140F;
+  --espresso-2:    #241C15;
+  --espresso-3:    #2E241B;
+  --ivory:         #FBF6EC;
+  --ivory-2:       #F2E9D8;
+  --gold:          #C9A15A;
+  --gold-light:    #E4C685;
+  --sienna:        #B5502B;
+  --text-onlight:  #241B14;
+  --text-muted-l:  #6E6252;
+  --text-onDark:   #FBF6EC;
+  --text-muted-d:  #A9977F;
+  --line-onDark:   rgba(251,246,236,0.14);
+  --line-onLight:  rgba(36,27,20,0.12);
+  --font-display:  'Fraunces', serif;
+  --font-body:     'Inter', sans-serif;
+  --r-sm: 4px; --r-md: 10px; --r-lg: 20px;
+  --ease: cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0; background:var(--ivory); color:var(--text-onlight);
+  font-family:var(--font-body); -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; }
+button{ font-family:inherit; cursor:pointer; }
+:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+.eyebrow{
+  font-family:var(--font-body); font-size:11px; font-weight:600; letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.section{ padding:96px 6vw; }
+@media(max-width:700px){ .section{ padding:64px 6vw; } }
+.section--dark{ background:var(--espresso); color:var(--text-onDark); }
+.section-head{ max-width:640px; margin:0 auto 48px; text-align:center; }
+.section-head .eyebrow{ color:var(--sienna); }
+.section--dark .section-head .eyebrow{ color:var(--gold); }
+.section-title{
+  font-family:var(--font-display); font-weight:500; font-size:clamp(28px,4vw,44px);
+  margin:10px 0 14px; line-height:1.1;
+}
+.section-title em{ font-style:italic; color:var(--sienna); font-weight:500; }
+.section--dark .section-title em{ color:var(--gold); }
+.section-sub{ font-size:15px; line-height:1.7; color:var(--text-muted-l); }
+.section--dark .section-sub{ color:var(--text-muted-d); }
 
-  <!-- ============================================================
-       CSS FILES  (loaded in strict order)
-       variables.css must always be first — everything else depends on it
-       responsive.css must always be last — it overrides section styles
-       ============================================================ -->
-  <link rel="stylesheet" href="assets/css/variables.css" />
-  <link rel="stylesheet" href="assets/css/reset.css" />
-  <link rel="stylesheet" href="assets/css/navbar.css" />
-  <link rel="stylesheet" href="assets/css/pages.css" />
-  <link rel="stylesheet" href="assets/css/hero.css" />
-  <link rel="stylesheet" href="assets/css/stylists.css" />
-  <link rel="stylesheet" href="assets/css/modal.css" />
-  <link rel="stylesheet" href="assets/css/services.css" />
-  <link rel="stylesheet" href="assets/css/hours.css" />
-  <link rel="stylesheet" href="assets/css/gallery.css" />
-  <link rel="stylesheet" href="assets/css/footer.css" />
-  <link rel="stylesheet" href="assets/css/responsive.css" />
+/* buttons */
+.btn{
+  display:inline-flex; align-items:center; gap:9px; padding:15px 28px;
+  border-radius:100px; font-size:12px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; border:1px solid transparent; text-decoration:none;
+  transition:transform .25s var(--ease), background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease);
+  white-space:nowrap;
+}
+.btn:hover{ transform:translateY(-2px); }
+.btn--gold{ background:var(--gold); color:var(--espresso); }
+.btn--gold:hover{ background:var(--gold-light); }
+.btn--line-dark{ border-color:var(--line-onDark); color:var(--text-onDark); }
+.btn--line-dark:hover{ border-color:var(--gold); color:var(--gold); }
+.btn--line-light{ border-color:var(--line-onLight); color:var(--text-onlight); }
+.btn--line-light:hover{ border-color:var(--sienna); color:var(--sienna); }
+.btn__icon{ flex-shrink:0; }
 
+/* pill link with circle arrow — reused signature control */
+.arrow-link{ display:inline-flex; align-items:center; gap:16px; text-decoration:none; }
+.arrow-link__text{ font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; transition:color .25s var(--ease); }
+.arrow-link__circle{
+  width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:var(--sienna); color:var(--ivory); flex-shrink:0;
+  transition:background .25s var(--ease), transform .3s var(--ease), color .25s var(--ease);
+}
+.arrow-link__circle svg{ transition:transform .3s var(--ease); }
+.arrow-link:hover .arrow-link__circle{ transform:scale(1.08); }
+.arrow-link:hover .arrow-link__circle svg{ transform:translateX(3px); }
+.arrow-link--dark .arrow-link__text{ color:var(--text-onDark); }
+.arrow-link--dark:hover .arrow-link__text{ color:var(--gold); }
+.arrow-link--dark .arrow-link__circle{ background:var(--gold); color:var(--espresso); }
+.arrow-link--light .arrow-link__text{ color:var(--text-onlight); }
+.arrow-link--light:hover .arrow-link__text{ color:var(--sienna); }
+
+/* ============================================================
+   BRAID DIVIDER — signature element
+   Two interleaved strands, standing in for the salon's own craft.
+   ============================================================ */
+.braid{ width:100%; height:44px; display:block; overflow:hidden; }
+.braid--onDark{ background:var(--espresso); }
+.braid--onLight{ background:var(--ivory); }
+.braid svg{ width:100%; height:100%; display:block; }
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 6vw; transition:background .35s var(--ease), padding .35s var(--ease), box-shadow .35s var(--ease);
+}
+.navbar.is-scrolled{ background:var(--espresso); padding:12px 6vw; box-shadow:0 8px 24px rgba(0,0,0,.25); }
+.navbar__brand{ display:flex; align-items:center; gap:12px; text-decoration:none; }
+.navbar__links{ display:flex; gap:36px; list-style:none; margin:0; padding:0; }
+.navbar__link{ text-decoration:none; font-size:12px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--text-muted-d); transition:color .25s var(--ease); position:relative; }
+.navbar__link.active, .navbar__link:hover{ color:var(--gold); }
+.navbar__right{ display:flex; align-items:center; gap:18px; }
+.navbar__hamburger{ display:none; flex-direction:column; gap:5px; background:none; border:none; padding:6px; }
+.navbar__hamburger-bar{ width:22px; height:2px; background:var(--text-onDark); border-radius:2px; transition:transform .3s var(--ease), opacity .3s var(--ease); }
+.navbar__mobile-panel{
+  position:fixed; inset:0; background:var(--espresso); z-index:99; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:30px; opacity:0; pointer-events:none; transition:opacity .3s var(--ease);
+}
+.navbar__mobile-panel.is-open{ opacity:1; pointer-events:auto; }
+.navbar__mobile-panel a{ font-family:var(--font-display); font-size:26px; color:var(--text-onDark); text-decoration:none; }
+
+/* ============================================================
+   BRAND WORDMARK — the salon's own logotype, reused everywhere
+   ============================================================ */
+.brand{ display:flex; flex-direction:column; line-height:1; }
+.brand__name{ font-family:var(--font-display); font-size:18px; letter-spacing:.01em; white-space:nowrap; }
+.brand__name .is-hero{ font-weight:700; letter-spacing:.02em; }
+.brand__name .is-moses{ font-style:italic; font-weight:500; margin-left:5px; }
+.brand__sub{ display:block; font-size:9px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; margin-top:5px; }
+.brand--sm .brand__name{ font-size:14px; }
+.brand--sm .brand__sub{ font-size:7.5px; margin-top:3px; }
+.brand--dark .brand__name{ color:var(--text-onDark); }
+.brand--dark .is-hero{ color:var(--gold); }
+.brand--dark .brand__sub{ color:var(--gold); opacity:.8; }
+.brand--light .brand__name{ color:var(--text-onlight); }
+.brand--light .is-hero{ color:var(--sienna); }
+.brand--light .brand__sub{ color:var(--text-muted-l); }
+
+/* ============================================================
+   HERO — salon photography behind the headline
+   ============================================================ */
+.hero{
+  position:relative; min-height:100vh; color:var(--text-onDark);
+  display:flex; align-items:flex-end; padding:0 6vw 96px; overflow:hidden;
+}
+.hero__bg{
+  position:absolute; inset:0; z-index:0;
+  background:linear-gradient(160deg, var(--espresso-3), var(--espresso-2) 60%);
+}
+.hero__bg-slide{
+  position:absolute; inset:0; background-size:cover; background-position:center;
+  opacity:0; transition:opacity 1.6s var(--ease);
+}
+.hero__bg-slide--active{ opacity:1; }
+.hero__scrim{
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(27,20,15,.94) 0%, rgba(27,20,15,.72) 42%, rgba(27,20,15,.4) 100%),
+    linear-gradient(0deg, rgba(27,20,15,.65) 0%, rgba(27,20,15,0) 40%);
+}
+.hero__content{ position:relative; z-index:2; max-width:620px; padding-top:180px; }
+.hero__badge{
+  display:inline-flex; align-items:center; gap:10px; padding:8px 16px 8px 14px; border:1px solid var(--line-onDark);
+  border-radius:100px; font-size:11px; letter-spacing:.14em; font-weight:600; text-transform:uppercase; color:var(--gold);
+  margin-bottom:26px;
+}
+.hero__badge::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+.hero__headline{
+  font-family:var(--font-display); font-weight:500; font-size:clamp(42px,6.4vw,74px);
+  line-height:1.02; margin:0 0 22px;
+}
+.hero__headline em{ font-style:italic; color:var(--gold); display:block; }
+.hero__tagline{ font-size:16px; line-height:1.75; color:var(--text-muted-d); max-width:460px; margin-bottom:38px; }
+.hero__ctas{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:52px; }
+.hero__contact{ display:flex; flex-wrap:wrap; gap:34px; padding-top:34px; border-top:1px solid var(--line-onDark); }
+.hero__contact-item{ display:flex; align-items:flex-start; gap:11px; }
+.hero__contact-icon{ color:var(--gold); flex-shrink:0; margin-top:2px; }
+.hero__contact-label{ display:block; font-size:9.5px; font-weight:700; letter-spacing:.16em; color:var(--text-muted-d); margin-bottom:3px; }
+.hero__contact-value{ font-size:13.5px; color:var(--text-onDark); line-height:1.45; }
+
+/* ============================================================
+   SERVICES TEASER
+   ============================================================ */
+.services-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line-onLight); border:1px solid var(--line-onLight); border-radius:var(--r-lg); overflow:hidden; margin-top:8px; }
+.service-card{ background:var(--ivory); padding:38px 30px; transition:background .3s var(--ease); }
+.service-card:hover{ background:var(--ivory-2); }
+.service-card__icon{ color:var(--sienna); margin-bottom:22px; }
+.service-card__name{ font-family:var(--font-display); font-size:20px; font-weight:600; margin:0 0 8px; }
+.service-card__desc{ font-size:13px; line-height:1.6; color:var(--text-muted-l); margin:0 0 18px; }
+.service-card__price{ font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--sienna); }
+.services-cta{ text-align:center; margin-top:56px; }
+.services-cta p{ font-size:14px; color:var(--text-muted-l); margin-bottom:26px; }
+
+/* ============================================================
+   TEAM MOSAIC
+   ============================================================ */
+.team-mosaic{ display:grid; grid-template-columns:repeat(4,1fr); gap:2px; max-width:720px; margin:0 auto; background:var(--line-onDark); border:1px solid var(--line-onDark); border-radius:var(--r-lg); overflow:hidden; }
+.team-tile{
+  aspect-ratio:1; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center;
+  opacity:0; transform:scale(.5); transition:opacity .45s var(--ease), transform .5s cubic-bezier(.34,1.45,.64,1);
+}
+.team-tile.tile-in{ opacity:1; transform:scale(1); }
+.team-tile--deco{ background:var(--espresso-3); }
+.team-tile--photo{ background:var(--espresso-2); background-size:cover; background-position:center top; filter:grayscale(100%); flex-direction:column; gap:6px; cursor:pointer; transition:filter .4s var(--ease); }
+.team-tile--photo:hover{ filter:grayscale(60%) brightness(1.05); }
+.team-tile__initial{ font-family:var(--font-display); font-style:italic; font-size:32px; color:var(--gold); }
+.team-tile__name{ position:absolute; bottom:9px; left:0; right:0; text-align:center; font-size:8px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted-d); }
+.team-tile--label{ background:var(--gold); flex-direction:column; gap:10px; }
+.team-tile__label-text{ font-size:10px; font-weight:700; letter-spacing:.1em; text-align:center; color:var(--espresso); line-height:1.5; }
+.team-tile--cta{ background:var(--espresso-2); text-decoration:none; flex-direction:column; gap:12px; }
+.team-tile__cta-text{ font-size:10px; font-weight:600; letter-spacing:.1em; text-align:center; color:var(--gold); line-height:1.5; }
+
+/* ============================================================
+   CTA BANNER
+   ============================================================ */
+.cta-banner{ background:linear-gradient(135deg, var(--sienna), #8f3d20); color:var(--ivory); padding:80px 6vw; text-align:center; }
+.cta-banner__logo{ margin-bottom:20px; display:flex; justify-content:center; }
+.cta-banner__logo .brand__name{ font-size:20px; }
+.cta-banner__logo .brand__name .is-hero, .cta-banner__logo .brand__name .is-moses{ color:var(--ivory); }
+.cta-banner__logo .brand__sub{ color:var(--ivory); opacity:.75; }
+.cta-banner__heading{ font-family:var(--font-display); font-weight:500; font-size:clamp(26px,4vw,38px); margin:0 0 12px; }
+.cta-banner__sub{ font-size:14px; color:rgba(251,246,236,.85); margin-bottom:34px; }
+.cta-banner__btns{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+.cta-banner .btn--gold{ background:var(--espresso); color:var(--gold); }
+.cta-banner .btn--gold:hover{ background:#000; }
+.cta-banner .btn--line-dark{ border-color:rgba(251,246,236,.4); }
+.cta-banner .btn--line-dark:hover{ border-color:var(--ivory); color:var(--ivory); }
+
+/* ============================================================
+   HOURS
+   ============================================================ */
+.hours-wrap{ display:grid; grid-template-columns:.9fr 1.1fr; gap:64px; align-items:start; }
+.hours__contacts{ display:flex; flex-direction:column; gap:16px; margin:28px 0 32px; }
+.hours__contact-row{ display:flex; align-items:center; gap:12px; font-size:14px; }
+.hours__contact-row svg{ color:var(--sienna); flex-shrink:0; }
+.hours-table{ border:1px solid var(--line-onLight); border-radius:var(--r-lg); overflow:hidden; }
+.hours-row{ display:flex; justify-content:space-between; align-items:center; padding:16px 24px; border-bottom:1px solid var(--line-onLight); font-size:14px; }
+.hours-row:last-child{ border-bottom:none; }
+.hours-row--today{ background:var(--ivory-2); }
+.hours-row__day{ display:flex; align-items:center; gap:10px; font-weight:600; }
+.hours-row__dot{ width:6px; height:6px; border-radius:50%; background:var(--line-onLight); }
+.hours-row--today .hours-row__dot{ background:var(--sienna); }
+.hours-row__today-tag{ display:none; font-size:9px; font-weight:700; letter-spacing:.08em; color:var(--sienna); background:rgba(181,80,43,.12); padding:3px 8px; border-radius:100px; }
+.hours-row--today .hours-row__today-tag{ display:inline-block; }
+.hours-row__time{ display:flex; align-items:center; gap:7px; color:var(--text-muted-l); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{ background:var(--espresso); color:var(--text-onDark); padding:80px 6vw 30px; }
+.footer__grid{ display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:50px; padding-bottom:44px; border-bottom:1px solid var(--line-onDark); }
+.footer__brand-row{ display:flex; align-items:center; margin-bottom:18px; }
+.footer__desc{ font-size:13.5px; line-height:1.75; color:var(--text-muted-d); max-width:340px; margin-bottom:24px; }
+.footer__social{ display:flex; gap:10px; }
+.footer__social a{ width:34px; height:34px; border-radius:50%; border:1px solid var(--line-onDark); display:flex; align-items:center; justify-content:center; color:var(--text-onDark); text-decoration:none; transition:border-color .25s var(--ease), color .25s var(--ease); }
+.footer__social a:hover{ border-color:var(--gold); color:var(--gold); }
+.footer__col-title{ font-size:11px; font-weight:700; letter-spacing:.14em; color:var(--gold); margin:0 0 18px; }
+.footer__address, .footer__hours-summary{ font-size:13.5px; line-height:1.9; color:var(--text-muted-d); margin:0; }
+.footer__divider{ border:none; border-top:1px solid var(--line-onDark); margin:16px 0; }
+.footer__contact-row{ display:flex; align-items:center; gap:10px; margin-bottom:12px; font-size:13.5px; }
+.footer__contact-row svg{ color:var(--gold); flex-shrink:0; }
+.footer__contact-link{ text-decoration:none; color:var(--text-muted-d); transition:color .25s var(--ease); }
+.footer__contact-link:hover{ color:var(--gold); }
+.footer__bottom{ padding-top:26px; text-align:center; font-size:11px; letter-spacing:.08em; color:var(--text-muted-d); }
+
+/* ============================================================
+   BOOKING MODAL
+   ============================================================ */
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(15,10,7,.7); backdrop-filter:blur(3px); z-index:200;
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  opacity:0; pointer-events:none; transition:opacity .3s var(--ease);
+}
+.modal-overlay.is-open{ opacity:1; pointer-events:auto; }
+.modal{
+  background:var(--ivory); border-radius:var(--r-lg); max-width:460px; width:100%;
+  max-height:88vh; overflow-y:auto; transform:translateY(16px) scale(.98); transition:transform .3s var(--ease);
+}
+.modal-overlay.is-open .modal{ transform:translateY(0) scale(1); }
+.modal__header{ display:flex; align-items:center; gap:14px; padding:26px 26px 20px; border-bottom:1px solid var(--line-onLight); }
+
+.modal__title-block{ flex:1; }
+.modal__title{ font-family:var(--font-display); font-size:19px; font-weight:600; margin:0; }
+.modal__subtitle{ font-size:11.5px; color:var(--text-muted-l); margin:2px 0 0; }
+.modal__close{ background:none; border:none; font-size:22px; line-height:1; color:var(--text-muted-l); padding:4px; }
+.modal__close:hover{ color:var(--sienna); }
+.modal__form{ padding:22px 26px 26px; display:flex; flex-direction:column; gap:16px; }
+.form-field__label{ display:block; font-size:10px; font-weight:700; letter-spacing:.1em; color:var(--text-muted-l); margin-bottom:7px; }
+.form-field__input{ width:100%; padding:12px 14px; border:1px solid var(--line-onLight); border-radius:var(--r-md); background:#fff; font-family:inherit; font-size:14px; color:var(--text-onlight); transition:border-color .2s var(--ease); }
+.form-field__input:focus{ border-color:var(--sienna); }
+.phone-row{ display:flex; gap:8px; }
+.phone-code{ flex:0 0 148px; text-overflow:ellipsis; }
+.phone-number{ flex:1; }
+.form-field__select-wrap{ position:relative; }
+.form-field__select{ appearance:none; padding-right:38px; }
+.form-field__chevron{ position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--text-muted-l); pointer-events:none; }
+.form-field__error{ display:block; font-size:11px; color:var(--sienna); min-height:14px; margin-top:4px; }
+.modal__submit{ background:var(--sienna); color:var(--ivory); border:none; border-radius:100px; padding:15px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; transition:background .25s var(--ease); }
+.modal__submit:hover{ background:#8f3d20; }
+.modal__footnote{ text-align:center; font-size:12.5px; color:var(--text-muted-l); margin:0; }
+.modal__footnote-link{ color:var(--sienna); text-decoration:none; font-weight:600; }
+.modal__success{ display:none; padding:40px 26px; text-align:center; }
+.modal__success.is-visible{ display:block; }
+.modal__success-icon{ width:56px; height:56px; border-radius:50%; background:rgba(181,80,43,.12); color:var(--sienna); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; }
+.modal__success h4{ font-family:var(--font-display); font-size:20px; margin:0 0 10px; }
+.modal__success p{ font-size:13.5px; color:var(--text-muted-l); line-height:1.6; margin:0 0 24px; }
+
+/* ============================================================
+   FLOATING BOOK BUTTON
+   ============================================================ */
+.floating-btn{
+  position:fixed; bottom:26px; right:26px; z-index:80; background:var(--sienna); color:var(--ivory);
+  border:none; border-radius:100px; padding:16px 24px; font-size:11.5px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; display:flex; align-items:center; gap:9px; box-shadow:0 10px 30px rgba(0,0,0,.35);
+  opacity:0; transform:translateY(16px); pointer-events:none; transition:opacity .3s var(--ease), transform .3s var(--ease), background .25s var(--ease);
+}
+.floating-btn.is-visible{ opacity:1; transform:translateY(0); pointer-events:auto; }
+.floating-btn:hover{ background:#8f3d20; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:980px){
+  .hero{ grid-template-columns:1fr; padding-top:130px; }
+  .hero__frame{ aspect-ratio:16/9; }
+  .hours-wrap{ grid-template-columns:1fr; gap:40px; }
+  .footer__grid{ grid-template-columns:1fr 1fr; }
+  .footer__col--brand{ grid-column:1/-1; }
+}
+@media(max-width:700px){
+  .navbar__links{ display:none; }
+  .navbar__hamburger{ display:flex; }
+  .services-grid{ grid-template-columns:1fr; }
+  .team-mosaic{ max-width:340px; }
+  .cta-banner__btns{ flex-direction:column; align-items:center; }
+  .hero__content{ padding-top:150px; }
+  .footer__grid{ grid-template-columns:1fr; }
+  .hours-row{ padding:14px 16px; }
+}
+</style>
 </head>
-
 <body>
 
-  <!-- ============================================================
-       SECTION 1 — NAVBAR
-       Sticky navigation bar that stays at the top while scrolling.
-       Contains: logo, wordmark, nav links, book now button.
-       JS: navbar.js handles active link + hamburger menu on mobile.
-       ============================================================ -->
-  <nav class="navbar" id="navbar">
-
-    <!-- Left: logo + wordmark -->
-    <div class="navbar__brand">
-      <!-- Logo SVG is injected here by logo.js at runtime -->
-      <div class="navbar__logo" id="navbar-logo"></div>
-
-      <div class="navbar__wordmark">
-        <span class="navbar__wordmark-name">
-          <span class="navbar__wordmark-hero">HERO</span>
-          <span class="navbar__wordmark-moses">MOSES</span>
-        </span>
-        <span class="navbar__wordmark-sub">HAIR SALON</span>
-      </div>
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<nav class="navbar" id="navbar">
+  <a href="#home" class="navbar__brand">
+    <div class="brand brand--dark">
+      <span class="brand__name"><span class="is-hero">Hero</span><span class="is-moses">Moses</span></span>
+      <span class="brand__sub">Hair Salon</span>
     </div>
+  </a>
 
-    <!-- Centre: navigation links (desktop) -->
-        <ul class="navbar__links" id="navbar-links">
-      <li><a href="index.html"       class="navbar__link active">Home</a></li>
-      <li><a href="services.html"    class="navbar__link">Services</a></li>
-      <li><a href="index.html#hours" class="navbar__link">Hours</a></li>
-      <li><a href="gallery.html"     class="navbar__link">Gallery</a></li>
-      <li><a href="stylists.html"    class="navbar__link">Stylists</a></li>
-    </ul>
+  <ul class="navbar__links">
+    <li><a href="#home" class="navbar__link active">Home</a></li>
+    <li><a href="#services" class="navbar__link">Services</a></li>
+    <li><a href="#hours" class="navbar__link">Hours</a></li>
+    <li><a href="gallery.html" class="navbar__link">Gallery</a></li>
+    <li><a href="#team" class="navbar__link">Stylists</a></li>
+  </ul>
 
-    <!-- Right: book now button -->
-    <button class="btn btn--gold open-modal" aria-label="Book an appointment">
-      <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-        <line x1="16" y1="2" x2="16" y2="6"></line>
-        <line x1="8"  y1="2" x2="8"  y2="6"></line>
-        <line x1="3"  y1="10" x2="21" y2="10"></line>
-      </svg>
-      BOOK NOW
+  <div class="navbar__right">
+    <button class="btn btn--gold open-modal">
+      <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Book Now
     </button>
-
-    <!-- Mobile: hamburger button (visible on small screens only) -->
     <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
       <span class="navbar__hamburger-bar"></span>
       <span class="navbar__hamburger-bar"></span>
       <span class="navbar__hamburger-bar"></span>
     </button>
-
-  </nav>
-
-
-  <!-- ============================================================
-       SECTION 2 — HERO
-       Full-viewport landing section.
-       Left: headline, tagline, CTAs, contact info strip.
-       Right: logo panel with carousel dots.
-       ============================================================ -->
-  <section class="hero" id="home">
-
-    <!-- Left column: text content -->
-    <div class="hero__content">
-
-      <!-- Gold badge pill -->
-      <div class="hero__badge">
-        <span class="hero__badge-star">✦</span>
-        PREMIUM LADIES HAIR SALON
-      </div>
-
-      <!-- Main headline -->
-      <h1 class="hero__headline">
-        <span class="hero__headline-white">Elevate</span>
-        <em class="hero__headline-gold">Your Style.</em>
-      </h1>
-
-      <!-- Tagline -->
-      <p class="hero__tagline">
-        Expert styling, wing installations, luxury braiding and every hair
-        service a woman deserves , at Mabirizi Complex.
-      </p>
-
-      <!-- CTA buttons -->
-      <div class="hero__ctas">
-        <button class="btn btn--gold open-modal" aria-label="Book an appointment">
-          <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="16" y1="2" x2="16" y2="6"></line>
-            <line x1="8"  y1="2" x2="8"  y2="6"></line>
-            <line x1="3"  y1="10" x2="21" y2="10"></line>
-          </svg>
-          BOOK NOW
-        </button>
-
-        <a href="services.html" class="btn btn--outline">VIEW SERVICES &rarr;</a>
-      </div>
-
-      <!-- Contact info strip: location / phone / email -->
-      <div class="hero__contact">
-
-        <div class="hero__contact-item">
-          <svg class="hero__contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-            <circle cx="12" cy="10" r="3"></circle>
-          </svg>
-          <div>
-            <span class="hero__contact-label">LOCATION</span>
-            <span class="hero__contact-value">Mabirizi Complex<br>Level 4, Room 22</span>
-          </div>
-        </div>
-
-        <div class="hero__contact-item">
-          <svg class="hero__contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"></path>
-          </svg>
-          <div>
-            <span class="hero__contact-label">CALL US</span>
-            <span class="hero__contact-value">+256 757541061</span>
-          </div>
-        </div>
-
-        <div class="hero__contact-item">
-          <svg class="hero__contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-          </svg>
-          <div>
-            <span class="hero__contact-label">EMAIL</span>
-            <span class="hero__contact-value">blessingbutsigho<br>@gmail.com</span>
-          </div>
-        </div>
-
-      </div>
-      <!-- end .hero__contact -->
-
-    </div>
-    <!-- end .hero__content -->
-
-    <!-- Right column: logo display panel -->
-    <div class="hero__panel">
-
-      <!-- Outer dark container -->
-      <div class="hero__panel-outer">
-
-        <!-- Gold decorative line — top -->
-        <div class="hero__panel-line hero__panel-line--top"></div>
-
-        <!-- White card with logo SVG centred inside -->
-        <div class="hero__panel-card">
-          <!-- Logo SVG injected by logo.js at runtime -->
-          <div class="hero__panel-logo" id="hero-logo"></div>
-        </div>
-
-        <!-- Gold decorative line — bottom -->
-        <div class="hero__panel-line hero__panel-line--bottom"></div>
-
-      </div>
-      <!-- end .hero__panel-outer -->
-
-      <!-- Carousel dot indicators -->
-      <div class="hero__dots" aria-hidden="true">
-        <span class="hero__dot hero__dot--active"></span>
-        <span class="hero__dot"></span>
-        <span class="hero__dot"></span>
-      </div>
-
-    </div>
-    <!-- end .hero__panel -->
-
-  </section>
-  <!-- end #home -->
-
-
-  <!-- ============================================================
-       SECTION 3 — STYLISTS ("THE ARTISTS")
-       Four stylist cards in a row.
-       First card (Moses) has gold border + Book With Moses button.
-       ============================================================ -->
-  <!-- ============================================================
-       SECTION 3 — THE ARTISTS (checkerboard team grid)
-       Modern mosaic layout. Photos display in black & white.
-       Orange tile redirects to the full stylists page.
-       ============================================================ -->
-  <section class="stylists">
-
-    <div class="stylists__header">
-      <h2 class="section-title">The <em>Artists</em></h2>
-      <p class="section-subtitle">
-        Meet the team of eight expert stylists, led by Moses himself,
-        dedicated to making every client look extraordinary.
-      </p>
-    </div>
-
-    <div class="team-mosaic" id="team-mosaic">
-      <div class="team-mosaic__loading" style="grid-column:1/-1;text-align:center;padding:40px 20px;color:#666;font-family:var(--font-body);font-size:13px">Loading our team...</div>
-    </div>
-
-    <style>
-      /* ── TEAM MOSAIC GRID ── */
-      .team-mosaic {
-        display:               grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap:                   0;
-        max-width:             640px;   /* compact — does not dominate the page */
-        margin:                0 auto;
-      }
-
-      /* ── BLOCK-BUILDING ANIMATION ──
-         Tiles start collapsed and build in one by one when the
-         section scrolls into view. Rebuilds on every revisit. */
-      .team-mosaic__tile {
-        opacity:   0;
-        transform: scale(0.4);
-        transition: opacity 0.45s ease,
-                    transform 0.45s cubic-bezier(0.34, 1.45, 0.64, 1);
-      }
-      .team-mosaic__tile.tile-in {
-        opacity:   1;
-        transform: scale(1);
-      }
-
-      .team-mosaic__tile {
-        aspect-ratio: 1;
-        position:     relative;
-        overflow:     hidden;
-        display:      flex;
-        align-items:  center;
-        justify-content: center;
-      }
-
-      /* Decorative blank tiles — like the reference design */
-      .team-mosaic__tile--blank-white { background: #f5f5f0; }
-      .team-mosaic__tile--blank-dark  { background: #3a3a3a; }
-      .team-mosaic__tile--blank-gray  { background: #c9c9c9; }
-      .team-mosaic__tile--blank-stripes {
-        background: repeating-linear-gradient(
-          45deg,
-          #1a1a1a,
-          #1a1a1a 3px,
-          #242424 3px,
-          #242424 6px
-        );
-      }
-
-      /* Photo tiles — black & white treatment */
-      .team-mosaic__tile--photo {
-        background:          #2a2a2a;
-        background-size:     cover;
-        background-position: center top;
-        filter:              grayscale(100%);   /* black & white as requested */
-        flex-direction:      column;
-        gap:                 6px;
-        transition:          filter 0.4s ease;
-        cursor:              pointer;
-      }
-
-      /* Subtle: photo regains hint of life on hover but stays B&W theme */
-      .team-mosaic__tile--photo:hover {
-        filter: grayscale(100%) brightness(1.15);
-      }
-
-      /* Initial letter placeholder — shows until real photo is set */
-      .team-mosaic__initial {
-        font-family: var(--font-display);
-        font-size:   34px;
-        font-weight: var(--fw-regular);
-        color:       #4a4a4a;
-        line-height: 1;
-      }
-
-      .team-mosaic__name {
-        position:       absolute;
-        bottom:         8px;
-        left:           0;
-        right:          0;
-        text-align:     center;
-        font-family:    var(--font-body);
-        font-size:      8px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color:          #8a8a8a;
-      }
-
-      /* White label tile — SALON LEADERSHIP */
-      .team-mosaic__tile--label {
-        background:     #f5f5f0;
-        flex-direction: column;
-        gap:            14px;
-      }
-      .team-mosaic__label-text {
-        font-family:    var(--font-body);
-        font-size:      11px;
-        font-weight:    500;
-        letter-spacing: 0.1em;
-        text-align:     center;
-        color:          var(--color-gold);
-        line-height:    1.5;
-      }
-      .team-mosaic__label-arrow {
-        width: 28px; height: 28px;
-        border: 2px solid var(--color-gold);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--color-gold);
-      }
-
-      /* Gold CTA tile — MEET THE TEAM → stylists page */
-      .team-mosaic__tile--cta {
-        background:      var(--color-gold);
-        flex-direction:  column;
-        gap:             16px;
-        text-decoration: none;
-        transition:      background 0.3s ease;
-      }
-      .team-mosaic__cta-text {
-        font-family:    var(--font-body);
-        font-size:      12px;
-        font-weight:    500;
-        letter-spacing: 0.1em;
-        text-align:     center;
-        color:          #ffffff;
-        line-height:    1.5;
-      }
-      .team-mosaic__cta-circle {
-        width: 30px; height: 30px;
-        border: 2px solid #ffffff;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #ffffff;
-        transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
-      }
-      .team-mosaic__tile--cta:hover {
-        background: var(--color-gold-light);
-      }
-      .team-mosaic__tile--cta:hover .team-mosaic__cta-circle {
-        background: #ffffff;
-        color:      var(--color-gold);
-        transform:  translateX(4px);
-      }
-
-      /* Mobile — SAME 4-column grid as desktop, scaled down */
-      @media (max-width: 600px) {
-        .team-mosaic__initial    { font-size: 22px; }
-        .team-mosaic__name       { font-size: 6px; bottom: 5px; }
-        .team-mosaic__cta-text   { font-size: 9px; }
-        .team-mosaic__label-text { font-size: 8px; }
-        .team-mosaic__cta-circle   { width: 22px; height: 22px; }
-        .team-mosaic__label-arrow  { width: 20px; height: 20px; }
-        .team-mosaic__cta-circle svg,
-        .team-mosaic__label-arrow svg { width: 11px; height: 11px; }
-        .team-mosaic__tile--cta,
-        .team-mosaic__tile--label { gap: 8px; }
-      }
-    </style>
-
-  </section>
-  <!-- end the artists -->
-
-
-  <!-- ============================================================
-       SECTION 4 — BOOKING MODAL
-       Hidden by default. Opened by any .open-modal button.
-       Overlay covers full screen. Modal card sits centred on overlay.
-       JS: modal.js handles open / close / validation / confirmation.
-       ============================================================ -->
-  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-
-    <div class="modal" id="modal">
-
-      <!-- Modal header: logo + title + close button -->
-      <div class="modal__header">
-
-        <!-- Logo SVG injected by logo.js at runtime -->
-        <div class="modal__logo" id="modal-logo"></div>
-
-        <div class="modal__title-block">
-          <h3 class="modal__title" id="modal-title">Book an Appointment</h3>
-          <p class="modal__subtitle">Hero Moses Hair Salon</p>
-        </div>
-
-        <button class="modal__close" id="modal-close" aria-label="Close booking modal">&times;</button>
-
-      </div>
-      <!-- end .modal__header -->
-
-      <!-- Booking form -->
-      <form class="modal__form" id="booking-form" novalidate>
-
-        <!-- Field 1: Name -->
-        <div class="form-field">
-          <label class="form-field__label" for="booking-name">YOUR NAME</label>
-          <input
-            class="form-field__input"
-            type="text"
-            id="booking-name"
-            name="name"
-            placeholder="Full name"
-            autocomplete="name"
-          />
-          <span class="form-field__error" id="error-name" aria-live="polite"></span>
-        </div>
-
-        <!-- Field 2: Phone -->
-        <div class="form-field">
-          <label class="form-field__label" for="booking-phone">PHONE NUMBER</label>
-          <div class="phone-row">
-            <select class="form-field__input phone-code" id="booking-code" name="code" aria-label="Country code">
-              <option value="+256" data-min="9" data-max="9" selected>🇺🇬 +256</option>
-              <option value="+254" data-min="9" data-max="9">🇰🇪 +254</option>
-              <option value="+255" data-min="9" data-max="9">🇹🇿 +255</option>
-              <option value="+250" data-min="9" data-max="9">🇷🇼 +250</option>
-              <option value="+257" data-min="8" data-max="8">🇧🇮 +257</option>
-              <option value="+243" data-min="9" data-max="9">🇨🇩 +243</option>
-              <option value="+211" data-min="9" data-max="9">🇸🇸 +211</option>
-              <option value="+251" data-min="9" data-max="9">🇪🇹 +251</option>
-              <option value="+260" data-min="9" data-max="9">🇿🇲 +260</option>
-              <option value="+27"  data-min="9" data-max="9">🇿🇦 +27</option>
-              <option value="+234" data-min="10" data-max="10">🇳🇬 +234</option>
-              <option value="+44"  data-min="10" data-max="10">🇬🇧 +44</option>
-              <option value="+1"   data-min="10" data-max="10">🇺🇸 +1</option>
-              <option value="+971" data-min="9" data-max="9">🇦🇪 +971</option>
-              <option value="+91"  data-min="10" data-max="10">🇮🇳 +91</option>
-              <option value="" data-min="6" data-max="15">🌍 Other</option>
-            </select>
-            <input class="form-field__input phone-number" type="tel" id="booking-phone" name="phone" placeholder="7XX XXX XXX" autocomplete="tel" inputmode="numeric" />
-          </div>
-          <span class="form-field__error" id="error-phone" aria-live="polite"></span>
-        </div>
-
-                        <!-- Field 3: Service dropdown -->
-        <div class="form-field">
-          <label class="form-field__label" for="booking-service">SERVICE</label>
-          <div class="form-field__select-wrap">
-            <select class="form-field__input form-field__select" id="booking-service" name="service">
-              <option value="" disabled selected>Select a service</option>
-              <optgroup label="Wig Installation">
-                <option>Wig Installation - 80,000 UGX</option>
-                <option>Buying in from our shop - 70,000 UGX</option>
-                <option>Installation + Lashes - 120,000 UGX</option>
-                <option>Installation + Washing + Lashes - 130,000 UGX</option>
-                <option>Wig Washing - 20,000 UGX</option>
-                <option>Lashes - 40,000 UGX</option>
-                <option>Weaving - 80,000 UGX</option>
-                <option>Masterpiece with hair - 150,000 UGX</option>
-                <option>Ponytail Gel - 50,000 UGX</option>
-                <option>Ponytail Closure - 70,000 UGX</option>
-              </optgroup>
-              <optgroup label="Boho Braids with Hair">
-                <option>Boho Braids Small - 150,000 UGX</option>
-                <option>Boho Braids Normal - 140,000 UGX</option>
-                <option>Boho Braids Big - 110,000 UGX</option>
-              </optgroup>
-              <optgroup label="Fulani Braids">
-                <option>Fulani Braids Small - 150,000 UGX</option>
-                <option>Fulani Braids Medium - 130,000 UGX</option>
-                <option>Fulani Braids Large - 100,000 UGX</option>
-              </optgroup>
-              <optgroup label="Knotless Braids">
-                <option>Knotless Small - 180,000 UGX</option>
-                <option>Knotless Small-Medium - 150,000 UGX</option>
-                <option>Knotless Medium - 130,000 UGX</option>
-                <option>Knotless Large - 100,000 UGX</option>
-              </optgroup>
-              <optgroup label="French Curls">
-                <option>French Curls for Pencil - 140,000 UGX</option>
-                <option>French Curls for Braids - 150,000 UGX</option>
-              </optgroup>
-              <optgroup label="Wigs - Short">
-                <option>Short Jerry Wig - 150,000 UGX</option>
-                <option>Pixie Wig - 150,000 UGX</option>
-                <option>Bob 10 inches - 180,000 UGX</option>
-                <option>Bob 12 inches - 200,000 UGX</option>
-              </optgroup>
-              <optgroup label="Wigs - Straight, Body and Curls">
-                <option>Wig 14 inches - 220,000 UGX</option>
-                <option>Wig 16 inches - 250,000 UGX</option>
-                <option>Wig 18 inches - 300,000 UGX</option>
-                <option>Wig 20 inches - 350,000 UGX</option>
-                <option>Wig 22 inches - 400,000 UGX</option>
-                <option>Wig 24 inches - 450,000 UGX</option>
-                <option>Wig 26 inches - 500,000 UGX</option>
-                <option>Wig 28 inches - 550,000 UGX</option>
-                <option>Wig 30 inches - 600,000 UGX</option>
-                <option>Wig 32 inches - 620,000 UGX</option>
-                <option>Wig 34 inches - 670,000 UGX</option>
-                <option>Wig 36 inches - 700,000 UGX</option>
-              </optgroup>
-              <optgroup label="Bridal Services">
-                <option>Half-day Bridal Hair - within Kampala 1,000,000 UGX</option>
-                <option>Half-day Bridal Hair - outside Kampala 1,500,000 UGX</option>
-                <option>Half-day Bridal Hair + Makeup - within Kampala 1,600,000 UGX</option>
-                <option>Half-day Bridal Hair + Makeup - outside Kampala 2,200,000 UGX</option>
-                <option>Full-day Bridal Hair - within Kampala 1,800,000 UGX</option>
-                <option>Full-day Bridal Hair - outside Kampala 2,000,000 UGX</option>
-                <option>Full-day Bridal Hair + Makeup - within Kampala 2,000,000 UGX</option>
-                <option>Full-day Bridal Hair + Makeup - outside Kampala 2,500,000 UGX</option>
-                <option>Full Package with Bridesmaids (3 to 6) - 3,500,000 UGX</option>
-              </optgroup>
-            </select>
-            <svg class="form-field__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </div>
-          <span class="form-field__error" id="error-service" aria-live="polite"></span>
-        </div>
-
-        <!-- Field 4: Preferred date -->
-        <div class="form-field">
-          <label class="form-field__label" for="booking-date">PREFERRED DATE</label>
-          <input
-            class="form-field__input"
-            type="date"
-            id="booking-date"
-            name="date"
-          />
-          <span class="form-field__error" id="error-date" aria-live="polite"></span>
-        </div>
-
-        <!-- Submit button -->
-        <button type="submit" class="modal__submit" id="booking-submit">
-          CONFIRM BOOKING
-        </button>
-
-        <!-- Call fallback note -->
-        <p class="modal__footnote">
-          Or call us directly at
-          <a href="tel:+256757541061" class="modal__footnote-link">+256 757541061</a>
-        </p>
-
-      </form>
-      <!-- end .modal__form -->
-
-    </div>
-    <!-- end .modal -->
-
   </div>
-  <!-- end .modal-overlay -->
+</nav>
 
+<div class="navbar__mobile-panel" id="mobile-panel">
+  <a href="#home">Home</a>
+  <a href="#services">Services</a>
+  <a href="#hours">Hours</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="#team">Stylists</a>
+</div>
 
-  <!-- ============================================================
-       SECTION 5 — SERVICES SUMMARY
-       A teaser of the main service categories.
-       Full menu lives on services.html
-       ============================================================ -->
-  <section class="services">
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero" id="home">
+  <div class="hero__bg" id="hero-bg">
+    <div class="hero__bg-slide hero__bg-slide--active"></div>
+    <div class="hero__bg-slide"></div>
+    <div class="hero__bg-slide"></div>
+    <div class="hero__bg-slide"></div>
+    <div class="hero__bg-slide"></div>
+  </div>
+  <div class="hero__scrim"></div>
 
-    <div class="services__header">
-      <h2 class="section-title">Our <em>Services</em></h2>
-      <p class="section-subtitle">
-        From wigs and braids to lashes and weaves, we offer a full
-        menu of premium ladies hair services in the heart of Kampala.
-      </p>
-    </div>
-
-    <div class="services__grid">
-
-      <!-- Column 1 -->
-      <div class="services__col">
-
-        <div class="service-row">
-          <div class="service-row__info">
-            <span class="service-row__name">Wig Installation</span>
-            <span class="service-row__desc">Installation, washing, lashes and masterpiece packages</span>
-          </div>
-          <span class="service-row__price">From 20,000 UGX</span>
-        </div>
-
-        <div class="service-row">
-          <div class="service-row__info">
-            <span class="service-row__name">Boho Braids with Hair</span>
-            <span class="service-row__desc">Small, Normal and Big sizes available</span>
-          </div>
-          <span class="service-row__price">From 110,000 UGX</span>
-        </div>
-
-      </div>
-
-      <!-- Column 2 -->
-      <div class="services__col">
-
-        <div class="service-row">
-          <div class="service-row__info">
-            <span class="service-row__name">Knotless Braids</span>
-            <span class="service-row__desc">Small to Large, clean, neat and long lasting</span>
-          </div>
-          <span class="service-row__price">From 100,000 UGX</span>
-        </div>
-
-        <div class="service-row">
-          <div class="service-row__info">
-            <span class="service-row__name">Fulani Braids &amp; Cornrows</span>
-            <span class="service-row__desc">Pencil, cornrows and Fulani styles in all sizes</span>
-          </div>
-          <span class="service-row__price">From 100,000 UGX</span>
-        </div>
-
-      </div>
-
-      <!-- Column 3 -->
-      <div class="services__col">
-
-        <div class="service-row">
-          <div class="service-row__info">
-            <span class="service-row__name">French Curls</span>
-            <span class="service-row__desc">For pencil and braids, elegant curly finish</span>
-          </div>
-          <span class="service-row__price">From 140,000 UGX</span>
-        </div>
-
-        <div class="service-row">
-          <div class="service-row__info">
-            <span class="service-row__name">Wigs Shop</span>
-            <span class="service-row__desc">Short, Bob, Straight, Body &amp; Curls, 10" to 36"</span>
-          </div>
-          <span class="service-row__price">From 150,000 UGX</span>
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- View full menu CTA -->
-    <div style="text-align:center; margin-top: 56px;">
-      <p style="font-family: var(--font-body); font-size: 14px; color: var(--color-text-muted); margin-bottom: 28px;">
-        View our complete price list including all sizes and packages.
-      </p>
-      <a href="services.html" class="services-cta-btn" aria-label="View full services menu">
-        <span class="services-cta-btn__text">VIEW FULL MENU</span>
-        <span class="services-cta-btn__circle">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </span>
-      </a>
-    </div>
-
-    <style>
-      /* Animated View Full Menu button */
-      .services-cta-btn {
-        display:         inline-flex;
-        align-items:     center;
-        gap:             16px;
-        text-decoration: none;
-        cursor:          pointer;
-      }
-
-      /* Text label */
-      .services-cta-btn__text {
-        font-family:    var(--font-body);
-        font-size:      12px;
-        font-weight:    var(--fw-medium);
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color:          var(--color-text-white);
-        transition:     color var(--transition-fast);
-      }
-
-      /* Round gold circle with arrow inside */
-      .services-cta-btn__circle {
-        display:         flex;
-        align-items:     center;
-        justify-content: center;
-        width:           52px;
-        height:          52px;
-        border-radius:   50%;
-        background:      var(--color-gold);
-        color:           var(--color-text-white);
-        flex-shrink:     0;
-
-        /* Arrow moves right on hover */
-        transition:      background   var(--transition-fast),
-                         transform    var(--transition-base),
-                         box-shadow   var(--transition-base);
-      }
-
-      /* Arrow SVG inside the circle */
-      .services-cta-btn__circle svg {
-        transition: transform var(--transition-base);
-      }
-
-      /* Hover state */
-      .services-cta-btn:hover .services-cta-btn__text {
-        color: var(--color-gold);
-      }
-
-      .services-cta-btn:hover .services-cta-btn__circle {
-        background:  #ffffff;
-        color:       var(--color-gold);
-        box-shadow:  0 0 0 2px var(--color-gold);
-        transform:   scale(1.08);
-      }
-
-      .services-cta-btn:hover .services-cta-btn__circle svg {
-        transform: translateX(3px);
-      }
-    </style>
-
-  </section>
-  <!-- end services -->
-
-
-  <!-- ============================================================
-       CTA BANNER — "Ready for your transformation?"
-       Sits between Services and Hours.
-       Dark panel with logo, heading, subtitle, two buttons.
-       ============================================================ -->
-  <section class="cta-banner">
-    <div class="cta-banner__inner">
-
-      <!-- Logo centred at top — logo.js injects image here -->
-      <div class="cta-banner__logo" id="cta-logo"></div>
-
-      <!-- Heading -->
-      <h2 class="cta-banner__heading">Ready for your transformation?</h2>
-
-      <!-- Subtitle -->
-      <p class="cta-banner__sub">
-        Book an appointment or walk in. We welcome all ladies.
-      </p>
-
-      <!-- Two buttons -->
-      <div class="cta-banner__btns">
-
-        <!-- Book Now — opens booking modal -->
-        <button class="btn btn--gold open-modal" aria-label="Book an appointment">
-          <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="16" y1="2" x2="16" y2="6"></line>
-            <line x1="8"  y1="2" x2="8"  y2="6"></line>
-            <line x1="3"  y1="10" x2="21" y2="10"></line>
-          </svg>
-          BOOK NOW
-        </button>
-
-        <!-- Call directly — outline button with phone icon -->
-        <a href="tel:+256757541061" class="btn cta-banner__call" aria-label="Call +256 757541061">
-          <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"></path>
-          </svg>
-          +256 757541061
-        </a>
-
-      </div>
-
-    </div>
-  </section>
-  <!-- end .cta-banner -->
-
-
-  <!-- ============================================================
-       SECTION 6 — HOURS OF OPERATION
-       Two-column: left has text + contact info, right has hours table.
-       JS: hours.js detects today's day and adds .hours-row--today class.
-       ============================================================ -->
-  <section class="hours" id="hours">
-
-    <!-- Left column -->
-    <div class="hours__left">
-
-      <h2 class="section-title">Hours of <em>Operation</em></h2>
-
-      <p class="hours__desc">
-        We are open 6 days a week. Walk-ins welcome,
-        appointments recommended on weekends.
-      </p>
-
-      <!-- Contact rows -->
-      <div class="hours__contacts">
-
-        <div class="hours__contact-row">
-          <svg class="hours__contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-            <circle cx="12" cy="10" r="3"></circle>
-          </svg>
-          <span>Mabirizi Complex, Level 4, Room 22, Kampala</span>
-        </div>
-
-        <div class="hours__contact-row">
-          <svg class="hours__contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"></path>
-          </svg>
-          <span>+256 757541061</span>
-        </div>
-
-        <div class="hours__contact-row">
-          <svg class="hours__contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-          </svg>
-          <span>blessingbutsigho@gmail.com</span>
-        </div>
-
-      </div>
-      <!-- end .hours__contacts -->
-
-      <button class="btn btn--gold open-modal" aria-label="Book an appointment">
-        <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-          <line x1="16" y1="2" x2="16" y2="6"></line>
-          <line x1="8"  y1="2" x2="8"  y2="6"></line>
-          <line x1="3"  y1="10" x2="21" y2="10"></line>
-        </svg>
-        BOOK NOW
+  <div class="hero__content">
+    <span class="hero__badge">Premium Ladies Hair Salon</span>
+    <h1 class="hero__headline">Elevate<em>your style.</em></h1>
+    <p class="hero__tagline">
+      Expert wig installation, luxury braiding and every hair service a
+      woman deserves, right in the heart of Mabirizi Complex, Kampala.
+    </p>
+    <div class="hero__ctas">
+      <button class="btn btn--gold open-modal">
+        <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book Now
       </button>
-
+      <a href="#services" class="btn btn--line-dark">View Services</a>
     </div>
-    <!-- end .hours__left -->
-
-    <!-- Right column: 7-day hours table -->
-    <div class="hours__table" id="hours-table">
-
-      <!-- Each row gets data-day="0-6" (0=Sun, 1=Mon ... 6=Sat)    -->
-      <!-- JS reads new Date().getDay() and adds .hours-row--today   -->
-
-      <div class="hours-row" data-day="1">
-        <div class="hours-row__day">
-          <span class="hours-row__dot"     aria-hidden="true"></span>
-          <span class="hours-row__name">Monday</span>
-          <span class="hours-row__today-tag" aria-hidden="true">TODAY</span>
-        </div>
-        <div class="hours-row__time">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          8:40 AM &ndash; 8:30 PM
-        </div>
+    <div class="hero__contact">
+      <div class="hero__contact-item">
+        <svg class="hero__contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><span class="hero__contact-label">Location</span><span class="hero__contact-value">Mabirizi Complex, Level 4, Room 22</span></div>
       </div>
-
-      <div class="hours-row" data-day="2">
-        <div class="hours-row__day">
-          <span class="hours-row__dot"     aria-hidden="true"></span>
-          <span class="hours-row__name">Tuesday</span>
-          <span class="hours-row__today-tag" aria-hidden="true">TODAY</span>
-        </div>
-        <div class="hours-row__time">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          8:40 AM &ndash; 8:30 PM
-        </div>
+      <div class="hero__contact-item">
+        <svg class="hero__contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"/></svg>
+        <div><span class="hero__contact-label">Call Us</span><span class="hero__contact-value">+256 757 541 061</span></div>
       </div>
-
-      <div class="hours-row" data-day="3">
-        <div class="hours-row__day">
-          <span class="hours-row__dot"     aria-hidden="true"></span>
-          <span class="hours-row__name">Wednesday</span>
-          <span class="hours-row__today-tag" aria-hidden="true">TODAY</span>
-        </div>
-        <div class="hours-row__time">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          8:40 AM &ndash; 8:30 PM
-        </div>
-      </div>
-
-      <div class="hours-row" data-day="4">
-        <div class="hours-row__day">
-          <span class="hours-row__dot"     aria-hidden="true"></span>
-          <span class="hours-row__name">Thursday</span>
-          <span class="hours-row__today-tag" aria-hidden="true">TODAY</span>
-        </div>
-        <div class="hours-row__time">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          8:40 AM &ndash; 8:30 PM
-        </div>
-      </div>
-
-      <div class="hours-row" data-day="5">
-        <div class="hours-row__day">
-          <span class="hours-row__dot"     aria-hidden="true"></span>
-          <span class="hours-row__name">Friday</span>
-          <span class="hours-row__today-tag" aria-hidden="true">TODAY</span>
-        </div>
-        <div class="hours-row__time">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          8:00 AM &ndash; 9:00 PM
-        </div>
-      </div>
-
-      <div class="hours-row" data-day="6">
-        <div class="hours-row__day">
-          <span class="hours-row__dot"     aria-hidden="true"></span>
-          <span class="hours-row__name">Saturday</span>
-          <span class="hours-row__today-tag" aria-hidden="true">TODAY</span>
-        </div>
-        <div class="hours-row__time">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          8:00 AM &ndash; 9:00 PM
-        </div>
-      </div>
-
-      <div class="hours-row" data-day="0">
-        <div class="hours-row__day">
-          <span class="hours-row__dot"     aria-hidden="true"></span>
-          <span class="hours-row__name">Sunday</span>
-          <span class="hours-row__today-tag" aria-hidden="true">TODAY</span>
-        </div>
-        <div class="hours-row__time">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          Closed
-        </div>
-      </div>
-
-    </div>
-    <!-- end .hours__table -->
-
-  </section>
-  <!-- end #hours -->
-
-
-  <!-- ============================================================
-       SECTION 7 — GALLERY
-       Two rows of image placeholders. Social CTA below.
-       Real photos replace the placeholders once uploaded.
-       ============================================================ -->
-  <section class="gallery">
-
-    <!-- Top bar: heading + social icons -->
-    <div class="gallery__topbar">
-
-      <div class="gallery__heading-block">
-        <h2 class="section-title">The <em>Gallery</em></h2>
-        <p class="section-subtitle">
-          A glimpse into our world , precision, artistry, and the
-          pursuit of perfection in every look.
-        </p>
-      </div>
-
-      <div class="gallery__social-icons">
-        <!-- Instagram — UPDATE: Instagram — heromoseshair -->
-        <a href="https://www.instagram.com/heromoseshair" class="gallery__icon-btn" aria-label="Follow us on Instagram" target="_blank" rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-          </svg>
-        </a>
-        <!-- TikTok — UPDATE: replace YOUR_HANDLE with the salon's real TikTok username -->
-        <a href="https://www.tiktok.com/@hero_moseshair" class="gallery__icon-btn" aria-label="Follow us on TikTok" target="_blank" rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
-          </svg>
-        </a>
-      </div>
-
-    </div>
-    <!-- end .gallery__topbar -->
-
-    <!-- Row 1: 2 tall cells -->
-
-
-    <!-- Row 2: 3 medium cells -->
-
-    <!-- Social CTA -->
-
-  
-    <!-- ── HOME GALLERY CAROUSEL ──
-         Desktop: one large slide at a time, auto-advances every 4s.
-         Mobile (≤600px): becomes a 2x2 photo grid instead. -->
-    <div class="home-carousel" id="home-carousel">
-      <div class="home-carousel__slide home-carousel__slide--active" aria-label="Gallery photo 1"></div>
-      <div class="home-carousel__slide" aria-label="Gallery photo 2"></div>
-      <div class="home-carousel__slide" aria-label="Gallery photo 3"></div>
-      <div class="home-carousel__slide" aria-label="Gallery photo 4"></div>
-      <div class="home-carousel__slide" aria-label="Gallery photo 5"></div>
-
-      <div class="home-carousel__dots" id="home-carousel-dots">
-        <button class="home-carousel__dot home-carousel__dot--active" data-slide="0" aria-label="Photo 1"></button>
-        <button class="home-carousel__dot" data-slide="1" aria-label="Photo 2"></button>
-        <button class="home-carousel__dot" data-slide="2" aria-label="Photo 3"></button>
-        <button class="home-carousel__dot" data-slide="3" aria-label="Photo 4"></button>
-        <button class="home-carousel__dot" data-slide="4" aria-label="Photo 5"></button>
+      <div class="hero__contact-item">
+        <svg class="hero__contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <div><span class="hero__contact-label">Email</span><span class="hero__contact-value">blessingbutsigho@gmail.com</span></div>
       </div>
     </div>
-
-    <style>
-      /* ── DESKTOP: fading carousel, full-size frame ── */
-      .home-carousel {
-        position:      relative;
-        max-width:     960px;
-        height:        520px;          /* large frame — photos show at real presence */
-        margin:        0 auto;
-        border-radius: var(--radius-lg);
-        overflow:      hidden;
-        border:        1px solid var(--color-border-dark);
-        background:    var(--color-bg-surface);
-      }
-
-      .home-carousel__slide {
-        position:            absolute;
-        inset:               0;
-        opacity:             0;
-        background-size:     cover;     /* photo scales to fill the frame */
-        background-position: center;
-        background-color:    #1d1d1d;
-        transition:          opacity 0.9s ease;
-      }
-      .home-carousel__slide--active { opacity: 1; }
-
-      /* Dots */
-      .home-carousel__dots {
-        position:        absolute;
-        bottom:          16px;
-        left:            0;
-        right:           0;
-        display:         flex;
-        justify-content: center;
-        gap:             8px;
-        z-index:         2;
-      }
-      .home-carousel__dot {
-        width:         24px;
-        height:        4px;
-        border:        none;
-        border-radius: 2px;
-        background:    rgba(255,255,255,0.35);
-        cursor:        pointer;
-        transition:    background 0.3s;
-        padding:       0;
-      }
-      .home-carousel__dot--active { background: var(--color-gold); }
-
-      /* ── MOBILE: 2x2 photo block grid ── */
-      @media (max-width: 600px) {
-        .home-carousel {
-          display:               grid;
-          grid-template-columns: 1fr 1fr;
-          gap:                   10px;
-          height:                auto;
-          border:                none;
-          background:            none;
-          overflow:              visible;
-        }
-        .home-carousel__slide {
-          position:      static;
-          opacity:       1;
-          aspect-ratio:  1;            /* perfect square blocks */
-          border-radius: var(--radius-md);
-          border:        1px solid var(--color-border-dark);
-        }
-        /* 2x2 = 4 photos; the 5th hides on mobile */
-        .home-carousel__slide:nth-child(5) { display: none; }
-        .home-carousel__dots { display: none; }
-      }
-    </style>
-
-    <!-- View more photos CTA — same animated style as View Full Menu -->
-    <div style="text-align:center; margin-top: 48px;">
-      <a href="gallery.html" class="services-cta-btn" aria-label="View more photos in the gallery">
-        <span class="services-cta-btn__text">VIEW MORE PHOTOS</span>
-        <span class="services-cta-btn__circle">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </span>
-      </a>
-    </div>
-
+  </div>
 </section>
-  <!-- end #gallery -->
 
+<div class="braid braid--onDark">
+  <svg viewBox="0 0 1600 44" preserveAspectRatio="none">
+    <path d="M0,22 C40,4 80,40 120,22 C160,4 200,40 240,22 C280,4 320,40 360,22 C400,4 440,40 480,22 C520,4 560,40 600,22 C640,4 680,40 720,22 C760,4 800,40 840,22 C880,4 920,40 960,22 C1000,4 1040,40 1080,22 C1120,4 1160,40 1200,22 C1240,4 1280,40 1320,22 C1360,4 1400,40 1440,22 C1480,4 1520,40 1560,22 C1580,13 1600,22 1600,22" stroke="#C9A15A" stroke-width="2" fill="none" opacity=".7"/>
+    <path d="M0,22 C40,40 80,4 120,22 C160,40 200,4 240,22 C280,40 320,4 360,22 C400,40 440,4 480,22 C520,40 560,4 600,22 C640,40 680,4 720,22 C760,40 800,4 840,22 C880,40 920,4 960,22 C1000,40 1040,4 1080,22 C1120,40 1160,4 1200,22 C1240,40 1280,4 1320,22 C1360,40 1400,4 1440,22 C1480,40 1520,4 1560,22 C1580,31 1600,22 1600,22" stroke="#B5502B" stroke-width="2" fill="none" opacity=".7"/>
+  </svg>
+</div>
 
-  <!-- ============================================================
-       SECTION 8 — FOOTER
-       Three columns: brand / visit us / contact.
-       Bottom bar: copyright + privacy policy.
-       ============================================================ -->
-  <footer class="footer" id="footer">
+<!-- ============================================================
+     SERVICES
+     ============================================================ -->
+<section class="section" id="services">
+  <div class="section-head">
+    <span class="eyebrow">The Menu</span>
+    <h2 class="section-title">Our <em>Services</em></h2>
+    <p class="section-sub">From wigs and braids to lashes and weaves, a full menu of premium ladies hair services.</p>
+  </div>
 
-    <div class="footer__grid">
-
-      <!-- Column 1: brand / logo / description / social icons -->
-      <div class="footer__col footer__col--brand">
-
-        <div class="footer__brand-row">
-          <!-- Logo SVG injected by logo.js at runtime -->
-          <div class="footer__logo" id="footer-logo"></div>
-          <div class="footer__wordmark">
-            <span class="footer__wordmark-name">HERO MOSES</span>
-            <span class="footer__wordmark-sub">HAIR SALON</span>
-          </div>
-        </div>
-
-        <p class="footer__desc">
-          A premium ladies hair salon offering professional styling, wing
-          installations, luxury braiding, and every hair service a woman
-          deserves , at an upscale atmosphere in the heart of Kampala.
-        </p>
-
-        <div class="footer__social">
-          <!-- Footer social icons — UPDATE each href with the salon's real social media URLs -->
-          <a href="https://www.instagram.com/heromoseshair" class="footer__social-btn" aria-label="Follow us on Instagram" target="_blank" rel="noopener noreferrer">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg>
-          </a>
-          <a href="https://www.facebook.com/YOUR_PAGE" class="footer__social-btn" aria-label="Follow us on Facebook" target="_blank" rel="noopener noreferrer">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-            </svg>
-          </a>
-          <a href="https://www.tiktok.com/@hero_moseshair" class="footer__social-btn" aria-label="Follow us on TikTok" target="_blank" rel="noopener noreferrer">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
-            </svg>
-          </a>
-        </div>
-
-      </div>
-      <!-- end col 1 -->
-
-      <!-- Column 2: visit us -->
-      <div class="footer__col">
-        <h4 class="footer__col-title">VISIT US</h4>
-        <p class="footer__address">
-          Mabirizi Complex<br>
-          Level 4, Room 22<br>
-          Kampala, Uganda
-        </p>
-        <hr class="footer__divider" />
-        <p class="footer__hours-summary">
-          Mon - Thu: 8:40 AM - 8:30 PM<br>
-          Fri - Sat: 8:00 AM - 9:00 PM
-        </p>
-      </div>
-      <!-- end col 2 -->
-
-      <!-- Column 3: contact -->
-      <div class="footer__col">
-        <h4 class="footer__col-title">CONTACT</h4>
-
-        <div class="footer__contact-row">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"></path>
-          </svg>
-          <a href="tel:+256757541061" class="footer__contact-link">+256 757541061</a>
-        </div>
-
-        <div class="footer__contact-row">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-          </svg>
-          <a href="mailto:blessingbutsigho@gmail.com" class="footer__contact-link">blessingbutsigho@gmail.com</a>
-        </div>
-
-        <button class="btn btn--gold open-modal" style="margin-top: 24px;" aria-label="Book an appointment">
-          <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="16" y1="2" x2="16" y2="6"></line>
-            <line x1="8"  y1="2" x2="8"  y2="6"></line>
-            <line x1="3"  y1="10" x2="21" y2="10"></line>
-          </svg>
-          BOOK NOW
-        </button>
-
-      </div>
-      <!-- end col 3 -->
-
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-card__icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c0-5 2-9 8-9s8 4 8 9"/><path d="M4 18h16"/><path d="M7 18v2M12 18v2M17 18v2"/></svg></div>
+      <h3 class="service-card__name">Wig Installation</h3>
+      <p class="service-card__desc">Install, wash, lash and finish with our signature masterpiece packages.</p>
+      <span class="service-card__price">From 20,000 UGX</span>
     </div>
-    <!-- end .footer__grid -->
+    <div class="service-card">
+      <div class="service-card__icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3c2 3-2 4 0 7s-2 4 0 7"/><path d="M12 3c2 3-2 4 0 7s-2 4 0 7"/><path d="M16 3c2 3-2 4 0 7s-2 4 0 7"/></svg></div>
+      <h3 class="service-card__name">Boho &amp; Fulani Braids</h3>
+      <p class="service-card__desc">Hand-braided with real hair, in small, normal and big sizing.</p>
+      <span class="service-card__price">From 100,000 UGX</span>
+    </div>
+    <div class="service-card">
+      <div class="service-card__icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12c2-6 6-8 8-8s6 2 8 8c-2 6-6 8-8 8s-6-2-8-8z"/><circle cx="12" cy="12" r="2.5"/></svg></div>
+      <h3 class="service-card__name">Knotless Braids</h3>
+      <p class="service-card__desc">Clean, neat and long lasting, in small through large sizes.</p>
+      <span class="service-card__price">From 100,000 UGX</span>
+    </div>
+    <div class="service-card">
+      <div class="service-card__icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20c0-8 4-8 4-4s4 4 4-4 4-4 4 4"/></svg></div>
+      <h3 class="service-card__name">French Curls</h3>
+      <p class="service-card__desc">An elegant curly finish, styled for pencil or braid looks.</p>
+      <span class="service-card__price">From 140,000 UGX</span>
+    </div>
+    <div class="service-card">
+      <div class="service-card__icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c0-5 2-9 8-9s8 4 8 9" /><path d="M4 18h16"/><path d="M9 6l-1-3M15 6l1-3"/></svg></div>
+      <h3 class="service-card__name">Wigs Shop</h3>
+      <p class="service-card__desc">Short, Bob, Straight, Body and Curls, from 10 to 36 inches.</p>
+      <span class="service-card__price">From 150,000 UGX</span>
+    </div>
+    <div class="service-card">
+      <div class="service-card__icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2 5 5 .7-3.6 3.5.85 5.3L12 14l-4.25 2.5.85-5.3L5 7.7 10 7z"/></svg></div>
+      <h3 class="service-card__name">Bridal Styling</h3>
+      <p class="service-card__desc">Half-day and full-day bridal hair, with optional makeup and bridesmaid packages.</p>
+      <span class="service-card__price">From 1,000,000 UGX</span>
+    </div>
+  </div>
 
-    <!-- Footer bottom bar -->
-    <div class="footer__bottom">
-      <span class="footer__copyright">
-        &copy; 2026 HERO MOSES HAIR SALON. ALL RIGHTS RESERVED.
-      </span>
+  <div class="services-cta">
+    <p>View our complete price list, including every size and package.</p>
+    <a href="services.html" class="arrow-link arrow-link--light">
+      <span class="arrow-link__text">View Full Menu</span>
+      <span class="arrow-link__circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+  </div>
+</section>
+
+<div class="braid braid--onLight">
+  <svg viewBox="0 0 1600 44" preserveAspectRatio="none">
+    <path d="M0,22 C40,4 80,40 120,22 C160,4 200,40 240,22 C280,4 320,40 360,22 C400,4 440,40 480,22 C520,4 560,40 600,22 C640,4 680,40 720,22 C760,4 800,40 840,22 C880,4 920,40 960,22 C1000,4 1040,40 1080,22 C1120,4 1160,40 1200,22 C1240,4 1280,40 1320,22 C1360,4 1400,40 1440,22 C1480,4 1520,40 1560,22 C1580,13 1600,22 1600,22" stroke="#B5502B" stroke-width="2" fill="none" opacity=".65"/>
+    <path d="M0,22 C40,40 80,4 120,22 C160,40 200,4 240,22 C280,40 320,4 360,22 C400,40 440,4 480,22 C520,40 560,4 600,22 C640,40 680,4 720,22 C760,40 800,4 840,22 C880,40 920,4 960,22 C1000,40 1040,4 1080,22 C1120,40 1160,4 1200,22 C1240,40 1280,4 1320,22 C1360,40 1400,4 1440,22 C1480,40 1520,4 1560,22 C1580,31 1600,22 1600,22" stroke="#C9A15A" stroke-width="2" fill="none" opacity=".65"/>
+  </svg>
+</div>
+
+<!-- ============================================================
+     CTA BANNER
+     ============================================================ -->
+<section class="cta-banner">
+  <div class="cta-banner__logo">
+    <div class="brand brand--dark" style="align-items:center;">
+      <span class="brand__name" style="text-align:center;"><span class="is-hero">Hero</span><span class="is-moses">Moses</span></span>
+      <span class="brand__sub" style="text-align:center;">Hair Salon</span>
+    </div>
+  </div>
+  <h2 class="cta-banner__heading">Ready for your transformation?</h2>
+  <p class="cta-banner__sub">Book an appointment or walk in. We welcome all ladies.</p>
+  <div class="cta-banner__btns">
+    <button class="btn btn--gold open-modal">
+      <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Book Now
+    </button>
+    <a href="tel:+256757541061" class="btn btn--line-dark">
+      <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"/></svg>
+      +256 757 541 061
+    </a>
+  </div>
+</section>
+
+<!-- ============================================================
+     HOURS
+     ============================================================ -->
+<section class="section" id="hours">
+  <div class="hours-wrap">
+    <div>
+      <span class="eyebrow" style="color:var(--sienna)">When To Visit</span>
+      <h2 class="section-title">Hours of <em>Operation</em></h2>
+      <p class="section-sub">Open six days a week. Walk-ins welcome, appointments recommended on weekends.</p>
+      <div class="hours__contacts">
+        <div class="hours__contact-row"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Mabirizi Complex, Level 4, Room 22, Kampala</span></div>
+        <div class="hours__contact-row"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"/></svg><span>+256 757 541 061</span></div>
+        <div class="hours__contact-row"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>blessingbutsigho@gmail.com</span></div>
+      </div>
+      <button class="btn btn--line-light open-modal">
+        <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book Now
+      </button>
     </div>
 
-  </footer>
-  <!-- end .footer -->
+    <div class="hours-table" id="hours-table">
+      <div class="hours-row" data-day="1"><div class="hours-row__day"><span class="hours-row__dot"></span><span>Monday</span><span class="hours-row__today-tag">Today</span></div><div class="hours-row__time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>8:40 AM – 8:30 PM</div></div>
+      <div class="hours-row" data-day="2"><div class="hours-row__day"><span class="hours-row__dot"></span><span>Tuesday</span><span class="hours-row__today-tag">Today</span></div><div class="hours-row__time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>8:40 AM – 8:30 PM</div></div>
+      <div class="hours-row" data-day="3"><div class="hours-row__day"><span class="hours-row__dot"></span><span>Wednesday</span><span class="hours-row__today-tag">Today</span></div><div class="hours-row__time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>8:40 AM – 8:30 PM</div></div>
+      <div class="hours-row" data-day="4"><div class="hours-row__day"><span class="hours-row__dot"></span><span>Thursday</span><span class="hours-row__today-tag">Today</span></div><div class="hours-row__time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>8:40 AM – 8:30 PM</div></div>
+      <div class="hours-row" data-day="5"><div class="hours-row__day"><span class="hours-row__dot"></span><span>Friday</span><span class="hours-row__today-tag">Today</span></div><div class="hours-row__time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>8:00 AM – 9:00 PM</div></div>
+      <div class="hours-row" data-day="6"><div class="hours-row__day"><span class="hours-row__dot"></span><span>Saturday</span><span class="hours-row__today-tag">Today</span></div><div class="hours-row__time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>8:00 AM – 9:00 PM</div></div>
+      <div class="hours-row" data-day="0"><div class="hours-row__day"><span class="hours-row__dot"></span><span>Sunday</span><span class="hours-row__today-tag">Today</span></div><div class="hours-row__time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Closed</div></div>
+    </div>
+  </div>
+</section>
 
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer" id="footer">
+  <div class="footer__grid">
+    <div class="footer__col--brand">
+      <div class="footer__brand-row">
+        <div class="brand brand--dark">
+          <span class="brand__name"><span class="is-hero">Hero</span><span class="is-moses">Moses</span></span>
+          <span class="brand__sub">Hair Salon</span>
+        </div>
+      </div>
+      <p class="footer__desc">A premium ladies hair salon offering professional styling, wig installations and luxury braiding, in an upscale atmosphere in the heart of Kampala.</p>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/heromoseshair" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://www.facebook.com/YOUR_PAGE" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="https://www.tiktok.com/@hero_moseshair" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+      </div>
+    </div>
+    <div>
+      <h4 class="footer__col-title">Visit Us</h4>
+      <p class="footer__address">Mabirizi Complex<br>Level 4, Room 22<br>Kampala, Uganda</p>
+      <hr class="footer__divider" />
+      <p class="footer__hours-summary">Mon–Thu: 8:40 AM–8:30 PM<br>Fri–Sat: 8:00 AM–9:00 PM</p>
+    </div>
+    <div>
+      <h4 class="footer__col-title">Contact</h4>
+      <div class="footer__contact-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"/></svg><a href="tel:+256757541061" class="footer__contact-link">+256 757 541 061</a></div>
+      <div class="footer__contact-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:blessingbutsigho@gmail.com" class="footer__contact-link">blessingbutsigho@gmail.com</a></div>
+      <button class="btn btn--gold open-modal" style="margin-top:22px;">
+        <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book Now
+      </button>
+    </div>
+  </div>
+  <div class="footer__bottom">© 2026 Hero Moses Hair Salon. All rights reserved.</div>
+</footer>
 
-  <!-- ============================================================
-       FLOATING BOOK NOW BUTTON
-       Fixed bottom-right. Fades in after user scrolls 300px.
-       scroll.js controls the visibility.
-       ============================================================ -->
-  <button class="floating-btn open-modal" id="floating-btn" aria-label="Book an appointment">
-    <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-      <line x1="16" y1="2" x2="16" y2="6"></line>
-      <line x1="8"  y1="2" x2="8"  y2="6"></line>
-      <line x1="3"  y1="10" x2="21" y2="10"></line>
-    </svg>
-    BOOK NOW
-  </button>
+<!-- ============================================================
+     BOOKING MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal" id="modal">
+    <div class="modal__header">
+      <div class="brand brand--light brand--sm">
+        <span class="brand__name"><span class="is-hero">Hero</span><span class="is-moses">Moses</span></span>
+        <span class="brand__sub">Hair Salon</span>
+      </div>
+      <div class="modal__title-block">
+        <h3 class="modal__title" id="modal-title">Book an Appointment</h3>
+        <p class="modal__subtitle">Hero Moses Hair Salon</p>
+      </div>
+      <button class="modal__close" id="modal-close" aria-label="Close">&times;</button>
+    </div>
 
+    <form class="modal__form" id="booking-form" novalidate>
+      <div class="form-field">
+        <label class="form-field__label" for="booking-name">Your Name</label>
+        <input class="form-field__input" type="text" id="booking-name" name="name" placeholder="Full name" autocomplete="name" />
+        <span class="form-field__error" id="error-name"></span>
+      </div>
 
-  <script src="assets/js/logo.js"></script>
-  <script src="assets/js/modal.js"></script>
-  <script src="assets/js/navbar.js"></script>
-  <script src="assets/js/stylists.js"></script>
-  <script src="assets/js/hours.js"></script>
-  <script src="assets/js/gallery.js"></script>
-  <script src="assets/js/scroll.js"></script>
+      <div class="form-field">
+        <label class="form-field__label" for="booking-phone">Phone Number</label>
+        <div class="phone-row">
+          <select class="form-field__input phone-code" id="booking-code" name="code" aria-label="Country code">
+            <option value="256" data-min="9" data-max="9" selected>+256 Uganda</option>
+            <option value="254" data-min="9" data-max="9">+254 Kenya</option>
+            <option value="255" data-min="9" data-max="9">+255 Tanzania</option>
+            <option value="250" data-min="9" data-max="9">+250 Rwanda</option>
+            <option value="257" data-min="8" data-max="8">+257 Burundi</option>
+            <option value="243" data-min="9" data-max="9">+243 DR Congo</option>
+            <option value="211" data-min="9" data-max="9">+211 South Sudan</option>
+            <option value="44"  data-min="10" data-max="10">+44 United Kingdom</option>
+            <option value="1"   data-min="10" data-max="10">+1 United States</option>
+            <option value="" data-min="6" data-max="15">Other</option>
+          </select>
+          <input class="form-field__input phone-number" type="tel" id="booking-phone" name="phone" placeholder="7XX XXX XXX" autocomplete="tel" inputmode="numeric" />
+        </div>
+        <span class="form-field__error" id="error-phone"></span>
+      </div>
 
+      <div class="form-field">
+        <label class="form-field__label" for="booking-service">Service</label>
+        <div class="form-field__select-wrap">
+          <select class="form-field__input form-field__select" id="booking-service" name="service">
+            <option value="" disabled selected>Select a service</option>
+            <optgroup label="Wig Installation">
+              <option>Wig Installation - 80,000 UGX</option>
+              <option>Buying in from our shop - 70,000 UGX</option>
+              <option>Installation + Lashes - 120,000 UGX</option>
+              <option>Installation + Washing + Lashes - 130,000 UGX</option>
+              <option>Wig Washing - 20,000 UGX</option>
+              <option>Lashes - 40,000 UGX</option>
+              <option>Weaving - 80,000 UGX</option>
+              <option>Masterpiece with hair - 150,000 UGX</option>
+              <option>Ponytail Gel - 50,000 UGX</option>
+              <option>Ponytail Closure - 70,000 UGX</option>
+            </optgroup>
+            <optgroup label="Boho Braids with Hair">
+              <option>Boho Braids Small - 150,000 UGX</option>
+              <option>Boho Braids Normal - 140,000 UGX</option>
+              <option>Boho Braids Big - 110,000 UGX</option>
+            </optgroup>
+            <optgroup label="Fulani Braids">
+              <option>Fulani Braids Small - 150,000 UGX</option>
+              <option>Fulani Braids Medium - 130,000 UGX</option>
+              <option>Fulani Braids Large - 100,000 UGX</option>
+            </optgroup>
+            <optgroup label="Knotless Braids">
+              <option>Knotless Small - 180,000 UGX</option>
+              <option>Knotless Small-Medium - 150,000 UGX</option>
+              <option>Knotless Medium - 130,000 UGX</option>
+              <option>Knotless Large - 100,000 UGX</option>
+            </optgroup>
+            <optgroup label="French Curls">
+              <option>French Curls for Pencil - 140,000 UGX</option>
+              <option>French Curls for Braids - 150,000 UGX</option>
+            </optgroup>
+            <optgroup label="Wigs - Short">
+              <option>Short Jerry Wig - 150,000 UGX</option>
+              <option>Pixie Wig - 150,000 UGX</option>
+              <option>Bob 10 inches - 180,000 UGX</option>
+              <option>Bob 12 inches - 200,000 UGX</option>
+            </optgroup>
+            <optgroup label="Wigs - Straight, Body and Curls">
+              <option>Wig 14 inches - 220,000 UGX</option>
+              <option>Wig 16 inches - 250,000 UGX</option>
+              <option>Wig 18 inches - 300,000 UGX</option>
+              <option>Wig 20 inches - 350,000 UGX</option>
+              <option>Wig 22 inches - 400,000 UGX</option>
+              <option>Wig 24 inches - 450,000 UGX</option>
+              <option>Wig 26 inches - 500,000 UGX</option>
+              <option>Wig 28 inches - 550,000 UGX</option>
+              <option>Wig 30 inches - 600,000 UGX</option>
+              <option>Wig 32 inches - 620,000 UGX</option>
+              <option>Wig 34 inches - 670,000 UGX</option>
+              <option>Wig 36 inches - 700,000 UGX</option>
+            </optgroup>
+            <optgroup label="Bridal Services">
+              <option>Half-day Bridal Hair - within Kampala 1,000,000 UGX</option>
+              <option>Half-day Bridal Hair - outside Kampala 1,500,000 UGX</option>
+              <option>Half-day Bridal Hair + Makeup - within Kampala 1,600,000 UGX</option>
+              <option>Half-day Bridal Hair + Makeup - outside Kampala 2,200,000 UGX</option>
+              <option>Full-day Bridal Hair - within Kampala 1,800,000 UGX</option>
+              <option>Full-day Bridal Hair - outside Kampala 2,000,000 UGX</option>
+              <option>Full-day Bridal Hair + Makeup - within Kampala 2,000,000 UGX</option>
+              <option>Full-day Bridal Hair + Makeup - outside Kampala 2,500,000 UGX</option>
+              <option>Full Package with Bridesmaids (3 to 6) - 3,500,000 UGX</option>
+            </optgroup>
+          </select>
+          <svg class="form-field__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <span class="form-field__error" id="error-service"></span>
+      </div>
 
-  <!-- ── CAROUSEL AUTO-ADVANCE ── -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var slides = document.querySelectorAll('.home-carousel__slide');
-      var dots   = document.querySelectorAll('.home-carousel__dot');
-      if (!slides.length) return;
+      <div class="form-field">
+        <label class="form-field__label" for="booking-date">Preferred Date</label>
+        <input class="form-field__input" type="date" id="booking-date" name="date" />
+        <span class="form-field__error" id="error-date"></span>
+      </div>
 
-      var current = 0;
-      var timer   = null;
-      var mobile  = window.matchMedia('(max-width: 600px)');
+      <button type="submit" class="modal__submit" id="booking-submit">Confirm Booking</button>
+      <p class="modal__footnote">Or call us directly at <a href="tel:+256757541061" class="modal__footnote-link">+256 757 541 061</a></p>
+    </form>
 
-      function show(i) {
-        slides.forEach(function (s, n) {
-          s.classList.toggle('home-carousel__slide--active', n === i);
-        });
-        dots.forEach(function (d, n) {
-          d.classList.toggle('home-carousel__dot--active', n === i);
-        });
-        current = i;
-      }
+    <div class="modal__success" id="modal-success">
+      <div class="modal__success-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <h4>Almost there!</h4>
+      <p>Tap below to send your booking details to us on WhatsApp, and we'll confirm your appointment shortly.</p>
+      <a href="#" class="btn btn--gold" id="whatsapp-link" target="_blank" rel="noopener noreferrer" style="width:100%;justify-content:center;margin-bottom:10px;">
+        <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.6.1s-.7.8-.9 1c-.2.2-.3.2-.5.1a6.6 6.6 0 0 1-2-1.2 7.3 7.3 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.1.2-.3.2-.4a.5.5 0 0 0 0-.5c-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.6 1.1 2.8.1.2 1.9 2.9 4.6 4a15.6 15.6 0 0 0 1.5.6 3.6 3.6 0 0 0 1.7.1 2.8 2.8 0 0 0 1.8-1.3c.2-.4.2-.7.1-.8z"/></svg>
+        Continue on WhatsApp
+      </a>
+      <button type="button" class="btn btn--line-light" id="modal-success-close" style="width:100%;justify-content:center;">Close</button>
+    </div>
+  </div>
+</div>
 
-      function start() {
-        stop();
-        if (mobile.matches) return;       /* mobile shows the 2x2 grid — no rotation */
-        timer = setInterval(function () {
-          show((current + 1) % slides.length);
-        }, 4000);                          /* auto-advance every 4 seconds */
-      }
-      function stop() { if (timer) clearInterval(timer); }
+<button class="floating-btn" id="floating-btn">
+  <svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+  Book Now
+</button>
 
-      /* Dots — tap to jump, timer restarts */
-      dots.forEach(function (dot) {
-        dot.addEventListener('click', function () {
-          show(parseInt(dot.dataset.slide, 10));
-          start();
-        });
-      });
+<script>
+/* ============================================================
+   NAVBAR — scroll state + hamburger
+   ============================================================ */
+(function(){
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('is-scrolled', window.scrollY > 40);
+  }, { passive:true });
 
-      mobile.addEventListener('change', start);
-      start();
-    });
-  </script>
+  const burger = document.getElementById('hamburger');
+  const panel = document.getElementById('mobile-panel');
+  burger.addEventListener('click', () => {
+    const open = panel.classList.toggle('is-open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    panel.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
+  }));
+})();
 
+/* ============================================================
+   FLOATING BOOK BUTTON
+   ============================================================ */
+(function(){
+  const btn = document.getElementById('floating-btn');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('is-visible', window.scrollY > 400);
+  }, { passive:true });
+})();
 
-  <!-- ══════ FIREBASE LOADER (single script) ══════
-       1. Fills the gallery carousel with Home Page photos
-       2. Fills the team mosaic tiles with team members
-       Managed entirely from /admin.html. -->
-  <script type="module">
+/* ============================================================
+   HOURS — highlight today
+   ============================================================ */
+(function(){
+  const today = new Date().getDay();
+  document.querySelectorAll('.hours-row').forEach(row => {
+    if (parseInt(row.dataset.day, 10) === today) row.classList.add('hours-row--today');
+  });
+})();
+
+/* ============================================================
+   BOOKING MODAL — open/close, validation, WhatsApp handoff
+   ============================================================ */
+(function(){
+  const overlay = document.getElementById('modal-overlay');
+  const form = document.getElementById('booking-form');
+  const success = document.getElementById('modal-success');
+  const closeBtn = document.getElementById('modal-close');
+  const successCloseBtn = document.getElementById('modal-success-close');
+
+  function openModal(){
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      form.style.display = '';
+      success.classList.remove('is-visible');
+      form.reset();
+      document.querySelectorAll('.form-field__error').forEach(e => e.textContent = '');
+    }, 300);
+  }
+
+  document.querySelectorAll('.open-modal').forEach(btn => btn.addEventListener('click', openModal));
+  closeBtn.addEventListener('click', closeModal);
+  successCloseBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeModal(); });
+
+  const minDateInput = document.getElementById('booking-date');
+  minDateInput.min = new Date().toISOString().split('T')[0];
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    let valid = true;
+    const name = document.getElementById('booking-name').value.trim();
+    const phoneDigits = document.getElementById('booking-phone').value.replace(/\D/g,'');
+    const codeSelect = document.getElementById('booking-code');
+    const code = codeSelect.value;
+    const min = parseInt(codeSelect.selectedOptions[0].dataset.min, 10);
+    const max = parseInt(codeSelect.selectedOptions[0].dataset.max, 10);
+    const service = document.getElementById('booking-service').value;
+    const date = document.getElementById('booking-date').value;
+
+    document.getElementById('error-name').textContent = '';
+    document.getElementById('error-phone').textContent = '';
+    document.getElementById('error-service').textContent = '';
+    document.getElementById('error-date').textContent = '';
+
+    if (!name){ document.getElementById('error-name').textContent = 'Please enter your name.'; valid = false; }
+    if (!phoneDigits || phoneDigits.length < min || phoneDigits.length > max){ document.getElementById('error-phone').textContent = `Enter a valid phone number.`; valid = false; }
+    if (!service){ document.getElementById('error-service').textContent = 'Please select a service.'; valid = false; }
+    if (!date){ document.getElementById('error-date').textContent = 'Please choose a date.'; valid = false; }
+
+    if (!valid) return;
+
+    const msg = `Hello Hero Moses Hair Salon! I'd like to book:%0A%0AName: ${name}%0APhone: +${code}${phoneDigits}%0AService: ${service}%0ADate: ${date}`;
+    document.getElementById('whatsapp-link').href = `https://wa.me/256757541061?text=${msg}`;
+
+    form.style.display = 'none';
+    success.classList.add('is-visible');
+  });
+})();
+
+/* ============================================================
+   HERO BACKGROUND — cross-fades between loaded salon photos
+   ============================================================ */
+(function(){
+  const slides = document.querySelectorAll('.hero__bg-slide');
+  if (!slides.length) return;
+  let current = 0, timer = null, loadedCount = 0;
+
+  window.setHeroSlideImage = function(index, url){
+    if (!slides[index]) return;
+    slides[index].style.backgroundImage = `url('${url}')`;
+    loadedCount++;
+    if (loadedCount > 1 && !timer){
+      timer = setInterval(() => {
+        current = (current + 1) % slides.length;
+        slides.forEach((s,n) => s.classList.toggle('hero__bg-slide--active', n === current));
+      }, 5500);
+    }
+  };
+})();
+
+/* ============================================================
+   FIREBASE — hero background photos + team mosaic
+   Reuses the salon's existing project (managed from /admin.html).
+   Falls back to an elegant placeholder if no photos exist yet.
+   ============================================================ */
+(function(){
+  const s = document.createElement('script');
+  s.type = 'module';
+  s.textContent = `
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs, limit }
-      from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+    import { getFirestore, collection, query, where, getDocs, limit } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBBV1YGdwlA2Q5yU1knZo0Kdayf4Cv_F1g",
@@ -1308,132 +899,98 @@
     };
     const db = getFirestore(initializeApp(firebaseConfig));
 
-    /* ── 1. Gallery carousel ── */
-    async function fetchSection(name) {
-      const snap = await getDocs(query(collection(db, 'gallery'), where('section', '==', name), limit(5)));
+    async function fetchSection(name){
+      const snap = await getDocs(query(collection(db,'gallery'), where('section','==',name), limit(5)));
       const docs = []; snap.forEach(d => docs.push(d.data()));
-      docs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      docs.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
       return docs;
     }
 
     (async () => {
-      try {
+      try{
         let photos = await fetchSection('home');
         if (!photos.length) photos = await fetchSection('clients');
         if (!photos.length) return;
-        const slides = document.querySelectorAll('.home-carousel__slide');
-        /* First slide loads immediately so the frame fills fast */
-        if (photos[0]) slides[0].style.backgroundImage = `url('${photos[0].image}')`;
-        /* Remaining slides decode in the background */
-        photos.slice(1).forEach((p, idx) => {
+        photos.slice(0,5).forEach((p, idx) => {
           const im = new Image();
-          im.onload = () => { if (slides[idx + 1]) slides[idx + 1].style.backgroundImage = `url('${p.image}')`; };
+          im.onload = () => { if (window.setHeroSlideImage) window.setHeroSlideImage(idx, p.image); };
           im.src = p.image;
         });
-      } catch (e) { console.warn('Gallery load:', e.message); }
+      }catch(e){ console.warn('Hero background load:', e.message); }
     })();
 
-    /* ── 2. Team mosaic — built entirely from Firestore ── */
     (async () => {
       const mosaic = document.getElementById('team-mosaic');
-      try {
-        const snap = await getDocs(collection(db, 'team'));
+      try{
+        const snap = await getDocs(collection(db,'team'));
         const members = [];
         snap.forEach(d => members.push(d.data()));
 
-        if (!members.length) {
-          mosaic.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:#666;font-family:var(--font-body);font-size:13px">Our team will appear here soon.</div>';
+        if (!members.length){
+          mosaic.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--text-muted-d);font-size:13px;">Our team will appear here soon.</div>';
           return;
         }
+        members.sort((a,b) => (b.founder===true)-(a.founder===true) || (a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
 
-        members.sort((a, b) => (b.founder === true) - (a.founder === true)
-          || (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0));
-
-        /* Decorative blank tile styles to weave between photos */
-        const blanks = ['blank-white', 'blank-dark', 'blank-gray', 'blank-stripes'];
-
-        /* Build a layout: photos with a few decorative tiles mixed in,
-           plus the SALON LEADERSHIP label and the MEET THE TEAM cta. */
         mosaic.innerHTML = '';
-        let blankIdx = 0;
-
-        /* Lead with one decorative tile for visual rhythm */
-        function addBlank() {
-          const b = document.createElement('div');
-          b.className = 'team-mosaic__tile team-mosaic__tile--' + blanks[blankIdx % blanks.length];
-          blankIdx++;
-          mosaic.appendChild(b);
-        }
-
-        function addPhoto(m) {
+        function addDeco(){ const b=document.createElement('div'); b.className='team-tile team-tile--deco'; mosaic.appendChild(b); }
+        function addPhoto(m){
           const tile = document.createElement('div');
-          tile.className = 'team-mosaic__tile team-mosaic__tile--photo';
-          tile.setAttribute('data-name', m.name);
-          if (m.photo) {
-            tile.style.backgroundImage = `url('${m.photo}')`;
-          } else {
+          tile.className = 'team-tile team-tile--photo';
+          if (m.photo){ tile.style.backgroundImage = \`url('\${m.photo}')\`; }
+          else{
             const init = document.createElement('span');
-            init.className = 'team-mosaic__initial';
-            init.textContent = (m.name || '?')[0];
+            init.className = 'team-tile__initial';
+            init.textContent = (m.name||'?')[0];
             tile.appendChild(init);
           }
           const nm = document.createElement('span');
-          nm.className = 'team-mosaic__name';
-          nm.textContent = m.founder ? m.name + ' \u00b7 Founder' : m.name;
+          nm.className = 'team-tile__name';
+          nm.textContent = m.founder ? m.name+' · Founder' : m.name;
           tile.appendChild(nm);
           mosaic.appendChild(tile);
         }
-
-        function addLabel() {
+        function addLabel(){
           const a = document.createElement('a');
           a.href = 'stylists.html';
-          a.className = 'team-mosaic__tile team-mosaic__tile--label';
-          a.setAttribute('aria-label', 'View salon leadership');
-          a.innerHTML = '<span class="team-mosaic__label-text">SALON<br>LEADERSHIP</span><span class="team-mosaic__label-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>';
+          a.className = 'team-tile team-tile--label';
+          a.innerHTML = '<span class="team-tile__label-text">SALON<br>LEADERSHIP</span>';
+          mosaic.appendChild(a);
+        }
+        function addCta(){
+          const a = document.createElement('a');
+          a.href = 'stylists.html';
+          a.className = 'team-tile team-tile--cta';
+          a.innerHTML = '<span class="team-tile__cta-text">MEET<br>THE<br>TEAM</span>';
           mosaic.appendChild(a);
         }
 
-        function addCta() {
-          const a = document.createElement('a');
-          a.href = 'stylists.html';
-          a.className = 'team-mosaic__tile team-mosaic__tile--cta';
-          a.setAttribute('aria-label', 'Meet the full team');
-          a.innerHTML = '<span class="team-mosaic__cta-text">MEET<br>THE<br>TEAM</span><span class="team-mosaic__cta-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>';
-          mosaic.appendChild(a);
-        }
-
-        /* Compose the grid: scatter members with occasional blanks,
-           then finish with the label + cta so both are always present. */
-        members.forEach((m, i) => {
-          /* sprinkle a decorative tile before some photos for the mosaic look */
-          if (i === 0 || i === 3) addBlank();
+        members.forEach((m,i) => {
+          if (i===0 || i===3) addDeco();
           addPhoto(m);
-          if (i === 1) addLabel();
+          if (i===1) addLabel();
         });
         addCta();
 
-        /* Trigger the build-in animation on the freshly created tiles */
-        const tiles = mosaic.querySelectorAll('.team-mosaic__tile');
-        if ('IntersectionObserver' in window) {
+        const tiles = mosaic.querySelectorAll('.team-tile');
+        if ('IntersectionObserver' in window){
           const obs = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                tiles.forEach((t, i) => setTimeout(() => t.classList.add('tile-in'), i * 70));
-              } else {
-                tiles.forEach(t => t.classList.remove('tile-in'));
-              }
+              if (entry.isIntersecting) tiles.forEach((t,i) => setTimeout(()=>t.classList.add('tile-in'), i*70));
+              else tiles.forEach(t => t.classList.remove('tile-in'));
             });
-          }, { threshold: 0.15 });
+          }, { threshold:0.15 });
           obs.observe(mosaic);
-        } else {
-          tiles.forEach(t => t.classList.add('tile-in'));
-        }
-      } catch (e) {
+        } else { tiles.forEach(t => t.classList.add('tile-in')); }
+      }catch(e){
         console.warn('Team mosaic:', e.message);
-        if (mosaic) mosaic.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#666;font-family:var(--font-body);font-size:13px">Team loading failed. Check your connection.</div>';
+        mosaic.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted-d);font-size:13px;">Team loading failed. Check your connection.</div>';
       }
     })();
-  </script>
+  `;
+  document.body.appendChild(s);
+})();
+</script>
 
 </body>
 </html>
